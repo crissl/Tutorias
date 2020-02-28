@@ -1,185 +1,324 @@
 package ec.edu.espe.Tutorias.models;
 
-public class Planificacion {
 
-	 private int Codigo_planificacion;
-	    private int Codigo_formularios;
-	    private int Iteracion;
-	    private String Fecha_formulario;
-	    private String TipoPersona;
-	    private String TipoTutoria;
-	    private int SpridenPidm;
-	    private String Tema;
-	    private String Publico;
-	    private String Nrc;
-	    private String CodAsignatura;
-	    private String Asignatura;
-	    private String Periodo;
-	    private String Nivel;
-	    private String Aula;
-	    private String FechaTutoria;
-	    private String HoraInicio;
-	    private String HoraFin;
-	    private String Observacion;
-	    private String Estado;
+import java.io.Serializable;
+import java.util.Date;
 
-	    public int getCodigo_planificacion() {
-	        return Codigo_planificacion;
-	    }
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.validation.constraints.NotNull;
+import javax.xml.crypto.Data;
 
-	    public void setCodigo_planificacion(int Codigo_planificacion) {
-	        this.Codigo_planificacion = Codigo_planificacion;
-	    }
+public class Planificacion implements Serializable {
+	
+	 
+	 @Basic(optional = false)
+	 @Column(name = "CODIGO_UZTPLANIF")
+	 private int codigoPlanificacion;
+	 
+	@Basic(optional = false)
+	 @Column(name = " CODIGO_UZGTFORMULARIOS")
+	 private int codigoFormularios;
+	 
+	 @Basic(optional = false)
+	 @Column(name = "UZGTRESPUESTAS_ITERACION")
+	 private int interacion;
+	 
+	 @Column(name = "UZTPLANIF_FECHAFORM")
+	 //@NotNull
+	 private String fechaFormulario;
+	 
+	 @Column(name = "UZTPLANIF_TIPOPERSONA")
+	 @NotNull
+	 private String tipoPersona;
+	 
+	 @Column(name = "UZTPLANIF_TITOTUTORIA")
+	 @NotNull
+	 private String tipoTutoria;
+	 
+	 @Basic(optional = false)
+	 @Column(name = "SPRIDEN_PIDM")
+	 private int spridenPidm;
+	 
+	 @Column(name = "UZTPLANIF_TEMA")
+	 @NotNull
+	 private String tema;
 
-	    public int getCodigo_formularios() {
-	        return Codigo_formularios;
-	    }
+	 @Column(name = "UZTPLANIF_PUBLICO")
+	 @NotNull
+	 private String publico;
+	 
+	 @Column(name = "UZTPLANIF_NRC")
+	 @NotNull
+	 private String nrc;
+	 
+	 @Column(name = "UZTPLANIF_CODIGO_ASIGNATURA")
+	 @NotNull
+	 private String codAsignatura;
+	 
+	 @Column(name = "UZTPLANIF_ASIGNATURA")
+	 @NotNull
+	 private String asignatura;
+	 
+	 @Column(name = "UZTPLANIF_PERIODO")
+	 @NotNull
+	 private String periodo;
+	 
+	 @Column(name = "UZTPLANIF_NIVEL")
+	 @NotNull
+	 private String nivel;
+	 
+	 @Column(name = "UZTPLANIF_AULA")
+	 @NotNull
+	 private String aula;
+	 
+	 @Column(name = "UZTPLANIF_FECHATUTORIA")
+	 @NotNull
+	 private String fechaTutoria;
+	 
+	 @Column(name = "UZTPLANIF_HORAINICIO")
+	 @NotNull
+	 private String horaInicio;
+	 
+	 @Column(name = "UZTPLANIF_HORAFIN")
+	 @NotNull
+	 private String horaFin;
+	 
+	 @Column(name = "UZTPLANIF_OBSERVACION")
+	 @NotNull
+	 private String observacion;
+	 
+	 @Column(name = "UZTPLANIF_ESTADO")
+	 @NotNull
+	 private String estado;
+	 
+	 @Column(name = "UZTPLANIF_FECHA_CREA")
+	 @NotNull
+	 private Date fechaCrea;
+	 
+	 @Column(name = "UZTPLANIF_USUA_CREA")
+	 @NotNull
+	 private String usuaCrea;
+	 
+	 @Column(name = "UZTPLANIF_FECHA_MODIF")
+	 @NotNull
+	 private Data fechaModif;
+	 
+	 @Column(name = "UZTPLANIF_USUA_MODIF")
+	 @NotNull
+	 private String usuaModif;
+	 
+	 @Column(name = "UZTPLANIF_CAMP_CODE")
+	 @NotNull
+	 private String campCode;
+	 
+	 
+	 public int getCodigoPlanificacion() {
+			return codigoPlanificacion;
+		}
 
-	    public void setCodigo_formularios(int Codigo_formularios) {
-	        this.Codigo_formularios = Codigo_formularios;
-	    }
+		public void setCodigoPlanificacion(int codigoPlanificacion) {
+			this.codigoPlanificacion = codigoPlanificacion;
+		}
 
-	    public String getFecha_formulario() {
-	        return Fecha_formulario;
-	    }
+		public int getCodigoFormularios() {
+			return codigoFormularios;
+		}
 
-	    public void setFecha_formulario(String Fecha_formulario) {
-	        this.Fecha_formulario = Fecha_formulario;
-	    }
+		public void setCodigoFormularios(int codigoFormularios) {
+			this.codigoFormularios = codigoFormularios;
+		}
 
-	    public String getTipoPersona() {
-	        return TipoPersona;
-	    }
+		public int getInteracion() {
+			return interacion;
+		}
 
-	    public void setTipoPersona(String TipoPersona) {
-	        this.TipoPersona = TipoPersona;
-	    }
+		public void setInteracion(int interacion) {
+			this.interacion = interacion;
+		}
 
-	    public String getTipoTutoria() {
-	        return TipoTutoria;
-	    }
+		public String getFechaFormulario() {
+			return fechaFormulario;
+		}
 
-	    public void setTipoTutoria(String TipoTutoria) {
-	        this.TipoTutoria = TipoTutoria;
-	    }
+		public void setFechaFormulario(String fechaFormulario) {
+			this.fechaFormulario = fechaFormulario;
+		}
 
-	    public int getSpridenPidm() {
-	        return SpridenPidm;
-	    }
+		public String getTipoPersona() {
+			return tipoPersona;
+		}
 
-	    public void setSpridenPidm(int SpridenPidm) {
-	        this.SpridenPidm = SpridenPidm;
-	    }
+		public void setTipoPersona(String tipoPersona) {
+			this.tipoPersona = tipoPersona;
+		}
 
-	    public String getTema() {
-	        return Tema;
-	    }
+		public String getTipoTutoria() {
+			return tipoTutoria;
+		}
 
-	    public void setTema(String Tema) {
-	        this.Tema = Tema;
-	    }
+		public void setTipoTutoria(String tipoTutoria) {
+			this.tipoTutoria = tipoTutoria;
+		}
 
-	    public String getPublico() {
-	        return Publico;
-	    }
+		public int getSpridenPidm() {
+			return spridenPidm;
+		}
 
-	    public void setPublico(String Publico) {
-	        this.Publico = Publico;
-	    }
+		public void setSpridenPidm(int spridenPidm) {
+			this.spridenPidm = spridenPidm;
+		}
 
-	    public String getNrc() {
-	        return Nrc;
-	    }
+		public String getTema() {
+			return tema;
+		}
 
-	    public void setNrc(String Nrc) {
-	        this.Nrc = Nrc;
-	    }
+		public void setTema(String tema) {
+			this.tema = tema;
+		}
 
-	    public String getAsignatura() {
-	        return Asignatura;
-	    }
+		public String getPublico() {
+			return publico;
+		}
 
-	    public void setAsignatura(String Asignatura) {
-	        this.Asignatura = Asignatura;
-	    }
+		public void setPublico(String publico) {
+			this.publico = publico;
+		}
 
-	    public String getPeriodo() {
-	        return Periodo;
-	    }
+		public String getNrc() {
+			return nrc;
+		}
 
-	    public void setPeriodo(String Periodo) {
-	        this.Periodo = Periodo;
-	    }
+		public void setNrc(String nrc) {
+			this.nrc = nrc;
+		}
 
-	    public String getNivel() {
-	        return Nivel;
-	    }
+		public String getCodAsignatura() {
+			return codAsignatura;
+		}
 
-	    public void setNivel(String Nivel) {
-	        this.Nivel = Nivel;
-	    }
+		public void setCodAsignatura(String codAsignatura) {
+			this.codAsignatura = codAsignatura;
+		}
 
-	    public String getAula() {
-	        return Aula;
-	    }
+		public String getAsignatura() {
+			return asignatura;
+		}
 
-	    public void setAula(String Aula) {
-	        this.Aula = Aula;
-	    }
+		public void setAsignatura(String asignatura) {
+			this.asignatura = asignatura;
+		}
 
-	    public String getFechaTutoria() {
-	        return FechaTutoria;
-	    }
+		public String getPeriodo() {
+			return periodo;
+		}
 
-	    public void setFechaTutoria(String FechaTutoria) {
-	        this.FechaTutoria = FechaTutoria;
-	    }
+		public void setPeriodo(String periodo) {
+			this.periodo = periodo;
+		}
 
-	    public String getHoraInicio() {
-	        return HoraInicio;
-	    }
+		public String getNivel() {
+			return nivel;
+		}
 
-	    public void setHoraInicio(String HoraInicio) {
-	        this.HoraInicio = HoraInicio;
-	    }
+		public void setNivel(String nivel) {
+			this.nivel = nivel;
+		}
 
-	    public String getHoraFin() {
-	        return HoraFin;
-	    }
+		public String getAula() {
+			return aula;
+		}
 
-	    public void setHoraFin(String HoraFin) {
-	        this.HoraFin = HoraFin;
-	    }
+		public void setAula(String aula) {
+			this.aula = aula;
+		}
 
-	    public String getObservacion() {
-	        return Observacion;
-	    }
+		public String getFechaTutoria() {
+			return fechaTutoria;
+		}
 
-	    public void setObservacion(String Observacion) {
-	        this.Observacion = Observacion;
-	    }
+		public void setFechaTutoria(String fechaTutoria) {
+			this.fechaTutoria = fechaTutoria;
+		}
 
-	    public int getIteracion() {
-	        return Iteracion;
-	    }
+		public String getHoraInicio() {
+			return horaInicio;
+		}
 
-	    public void setIteracion(int Iteracion) {
-	        this.Iteracion = Iteracion;
-	    }
+		public void setHoraInicio(String horaInicio) {
+			this.horaInicio = horaInicio;
+		}
 
-	    public String getCodAsignatura() {
-	        return CodAsignatura;
-	    }
+		public String getHoraFin() {
+			return horaFin;
+		}
 
-	    public void setCodAsignatura(String CodAsignatura) {
-	        this.CodAsignatura = CodAsignatura;
-	    }
+		public void setHoraFin(String horaFin) {
+			this.horaFin = horaFin;
+		}
 
-	    public String getEstado() {
-	        return Estado;
-	    }
+		public String getObservacion() {
+			return observacion;
+		}
 
-	    public void setEstado(String Estado) {
-	        this.Estado = Estado;
-	    }
+		public void setObservacion(String observacion) {
+			this.observacion = observacion;
+		}
+
+		public String getEstado() {
+			return estado;
+		}
+
+		public void setEstado(String estado) {
+			this.estado = estado;
+		}
+
+		public Date getFechaCrea() {
+			return fechaCrea;
+		}
+
+		public void setFechaCrea(Date fechaCrea) {
+			this.fechaCrea = fechaCrea;
+		}
+
+		public String getUsuaCrea() {
+			return usuaCrea;
+		}
+
+		public void setUsuaCrea(String usuaCrea) {
+			this.usuaCrea = usuaCrea;
+		}
+
+		public Data getFechaModif() {
+			return fechaModif;
+		}
+
+		public void setFechaModif(Data fechaModif) {
+			this.fechaModif = fechaModif;
+		}
+
+		public String getUsuaModif() {
+			return usuaModif;
+		}
+
+		public void setUsuaModif(String usuaModif) {
+			this.usuaModif = usuaModif;
+		}
+
+		public String getCampCode() {
+			return campCode;
+		}
+
+		public void setCampCode(String campCode) {
+			this.campCode = campCode;
+		}
+
 }
+
+
+
+	 
+	   
+	  
+	 
+	
