@@ -6,12 +6,20 @@ import java.util.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.xml.crypto.Data;
 
+
+@Entity
+@Table(name = "UZTPLANIF")
 public class Planificacion implements Serializable {
 	
-	 
+	 private static final long serialVersionUID = 1L;
+
+	
+	 @Id
 	 @Basic(optional = false)
 	 @Column(name = "CODIGO_UZTPLANIF")
 	 private int codigoPlanificacion;
@@ -102,7 +110,7 @@ public class Planificacion implements Serializable {
 	 
 	 @Column(name = "UZTPLANIF_FECHA_MODIF")
 	 @NotNull
-	 private Data fechaModif;
+	 private Date fechaModif;
 	 
 	 @Column(name = "UZTPLANIF_USUA_MODIF")
 	 @NotNull
@@ -289,11 +297,11 @@ public class Planificacion implements Serializable {
 			this.usuaCrea = usuaCrea;
 		}
 
-		public Data getFechaModif() {
+		public Date getFechaModif() {
 			return fechaModif;
 		}
 
-		public void setFechaModif(Data fechaModif) {
+		public void setFechaModif(Date fechaModif) {
 			this.fechaModif = fechaModif;
 		}
 
