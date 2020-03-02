@@ -3,7 +3,7 @@ package ec.edu.espe.Tutorias.controller;
 import ec.edu.espe.Tutorias.Vo.NrcVo;
 import ec.edu.espe.Tutorias.Vo.SolicitudVo;
 import ec.edu.espe.Tutorias.dao.planificacionRepository;
-import ec.edu.espe.Tutorias.models.Planificacion;
+import ec.edu.espe.Tutorias.model.Planificacion;
 
 import java.sql.SQLException;
 import java.util.List;
