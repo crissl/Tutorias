@@ -1,5 +1,8 @@
 package ec.edu.espe.Tutorias.controller;
 
+import ec.edu.espe.Tutorias.Vo.NrcSolicitudVo;
+import ec.edu.espe.Tutorias.Vo.NrcVo;
+import ec.edu.espe.Tutorias.Vo.SolicitudVo;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -18,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import ec.edu.espe.Tutorias.dao.planificacionRepository;
 import ec.edu.espe.Tutorias.model.Planificacion;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/tut")
 public class planificacionRest {
@@ -26,7 +28,8 @@ public class planificacionRest {
     @Autowired
     private planificacionRepository planificacionRep;
 
-   
+    @Autowired
+    private SolicitudVo libretaRep;
 
     // funcion para listar un formulario
     @RequestMapping(value = "/segu1", method = RequestMethod.GET)
@@ -38,23 +41,41 @@ public class planificacionRest {
             return new ResponseEntity(tutorias, HttpStatus.OK);
         }
     }
-    
-     //metodo agregar
+
+    //metodo agregar
     @RequestMapping(value = "/segu", method = RequestMethod.POST)
     public ResponseEntity<Planificacion> crearPlanificacion(@Valid @RequestBody Planificacion usuario) {
         Planificacion planif = new Planificacion();
-        int ultimo = planificacionRep.findTopByOrderByIdDesc().getId()+1;
+        int ultimo = planificacionRep.findTopByOrderByIdDesc().getId() + 1;
         usuario.setId(ultimo);
         //planif.setId(ultimo);
         planificacionRep.save(usuario);
         return new ResponseEntity("planificacion creado", HttpStatus.CREATED);
     }
-    
+
     @RequestMapping(value = "/ultimo", method = RequestMethod.GET)
-    public ResponseEntity<Planificacion> ultimo(){
-        int ultimo = planificacionRep.findTopByOrderByIdDesc().getId()+1;
+    public ResponseEntity<Planificacion> ultimo() {
+        int ultimo = planificacionRep.findTopByOrderByIdDesc().getId() + 1;
         return new ResponseEntity(ultimo, HttpStatus.OK);
-    
+
+    }
+
+    @RequestMapping(value = "/nrcS/{data}", method = RequestMethod.GET)
+    public ResponseEntity libretap(@PathVariable int data) throws SQLException {
+        String wi = " WHERE SIRASGN_PIDM  = " + data + ""
+                + " AND SIRASGN_TERM_CODE = SSBSECT_TERM_CODE"
+                + " AND SIRASGN_CRN = SSBSECT_CRN"
+                + " AND SSBSECT_SUBJ_CODE = A.SCBCRSE_SUBJ_CODE"
+                + " AND SSBSECT_CRSE_NUMB = A.SCBCRSE_CRSE_NUMB";
+        List<NrcVo> libreta1 = libretaRep.getNrc(wi);
+        return new ResponseEntity(libreta1, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/nrcSolicitud/{data}", method = RequestMethod.GET)
+    public ResponseEntity getNrcSolicitud(@PathVariable int data) throws SQLException {
+        String wi = " WHERE sfrstcr_pidm = " + data + " AND sfrstcr_term_code = ssbsect_term_code AND sfrstcr_crn = ssbsect_crn  AND ssbsect_subj_code = a.scbcrse_subj_code AND ssbsect_crse_numb = a.scbcrse_crse_numb ";
+        List<NrcSolicitudVo> NrcEstudiante = libretaRep.getNrcSolicitud(wi);
+        return new ResponseEntity(NrcEstudiante, HttpStatus.OK);
     }
 
 }

@@ -21,13 +21,21 @@ public class SolicitudVo {
 
     private static String opciones = "   FROM SIRASGN, SSBSECT, SCBCRSE A ";
 
+    private static String fromNrcSolicitud = " FROM sfrstcr,ssbsect, scbcrse a";
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     public List<NrcVo> getNrc(String q) throws SQLException {
         String opcion = "SELECT DISTINCT SIRASGN_CRN , A.SCBCRSE_SUBJ_CODE,  A.SCBCRSE_CRSE_NUMB , A.SCBCRSE_TITLE , SSBSECT_CAMP_CODE , SSBSECT_TERM_CODE ";
         String where = " AND A.SCBCRSE_EFF_TERM = (SELECT MAX( SCBCRSE_EFF_TERM)  FROM  SCBCRSE  WHERE SCBCRSE_SUBJ_CODE = A.SCBCRSE_SUBJ_CODE  AND SCBCRSE_CRSE_NUMB = A.SCBCRSE_CRSE_NUMB);";
-        return jdbcTemplate.query(opcion + opciones + q , new BeanPropertyRowMapper<>(NrcVo.class));
+        return jdbcTemplate.query(opcion + opciones + q, new BeanPropertyRowMapper<>(NrcVo.class));
+    }
+
+    public List<NrcSolicitudVo> getNrcSolicitud(String q) throws SQLException {
+        String selectNrcSolicitud = "SELECT DISTINCT sfrstcr_crn as nrc ,a.scbcrse_subj_code||a.scbcrse_crse_numb as codigo,a.scbcrse_title as asignatura ,sfrstcr_camp_code as campus  ,sfrstcr_term_code as periodo ,sfrstcr_levl_code as nivel ";
+        String whereNrcSolicitud = " AND a.scbcrse_eff_term = (SELECT MAX(scbcrse_eff_term) FROM scbcrse WHERE scbcrse_subj_code = a.scbcrse_subj_code AND scbcrse_crse_numb = a.scbcrse_crse_numb)";
+        return jdbcTemplate.query(selectNrcSolicitud + fromNrcSolicitud+q+whereNrcSolicitud, new BeanPropertyRowMapper<>(NrcSolicitudVo.class));
     }
 
 }
