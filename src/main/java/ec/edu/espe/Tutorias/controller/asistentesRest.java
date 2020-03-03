@@ -25,12 +25,15 @@ public class asistentesRest  {
 	
     private asistenciaRepository asistenciaRep;
 
-//  Funcion Actualizar un usuario
+//  Funcion Actualizar un asistencia
+    
 @RequestMapping(value = "/segu2", method = RequestMethod.PUT)
 public ResponseEntity<Asistencia> actualizarAsistencia(@Valid @RequestBody  Asistencia asistencia) throws SQLException {
      asistenciaRep.save(asistencia);
 return new ResponseEntity("actualizado asistencia", HttpStatus.OK);
 }
+
+
 
 
 }
