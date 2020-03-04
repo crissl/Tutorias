@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ec.edu.espe.Tutorias.dao.planificacionRepository;
 import ec.edu.espe.Tutorias.model.Planificacion;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/tut")
 public class planificacionRest {
@@ -70,7 +71,7 @@ public class planificacionRest {
         List<NrcVo> libreta1 = libretaRep.getNrc(wi);
         return new ResponseEntity(libreta1, HttpStatus.OK);
     }
-
+    //Lista nrc de un solicitud de reforzzamineto estudiante
     @RequestMapping(value = "/nrcSolicitud/{data}", method = RequestMethod.GET)
     public ResponseEntity getNrcSolicitud(@PathVariable int data) throws SQLException {
         String wi = " WHERE sfrstcr_pidm = " + data + " AND sfrstcr_term_code = ssbsect_term_code AND sfrstcr_crn = ssbsect_crn  AND ssbsect_subj_code = a.scbcrse_subj_code AND ssbsect_crse_numb = a.scbcrse_crse_numb ";
