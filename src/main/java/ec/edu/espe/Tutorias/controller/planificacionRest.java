@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ec.edu.espe.Tutorias.dao.planificacionRepository;
 import ec.edu.espe.Tutorias.model.Planificacion;
+import ec.edu.espe.Tutorias.util.Mensaje;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 @RestController
@@ -28,6 +29,7 @@ public class planificacionRest {
 
     @Autowired
     private planificacionRepository planificacionRep;
+    private final Mensaje msg = new Mensaje();
 
     @Autowired
     private SolicitudVo libretaRep;
@@ -37,7 +39,7 @@ public class planificacionRest {
     public ResponseEntity<Planificacion> listarPlanificacion() throws SQLException {
         List<Planificacion> tutorias = planificacionRep.findallPlanifica();
         if (tutorias.isEmpty()) {
-            return new ResponseEntity("no encuentra", HttpStatus.OK);
+            return new ResponseEntity(msg.notfound(), HttpStatus.OK);
         } else {
             return new ResponseEntity(tutorias, HttpStatus.OK);
         }
@@ -51,7 +53,7 @@ public class planificacionRest {
         usuario.setId(ultimo);
         //planif.setId(ultimo);
         planificacionRep.save(usuario);
-        return new ResponseEntity("planificacion creado", HttpStatus.CREATED);
+        return new ResponseEntity(msg.add(), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/ultimo", method = RequestMethod.GET)
