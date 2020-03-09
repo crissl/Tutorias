@@ -23,6 +23,7 @@ public class SolicitudVo {
 
     private static String fromNrcSolicitud = " FROM sfrstcr,ssbsect, scbcrse a";
 
+    private static String confirma = " FROM UTIC.UZTASISTENTES a, UTIC.UZTPLANIF p";
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -37,5 +38,11 @@ public class SolicitudVo {
         String whereNrcSolicitud = " AND a.scbcrse_eff_term = (SELECT MAX(scbcrse_eff_term) FROM scbcrse WHERE scbcrse_subj_code = a.scbcrse_subj_code AND scbcrse_crse_numb = a.scbcrse_crse_numb)";
         return jdbcTemplate.query(selectNrcSolicitud + fromNrcSolicitud+q+whereNrcSolicitud, new BeanPropertyRowMapper<>(NrcSolicitudVo.class));
     }
-
+    public List<ConfirmacionAsistenciaVo> getConfirmar(String q) throws SQLException {
+    	
+    	String selecConfirmacion = "SELECT UZTASISTENTES_CODIGO, p.CODIGO_UZTPLANIF, UZTPLANIF_TEMA";
+    	String whereConfirmacion = "AND (a.CODIGO_UZGTFORMULARIOS=3 OR a.CODIGO_UZGTFORMULARIOS=1) AND UZTASISTENTES_ESTADO='A' ORDER BY p.CODIGO_UZTPLANIF ASC";
+    	return jdbcTemplate.query(selecConfirmacion + confirma + q + whereConfirmacion, new BeanPropertyRowMapper<>(ConfirmacionAsistenciaVo.class));
+    
+    }
 }

@@ -1,5 +1,6 @@
 package ec.edu.espe.Tutorias.controller;
 
+import ec.edu.espe.Tutorias.Vo.ConfirmacionAsistenciaVo;
 import ec.edu.espe.Tutorias.Vo.NrcSolicitudVo;
 import ec.edu.espe.Tutorias.Vo.NrcVo;
 import ec.edu.espe.Tutorias.Vo.SolicitudVo;
@@ -33,7 +34,8 @@ public class planificacionRest {
 
     @Autowired
     private SolicitudVo libretaRep;
-
+    @Autowired
+    private SolicitudVo confirmacionAsi;
     // funcion para listar un formulario
     @RequestMapping(value = "/segu1", method = RequestMethod.GET)
     public ResponseEntity<Planificacion> listarPlanificacion() throws SQLException {
@@ -81,4 +83,10 @@ public class planificacionRest {
         return new ResponseEntity(NrcEstudiante, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/confirmarAsistencia/{data}", method = RequestMethod.GET)
+    public ResponseEntity getConfirmar(@PathVariable int data) throws SQLException {
+        String wi = "  WHERE a.CODIGO_UZTPLANIF=p.CODIGO_UZTPLANIF AND a.SPRIDEN_PIDM = " + data + " ";
+        List<ConfirmacionAsistenciaVo> Confirmar = confirmacionAsi.getConfirmar(wi);
+        return new ResponseEntity(Confirmar, HttpStatus.OK);
+    }
 }
