@@ -5,35 +5,35 @@ import java.io.Serializable;
 public class ConfirmacionAsistenciaVo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	private int CODIGO;
-	private int PLANIFICACION;
-	private String TEMA;
+	private int UZTASISTENTES_CODIGO;
+	private int CODIGO_UZTPLANIF;
+	private String UZTPLANIF_TEMA;
 	
 	 public ConfirmacionAsistenciaVo() {
 	    }
 	 public ConfirmacionAsistenciaVo(int CODIGO, int PLANIFICACION, String TEMA) 
 			  {
-		 this.CODIGO=CODIGO;
-		 this.PLANIFICACION=PLANIFICACION;
-		 this.TEMA=TEMA;
+		 this.UZTASISTENTES_CODIGO=CODIGO;
+		 this.CODIGO_UZTPLANIF=PLANIFICACION;
+		 this.UZTPLANIF_TEMA=TEMA;
 	    }
-	public int getCODIGO() {
-		return CODIGO;
+	public int getUZTASISTENTES_CODIGO() {
+		return UZTASISTENTES_CODIGO;
 	}
-	public void setCODIGO(int CODIGO) {
-		this.CODIGO = CODIGO;
+	public void setUZTASISTENTES_CODIGO(int uZTASISTENTES_CODIGO) {
+		UZTASISTENTES_CODIGO = uZTASISTENTES_CODIGO;
 	}
-	public int getPLANIFICACION() {
-		return PLANIFICACION;
+	public int getCODIGO_UZTPLANIF() {
+		return CODIGO_UZTPLANIF;
 	}
-	public void setPLANIFICACION(int PLANIFICACION) {
-		this.PLANIFICACION = PLANIFICACION;
+	public void setCODIGO_UZTPLANIF(int cODIGO_UZTPLANIF) {
+		CODIGO_UZTPLANIF = cODIGO_UZTPLANIF;
 	}
-	public String getTEMA() {
-		return TEMA;
+	public String getUZTPLANIF_TEMA() {
+		return UZTPLANIF_TEMA;
 	}
-	public void setTEMA(String TEMA) {
-		this.TEMA = TEMA;
+	public void setUZTPLANIF_TEMA(String uZTPLANIF_TEMA) {
+		UZTPLANIF_TEMA = uZTPLANIF_TEMA;
 	}
-	 
-}
+	 }
+	
