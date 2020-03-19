@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ec.edu.espe.Tutorias.dao.asistenciaRepository;
 import ec.edu.espe.Tutorias.dao.planificacionRepository;
+import ec.edu.espe.Tutorias.model.Asistencia;
 import ec.edu.espe.Tutorias.model.Planificacion;
 import ec.edu.espe.Tutorias.util.Mensaje;
 
@@ -36,6 +38,9 @@ public class planificacionRest {
     private SolicitudVo libretaRep;
     @Autowired
     private SolicitudVo confirmacionAsi;
+    @Autowired
+    private asistenciaRepository asistenciaRep;
+    
     // funcion para listar un formulario
     @RequestMapping(value = "/segu1", method = RequestMethod.GET)
     public ResponseEntity<Planificacion> listarPlanificacion() throws SQLException {
@@ -47,7 +52,8 @@ public class planificacionRest {
         }
     }
 
-    //metodo agregar
+
+    //metodo agregar solicitud de 
     @RequestMapping(value = "/segu", method = RequestMethod.POST)
     public ResponseEntity<Planificacion> crearPlanificacion(@Valid @RequestBody Planificacion usuario) {
         Planificacion planif = new Planificacion();
@@ -57,6 +63,7 @@ public class planificacionRest {
         planificacionRep.save(usuario);
         return new ResponseEntity(msg.add(), HttpStatus.CREATED);
     }
+  
 
     @RequestMapping(value = "/ultimo", method = RequestMethod.GET)
     public ResponseEntity<Planificacion> ultimo() {
