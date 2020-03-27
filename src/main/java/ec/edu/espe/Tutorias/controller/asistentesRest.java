@@ -9,11 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ec.edu.espe.Tutorias.Vo.ConfirmacionAsistenciaVo;
+import ec.edu.espe.Tutorias.Vo.SolicitudVo;
 import ec.edu.espe.Tutorias.dao.asistenciaRepository;
 import ec.edu.espe.Tutorias.model.Asistencia;
 import ec.edu.espe.Tutorias.util.Mensaje;
@@ -25,11 +28,13 @@ public class asistentesRest  {
 	
 	@Autowired
     private asistenciaRepository asistenciaRep;
+	@Autowired
+	private SolicitudVo camppus;
 
     private final Mensaje msg = new Mensaje();
 
  // funcion para listar un asistencia
-    @RequestMapping(value = "/seguP", method = RequestMethod.GET)
+    @RequestMapping(value = "/seguA", method = RequestMethod.GET)
     public ResponseEntity<Asistencia> listarAsistencia() throws SQLException {
         List<Asistencia> asistencias = asistenciaRep.findallAsiste();
        if (asistencias.isEmpty()) {
@@ -56,6 +61,13 @@ public ResponseEntity<Asistencia> actualizarAsistencia(@Valid @RequestBody  Asis
      asistenciaRep.save(asistencia);
      return new ResponseEntity(msg.update(), HttpStatus.OK);
      }
+
+@RequestMapping(value = "/campus/{data}", method = RequestMethod.GET)
+public ResponseEntity getConfirmar(@PathVariable int data) throws SQLException {
+    String wi = "  WHERE a.CODIGO_UZTPLANIF=p.CODIGO_UZTPLANIF AND a.SPRIDEN_PIDM = " + data + " ";
+    List<ConfirmacionAsistenciaVo> Confirmar = camppus.getConfirmar(wi);
+    return new ResponseEntity(Confirmar, HttpStatus.OK);
+}
 
 
 }
