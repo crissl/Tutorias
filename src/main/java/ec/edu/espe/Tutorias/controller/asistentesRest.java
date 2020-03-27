@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ec.edu.espe.Tutorias.Vo.CampusVo;
 import ec.edu.espe.Tutorias.Vo.ConfirmacionAsistenciaVo;
+import ec.edu.espe.Tutorias.Vo.HorarioVo;
 import ec.edu.espe.Tutorias.Vo.SolicitudVo;
 import ec.edu.espe.Tutorias.dao.asistenciaRepository;
 import ec.edu.espe.Tutorias.model.Asistencia;
@@ -29,7 +31,9 @@ public class asistentesRest  {
 	@Autowired
     private asistenciaRepository asistenciaRep;
 	@Autowired
-	private SolicitudVo camppus;
+	private SolicitudVo campusRep;
+	@Autowired
+	private SolicitudVo horarioAsi;
 
     private final Mensaje msg = new Mensaje();
 
@@ -62,13 +66,18 @@ public ResponseEntity<Asistencia> actualizarAsistencia(@Valid @RequestBody  Asis
      return new ResponseEntity(msg.update(), HttpStatus.OK);
      }
 
-@RequestMapping(value = "/campus/{data}", method = RequestMethod.GET)
-public ResponseEntity getConfirmar(@PathVariable int data) throws SQLException {
-    String wi = "  WHERE a.CODIGO_UZTPLANIF=p.CODIGO_UZTPLANIF AND a.SPRIDEN_PIDM = " + data + " ";
-    List<ConfirmacionAsistenciaVo> Confirmar = camppus.getConfirmar(wi);
-    return new ResponseEntity(Confirmar, HttpStatus.OK);
+@RequestMapping(value = "/campus", method = RequestMethod.GET)
+public ResponseEntity getCampus () throws SQLException {
+    String wi = "  WHERE SLBRDEF_BLDG_CODE = SLBBLDG_BLDG_CODE ";
+    List<CampusVo> campus = campusRep.getCampus(wi);
+    return new ResponseEntity(campus, HttpStatus.OK);
 }
-
+@RequestMapping(value = "/Horario/{campus}/{dia}", method = RequestMethod.GET)
+public ResponseEntity getConfirmar(@PathVariable String campus,String dia) throws SQLException {
+    String wi = "WHERE SZARPGN_IDREPORT = 'AULAS_'||'\" + ccampus + \"' AND SLBRDEF_BLDG_CODE = SZARPGN_CAMPVAR3 AND SLBRDEF_ROOM_NUMBER = SZARPGN_CAMPVAR4 AND SLBRDEF_RMST_CODE = 'AC' AND SLBRDEF_ROOM_TYPE = 'C' AND SZARPGN_CAMPVAR9 \" + dia + \"";
+    List<HorarioVo> horario = horarioAsi.getHorario(wi);
+    return new ResponseEntity(horario, HttpStatus.OK);
+}
 
 }
 
