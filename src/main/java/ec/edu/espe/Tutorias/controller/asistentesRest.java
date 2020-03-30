@@ -73,8 +73,8 @@ public ResponseEntity getCampus () throws SQLException {
     return new ResponseEntity(campus, HttpStatus.OK);
 }
 @RequestMapping(value = "/Horario/{campus}/{dia}", method = RequestMethod.GET)
-public ResponseEntity getConfirmar(@PathVariable String campus,String dia) throws SQLException {
-    String wi = "WHERE SZARPGN_IDREPORT = 'AULAS_'||'\" + ccampus + \"' AND SLBRDEF_BLDG_CODE = SZARPGN_CAMPVAR3 AND SLBRDEF_ROOM_NUMBER = SZARPGN_CAMPVAR4 AND SLBRDEF_RMST_CODE = 'AC' AND SLBRDEF_ROOM_TYPE = 'C' AND SZARPGN_CAMPVAR9 \" + dia + \"";
+public ResponseEntity getConfirmar(@PathVariable String campus, String dia) throws SQLException {
+    String wi = "WHERE SZARPGN_IDREPORT = 'AULAS_'||'" + campus + "' AND SLBRDEF_BLDG_CODE = SZARPGN_CAMPVAR3 AND SLBRDEF_ROOM_NUMBER = SZARPGN_CAMPVAR4 AND SLBRDEF_RMST_CODE = 'AC' AND SLBRDEF_ROOM_TYPE = 'C' AND '" + dia + "' IS NOT NULL ORDER BY 3,4,1";
     List<HorarioVo> horario = horarioAsi.getHorario(wi);
     return new ResponseEntity(horario, HttpStatus.OK);
 }

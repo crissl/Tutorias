@@ -29,7 +29,7 @@ public class SolicitudVo {
     
     private static String horario = " FROM SATURN.SZARPGN, SLBRDEF ";
 
-    
+    private static String reforzamiento ="FROM SIRASGN, SSBSECT, SCBCRSE A, SSRMEET";
     
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -60,9 +60,16 @@ public class SolicitudVo {
     	
     }
     public List<HorarioVo> getHorario(String q) throws SQLException {
-    	String selecHorario = "SELECT DISTINCT SZARPGN_CAMPVAR3 ||' - '||SZARPGN_CAMPVAR4 AS AULA,SZARPGN_CAMPVAR7 ||' - '||SZARPGN_CAMPVAR8 AS HORARIO, SZARPGN_CAMPVAR7 AS HORA_INICIO, SZARPGN_CAMPVAR8 AS HORA_FIN";
+    	String selecHorario = "SELECT DISTINCT SZARPGN_CAMPVAR3||' - '||SZARPGN_CAMPVAR4 AS AULA, SZARPGN_CAMPVAR7||' - '||SZARPGN_CAMPVAR8 AS HORARIO, SZARPGN_CAMPVAR7 AS HORA_INICIO, SZARPGN_CAMPVAR8 AS HORA_FIN";
     	String whereHorario = "";
     	return jdbcTemplate.query(selecHorario + horario + q + whereHorario, new BeanPropertyRowMapper<>(HorarioVo.class));
+    	
+    	
+    }
+    public List<PlanificacionReforzamientoVo> getPlanificaionR(String q) throws SQLException {
+        	String selecHorario = "SELECT DISTINCT SIRASGN_CRN AS NRC, A.SCBCRSE_SUBJ_CODE || A.SCBCRSE_CRSE_NUMB || ' - ' || A.SCBCRSE_TITLE AS ASIGNATURA, SSBSECT_CAMP_CODE AS CAMPUS, SSBSECT_TERM_CODE AS PERIODO, SSRMEET_BEGIN_TIME AS INICIO, SSRMEET_END_TIME AS FIN";
+        	String whereHorario = "";
+        	return jdbcTemplate.query(selecHorario + reforzamiento + q + whereHorario, new BeanPropertyRowMapper<>(PlanificacionReforzamientoVo.class));
     
     	
     }
