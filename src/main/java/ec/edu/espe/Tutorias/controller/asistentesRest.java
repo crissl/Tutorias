@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ec.edu.espe.Tutorias.Vo.CampusVo;
 import ec.edu.espe.Tutorias.Vo.ConfirmacionAsistenciaVo;
+import ec.edu.espe.Tutorias.Vo.HorarioPlaVo;
 import ec.edu.espe.Tutorias.Vo.HorarioVo;
+import ec.edu.espe.Tutorias.Vo.PlanificacionReforzamientoVo;
 import ec.edu.espe.Tutorias.Vo.SolicitudVo;
 import ec.edu.espe.Tutorias.dao.asistenciaRepository;
 import ec.edu.espe.Tutorias.model.Asistencia;
@@ -34,6 +36,11 @@ public class asistentesRest  {
 	private SolicitudVo campusRep;
 	@Autowired
 	private SolicitudVo horarioAsi;
+	@Autowired
+	private SolicitudVo nrcPlanificacion;
+	@Autowired
+	private SolicitudVo horarioPla;
+
 
     private final Mensaje msg = new Mensaje();
 
@@ -73,12 +80,35 @@ public ResponseEntity getCampus () throws SQLException {
     return new ResponseEntity(campus, HttpStatus.OK);
 }
 @RequestMapping(value = "/Horario/{campus}/{dia}", method = RequestMethod.GET)
-public ResponseEntity getConfirmar(@PathVariable String campus, String dia) throws SQLException {
+public ResponseEntity getHorario(@PathVariable String campus, String dia) throws SQLException {
     String wi = "WHERE SZARPGN_IDREPORT = 'AULAS_'||'" + campus + "' AND SLBRDEF_BLDG_CODE = SZARPGN_CAMPVAR3 AND SLBRDEF_ROOM_NUMBER = SZARPGN_CAMPVAR4 AND SLBRDEF_RMST_CODE = 'AC' AND SLBRDEF_ROOM_TYPE = 'C' AND '" + dia + "' IS NOT NULL ORDER BY 3,4,1";
     List<HorarioVo> horario = horarioAsi.getHorario(wi);
     return new ResponseEntity(horario, HttpStatus.OK);
 }
-
+@RequestMapping(value = "/planificaionReforzamiento/{pidm}", method = RequestMethod.GET)
+public ResponseEntity getPlanificaionR(@PathVariable String pidm) throws SQLException {
+    String wi = "WHERE SIRASGN_PIDM  = "+ pidm +" \r\n" + 
+    		"                AND SIRASGN_TERM_CODE = SSBSECT_TERM_CODE\r\n" + 
+    		"                AND SIRASGN_CRN = SSBSECT_CRN\r\n" + 
+    		"                AND SSRMEET_TERM_CODE = SSBSECT_TERM_CODE\r\n" + 
+    		"                AND SSRMEET_CRN = SSBSECT_CRN       \r\n" + 
+    		"                AND SSRMEET_MTYP_CODE = 'TUTO' \r\n" + 
+    		//"                AND SSBSECT_PTRM_END_DATE >= SYSDATE\r\n" + 
+    		"                AND SSBSECT_SUBJ_CODE = A.SCBCRSE_SUBJ_CODE\r\n" + 
+    		"                AND SSBSECT_CRSE_NUMB = A.SCBCRSE_CRSE_NUMB\r\n" + 
+    		"                AND A.SCBCRSE_EFF_TERM = (SELECT MAX( SCBCRSE_EFF_TERM)\r\n" + 
+    		"                FROM  SCBCRSE\r\n" + 
+    		"                WHERE SCBCRSE_SUBJ_CODE = A.SCBCRSE_SUBJ_CODE\r\n" + 
+    		"                AND SCBCRSE_CRSE_NUMB = A.SCBCRSE_CRSE_NUMB) ";
+    List<PlanificacionReforzamientoVo> nrcPlanif = nrcPlanificacion.getPlanificaionR(wi);
+    return new ResponseEntity(nrcPlanif, HttpStatus.OK);
+}
+@RequestMapping(value = "/HorarioP/{campus1}/{dia}/{horainicio}/{horafin}", method = RequestMethod.GET)
+public ResponseEntity getHorarioPla(@PathVariable String campus1, String dia, String horainicio, String horafin ) throws SQLException {
+    String wi = "WHERE SZARPGN_IDREPORT = 'AULAS_'|| '" + campus1 + "' AND SLBRDEF_BLDG_CODE = SZARPGN_CAMPVAR3 AND SLBRDEF_ROOM_NUMBER = SZARPGN_CAMPVAR4 AND SLBRDEF_RMST_CODE = 'AC' AND SLBRDEF_ROOM_TYPE = 'C' AND '" + dia + "' IS NOT NULL AND '" + horainicio + "' >=SZARPGN_CAMPVAR7 AND '" + horafin + "' <= SZARPGN_CAMPVAR8 ORDER BY 3,4,1";
+    List<HorarioPlaVo> horarioPlan = horarioPla.getHorarioPla(wi);
+    return new ResponseEntity(horarioPlan, HttpStatus.OK);
+}
 }
 
 
