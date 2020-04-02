@@ -103,10 +103,13 @@ public ResponseEntity getPlanificaionR(@PathVariable String pidm) throws SQLExce
     List<PlanificacionReforzamientoVo> nrcPlanif = nrcPlanificacion.getPlanificaionR(wi);
     return new ResponseEntity(nrcPlanif, HttpStatus.OK);
 }
-@RequestMapping(value = "/HorarioP/{campus1}/{dia}/{horainicio}/{horafin}", method = RequestMethod.GET)
-public ResponseEntity getHorarioPla(@PathVariable String campus1, String dia, String horainicio, String horafin ) throws SQLException {
-    String wi = "WHERE SZARPGN_IDREPORT = 'AULAS_'|| '" + campus1 + "' AND SLBRDEF_BLDG_CODE = SZARPGN_CAMPVAR3 AND SLBRDEF_ROOM_NUMBER = SZARPGN_CAMPVAR4 AND SLBRDEF_RMST_CODE = 'AC' AND SLBRDEF_ROOM_TYPE = 'C' AND '" + dia + "' IS NOT NULL AND '" + horainicio + "' >=SZARPGN_CAMPVAR7 AND '" + horafin + "' <= SZARPGN_CAMPVAR8 ORDER BY 3,4,1";
+@RequestMapping(value = "/HorarioP/{campus1}/{dia}/{hora_INICIO}/{hora_FIN}", method = RequestMethod.GET)
+public ResponseEntity getHorarioPla(@PathVariable String campus1,@PathVariable String dia, @PathVariable String hora_INICIO,@PathVariable String hora_FIN) throws SQLException {
+	System.out.println(campus1+dia+hora_INICIO+hora_FIN);
+    String wi = "WHERE SZARPGN_IDREPORT = 'AULAS_'||'" + campus1 + "' AND SLBRDEF_BLDG_CODE = SZARPGN_CAMPVAR3 AND SLBRDEF_ROOM_NUMBER = SZARPGN_CAMPVAR4 AND SLBRDEF_RMST_CODE = 'AC' AND SLBRDEF_ROOM_TYPE = 'C' AND '" + dia + "' IS NOT NULL AND SZARPGN_CAMPVAR7 = '" + hora_INICIO + "' AND SZARPGN_CAMPVAR8 = '" + hora_FIN + "' ";
     List<HorarioPlaVo> horarioPlan = horarioPla.getHorarioPla(wi);
+    
+    System.out.println(wi);
     return new ResponseEntity(horarioPlan, HttpStatus.OK);
 }
 }

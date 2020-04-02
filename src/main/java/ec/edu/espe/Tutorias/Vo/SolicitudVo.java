@@ -79,7 +79,7 @@ public class SolicitudVo {
     }
     public List<HorarioPlaVo> getHorarioPla(String q) throws SQLException {
     	String selecHorarioPla = "SELECT DISTINCT SZARPGN_CAMPVAR3||' - '||SZARPGN_CAMPVAR4 AS AULA, SZARPGN_CAMPVAR7||' - '||SZARPGN_CAMPVAR8 AS HORARIO, SZARPGN_CAMPVAR7 AS HORA_INICIO, SZARPGN_CAMPVAR8 AS HORA_FIN";
-    	String whereHorarioPla = "";
+    	String whereHorarioPla = "ORDER BY 3,4,1";
     	return jdbcTemplate.query(selecHorarioPla + horario + q + whereHorarioPla, new BeanPropertyRowMapper<>(HorarioPlaVo.class));
     	
     	
