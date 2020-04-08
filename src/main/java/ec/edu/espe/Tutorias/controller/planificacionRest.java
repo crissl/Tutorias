@@ -19,19 +19,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ec.edu.espe.Tutorias.dao.asistenciaRepository;
-import ec.edu.espe.Tutorias.dao.planificacionRepository;
+import ec.edu.espe.Tutorias.dao.AsistenciaRepository;
+import ec.edu.espe.Tutorias.dao.PlanificacionRepository;
 import ec.edu.espe.Tutorias.model.Asistencia;
 import ec.edu.espe.Tutorias.model.Planificacion;
 import ec.edu.espe.Tutorias.util.Mensaje;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/tut")
-public class planificacionRest {
+@RequestMapping("/tutoring")
+public class PlanificacionRest {
 
     @Autowired
-    private planificacionRepository planificacionRep;
+    private PlanificacionRepository planificacionRep;
     private final Mensaje msg = new Mensaje();
 
     @Autowired
@@ -39,10 +39,10 @@ public class planificacionRest {
     @Autowired
     private SolicitudVo confirmacionAsi;
     @Autowired
-    private asistenciaRepository asistenciaRep;
+    private AsistenciaRepository asistenciaRep;
     
     // funcion para listar un formulario
-    @RequestMapping(value = "/segu1", method = RequestMethod.GET)
+    @RequestMapping(value = "/listarPlanificacion", method = RequestMethod.GET)
     public ResponseEntity<Planificacion> listarPlanificacion() throws SQLException {
         List<Planificacion> tutorias = planificacionRep.findallPlanifica();
         if (tutorias.isEmpty()) {
@@ -54,7 +54,7 @@ public class planificacionRest {
 
 
     //metodo agregar solicitud de 
-    @RequestMapping(value = "/segu", method = RequestMethod.POST)
+    @RequestMapping(value = "/crearPlanificacion", method = RequestMethod.POST)
     public ResponseEntity<Planificacion> crearPlanificacion(@Valid @RequestBody Planificacion usuario) {
         Planificacion planif = new Planificacion();
         int ultimo = planificacionRep.findTopByOrderByIdDesc().getId() + 1;

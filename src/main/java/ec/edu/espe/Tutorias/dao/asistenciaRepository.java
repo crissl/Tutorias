@@ -10,7 +10,7 @@ import ec.edu.espe.Tutorias.model.Asistencia;
 
 
 @Repository
-public interface asistenciaRepository extends JpaRepository<Asistencia, Long>{
+public interface AsistenciaRepository extends JpaRepository<Asistencia, Long>{
 	 @Query(value = "SELECT * FROM UZTASISTENTES order by UZTASISTENTES_CODIGO", nativeQuery = true)
 	 List<Asistencia> findallAsiste();
          //List<Planificacion> findTopByOrderBy();

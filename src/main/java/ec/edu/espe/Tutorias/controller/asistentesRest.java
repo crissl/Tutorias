@@ -21,33 +21,33 @@ import ec.edu.espe.Tutorias.Vo.HorarioPlaVo;
 import ec.edu.espe.Tutorias.Vo.HorarioVo;
 import ec.edu.espe.Tutorias.Vo.PlanificacionReforzamientoVo;
 import ec.edu.espe.Tutorias.Vo.SolicitudVo;
-import ec.edu.espe.Tutorias.dao.asistenciaRepository;
+import ec.edu.espe.Tutorias.dao.AsistenciaRepository;
 import ec.edu.espe.Tutorias.model.Asistencia;
 import ec.edu.espe.Tutorias.util.Mensaje;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/tut")
-public class asistentesRest  {
+@RequestMapping("/tutoring")
+public class AsistentesRest  {
 	
 	@Autowired
-    private asistenciaRepository asistenciaRep;
+    private AsistenciaRepository asistenciaRepository;
 	@Autowired
-	private SolicitudVo campusRep;
+	private SolicitudVo campusRepository;
 	@Autowired
-	private SolicitudVo horarioAsi;
+	private SolicitudVo horarioAsistencia;
 	@Autowired
 	private SolicitudVo nrcPlanificacion;
 	@Autowired
-	private SolicitudVo horarioPla;
+	private SolicitudVo horarioPlanificacion;
 
 
     private final Mensaje msg = new Mensaje();
 
  // funcion para listar un asistencia
-    @RequestMapping(value = "/seguA", method = RequestMethod.GET)
+    @RequestMapping(value = "/listarAsistencia", method = RequestMethod.GET)
     public ResponseEntity<Asistencia> listarAsistencia() throws SQLException {
-        List<Asistencia> asistencias = asistenciaRep.findallAsiste();
+        List<Asistencia> asistencias = asistenciaRepository.findallAsiste();
        if (asistencias.isEmpty()) {
             return new ResponseEntity(msg.notfound(), HttpStatus.OK);
         } else {
@@ -67,22 +67,22 @@ public class asistentesRest  {
 
 //  Funcion Actualizar un asistencia
     
-@RequestMapping(value = "/segu2", method = RequestMethod.PUT)
+@RequestMapping(value = "/actualizarAsistencia", method = RequestMethod.PUT)
 public ResponseEntity<Asistencia> actualizarAsistencia(@Valid @RequestBody  Asistencia asistencia) throws SQLException {
-     asistenciaRep.save(asistencia);
+     asistenciaRepository.save(asistencia);
      return new ResponseEntity(msg.update(), HttpStatus.OK);
      }
 
-@RequestMapping(value = "/campus", method = RequestMethod.GET)
+@RequestMapping(value = "/getCampus", method = RequestMethod.GET)
 public ResponseEntity getCampus () throws SQLException {
     String wi = "  WHERE SLBRDEF_BLDG_CODE = SLBBLDG_BLDG_CODE ";
-    List<CampusVo> campus = campusRep.getCampus(wi);
+    List<CampusVo> campus = campusRepository.getCampus(wi);
     return new ResponseEntity(campus, HttpStatus.OK);
 }
-@RequestMapping(value = "/Horario/{campus}/{dia}", method = RequestMethod.GET)
+@RequestMapping(value = "/horario/{campus}/{dia}", method = RequestMethod.GET)
 public ResponseEntity getHorario(@PathVariable String campus, String dia) throws SQLException {
     String wi = "WHERE SZARPGN_IDREPORT = 'AULAS_'||'" + campus + "' AND SLBRDEF_BLDG_CODE = SZARPGN_CAMPVAR3 AND SLBRDEF_ROOM_NUMBER = SZARPGN_CAMPVAR4 AND SLBRDEF_RMST_CODE = 'AC' AND SLBRDEF_ROOM_TYPE = 'C' AND '" + dia + "' IS NOT NULL ORDER BY 3,4,1";
-    List<HorarioVo> horario = horarioAsi.getHorario(wi);
+    List<HorarioVo> horario = horarioAsistencia.getHorario(wi);
     return new ResponseEntity(horario, HttpStatus.OK);
 }
 @RequestMapping(value = "/planificaionReforzamiento/{pidm}", method = RequestMethod.GET)
@@ -103,11 +103,11 @@ public ResponseEntity getPlanificaionR(@PathVariable String pidm) throws SQLExce
     List<PlanificacionReforzamientoVo> nrcPlanif = nrcPlanificacion.getPlanificaionR(wi);
     return new ResponseEntity(nrcPlanif, HttpStatus.OK);
 }
-@RequestMapping(value = "/HorarioP/{campus1}/{dia}/{hora_INICIO}/{hora_FIN}", method = RequestMethod.GET)
-public ResponseEntity getHorarioPla(@PathVariable String campus1,@PathVariable String dia, @PathVariable String hora_INICIO,@PathVariable String hora_FIN) throws SQLException {
+@RequestMapping(value = "/horarioPlanificacion/{campus1}/{dia}/{hora_INICIO}/{hora_FIN}", method = RequestMethod.GET)
+public ResponseEntity getHorarioPlanificacion(@PathVariable String campus1,@PathVariable String dia, @PathVariable String hora_INICIO,@PathVariable String hora_FIN) throws SQLException {
 	System.out.println(campus1+dia+hora_INICIO+hora_FIN);
     String wi = "WHERE SZARPGN_IDREPORT = 'AULAS_'||'" + campus1 + "' AND SLBRDEF_BLDG_CODE = SZARPGN_CAMPVAR3 AND SLBRDEF_ROOM_NUMBER = SZARPGN_CAMPVAR4 AND SLBRDEF_RMST_CODE = 'AC' AND SLBRDEF_ROOM_TYPE = 'C' AND '" + dia + "' IS NOT NULL AND SZARPGN_CAMPVAR7 = '" + hora_INICIO + "' AND SZARPGN_CAMPVAR8 = '" + hora_FIN + "' ";
-    List<HorarioPlaVo> horarioPlan = horarioPla.getHorarioPla(wi);
+    List<HorarioPlaVo> horarioPlan = horarioPlanificacion.getHorarioPlanificacion(wi);
     
     System.out.println(wi);
     return new ResponseEntity(horarioPlan, HttpStatus.OK);
