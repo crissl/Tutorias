@@ -31,6 +31,9 @@ public class SolicitudVo {
 
     private static String reforzamiento = " FROM SIRASGN, SSBSECT, SCBCRSE A, SSRMEET ";
     
+    private static String Asistencias = "FROM UTIC.UZTASISTENTES ";
+
+    
 
     
     
@@ -85,4 +88,12 @@ public class SolicitudVo {
     	
     }
 
+    
+    public List<AsistentesVo> getRegistroAsistencia(String q) throws SQLException {
+    	String selecRegistroAsistencia = "SELECT SPRIDEN_PIDM, UZTASISTENTES_ID, UZTASISTENTES_ESTUDIANTE, UZTASISTENTES_EMAIL, UZTASISTENTES_CEDULA";
+    	String whereRegistroAsistencia = "AND CODIGO_UZGTFORMULARIOS =3";
+    	return jdbcTemplate.query(selecRegistroAsistencia + Asistencias + q + whereRegistroAsistencia, new BeanPropertyRowMapper<>(AsistentesVo.class));
+    	
+    	
+    }
 }

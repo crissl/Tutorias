@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ec.edu.espe.Tutorias.Vo.AsistentesVo;
 import ec.edu.espe.Tutorias.Vo.CampusVo;
 import ec.edu.espe.Tutorias.Vo.ConfirmacionAsistenciaVo;
 import ec.edu.espe.Tutorias.Vo.HorarioPlaVo;
@@ -40,6 +41,8 @@ public class Asistentes  {
 	private SolicitudVo nrcPlanificacion;
 	@Autowired
 	private SolicitudVo horarioPlanificacion;
+	@Autowired
+	private SolicitudVo registroAsistencia;
 
 
     private final Mensaje msg = new Mensaje();
@@ -108,6 +111,14 @@ public ResponseEntity getHorarioPlanificacion(@PathVariable String campus1,@Path
 	System.out.println(campus1+dia+hora_INICIO+hora_FIN);
     String wi = "WHERE SZARPGN_IDREPORT = 'AULAS_'||'" + campus1 + "' AND SLBRDEF_BLDG_CODE = SZARPGN_CAMPVAR3 AND SLBRDEF_ROOM_NUMBER = SZARPGN_CAMPVAR4 AND SLBRDEF_RMST_CODE = 'AC' AND SLBRDEF_ROOM_TYPE = 'C' AND '" + dia + "' IS NOT NULL AND SZARPGN_CAMPVAR7 = '" + hora_INICIO + "' AND SZARPGN_CAMPVAR8 = '" + hora_FIN + "' ";
     List<HorarioPlaVo> horarioPlan = horarioPlanificacion.getHorarioPlanificacion(wi);
+    
+    System.out.println(wi);
+    return new ResponseEntity(horarioPlan, HttpStatus.OK);
+}
+@RequestMapping(value = "/registroAsistencia/{pidm}", method = RequestMethod.GET)
+public ResponseEntity getRegistroAsistencia(@PathVariable String pidm) throws SQLException {
+    String wi = "WHERE CODIGO_UZTPLANIF ="+ pidm +" ";
+    List<AsistentesVo> horarioPlan = registroAsistencia.getRegistroAsistencia(wi);
     
     System.out.println(wi);
     return new ResponseEntity(horarioPlan, HttpStatus.OK);

@@ -1,0 +1,67 @@
+package ec.edu.espe.Tutorias.Vo;
+
+import java.io.Serializable;
+
+public class AsistentesVo implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private int SPRIDEN_PIDM;
+	private int UZTASISTENTES_ID;
+	private String UZTASISTENTES_ESTUDIANTE;
+	private String UZTASISTENTES_EMAIL;
+	private String UZTASISTENTES_CEDULA;
+	
+	public AsistentesVo() {
+		
+	}
+
+    public AsistentesVo(int SPRIDEN_PIDM, int UZTASISTENTES_ID, String UZTASISTENTES_ESTUDIANTE, String UZTASISTENTES_EMAIL, String UZTASISTENTES_CEDULA ) {
+    	this.SPRIDEN_PIDM=SPRIDEN_PIDM;
+    	this.UZTASISTENTES_ID=UZTASISTENTES_ID;
+    	this.UZTASISTENTES_ESTUDIANTE=UZTASISTENTES_ESTUDIANTE;
+    	this.UZTASISTENTES_EMAIL=UZTASISTENTES_EMAIL;
+    	this.UZTASISTENTES_CEDULA=UZTASISTENTES_CEDULA;
+		
+	}
+
+	public int getSPRIDEN_PIDM() {
+		return SPRIDEN_PIDM;
+	}
+
+	public void setSPRIDEN_PIDM(int sPRIDEN_PIDM) {
+		SPRIDEN_PIDM = sPRIDEN_PIDM;
+	}
+
+	public int getUZTASISTENTES_ID() {
+		return UZTASISTENTES_ID;
+	}
+
+	public void setUZTASISTENTES_ID(int uZTASISTENTES_ID) {
+		UZTASISTENTES_ID = uZTASISTENTES_ID;
+	}
+
+	public String getUZTASISTENTES_ESTUDIANTE() {
+		return UZTASISTENTES_ESTUDIANTE;
+	}
+
+	public void setUZTASISTENTES_ESTUDIANTE(String uZTASISTENTES_ESTUDIANTE) {
+		UZTASISTENTES_ESTUDIANTE = uZTASISTENTES_ESTUDIANTE;
+	}
+
+	public String getUZTASISTENTES_EMAIL() {
+		return UZTASISTENTES_EMAIL;
+	}
+
+	public void setUZTASISTENTES_EMAIL(String uZTASISTENTES_EMAIL) {
+		UZTASISTENTES_EMAIL = uZTASISTENTES_EMAIL;
+	}
+
+	public String getUZTASISTENTES_CEDULA() {
+		return UZTASISTENTES_CEDULA;
+	}
+
+	public void setUZTASISTENTES_CEDULA(String uZTASISTENTES_CEDULA) {
+		UZTASISTENTES_CEDULA = uZTASISTENTES_CEDULA;
+	}
+
+}
