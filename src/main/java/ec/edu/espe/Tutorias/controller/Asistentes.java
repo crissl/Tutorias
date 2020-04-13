@@ -115,9 +115,9 @@ public ResponseEntity getHorarioPlanificacion(@PathVariable String campus1,@Path
     System.out.println(wi);
     return new ResponseEntity(horarioPlan, HttpStatus.OK);
 }
-@RequestMapping(value = "/registroAsistencia/{pidm}", method = RequestMethod.GET)
-public ResponseEntity getRegistroAsistencia(@PathVariable String pidm) throws SQLException {
-    String wi = "WHERE CODIGO_UZTPLANIF ="+ pidm +" ";
+@RequestMapping(value = "/registroAsistencia/{codigoPlanificacion}", method = RequestMethod.GET)
+public ResponseEntity getRegistroAsistencia(@PathVariable int codigoPlanificacion) throws SQLException {
+    String wi = "WHERE CODIGO_UZTPLANIF ="+ codigoPlanificacion +" ";
     List<AsistentesVo> horarioPlan = registroAsistencia.getRegistroAsistencia(wi);
     
     System.out.println(wi);

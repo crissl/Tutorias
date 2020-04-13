@@ -5,39 +5,38 @@ import java.io.Serializable;
 public class AsistentesVo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private int SPRIDEN_PIDM;
-	private int UZTASISTENTES_ID;
+	private String UZTASISTENTES_CEDULA;
+	private String UZTASISTENTES_ID;
 	private String UZTASISTENTES_ESTUDIANTE;
 	private String UZTASISTENTES_EMAIL;
-	private String UZTASISTENTES_CEDULA;
+	private String UZTASISTENTES_ESTADO;
 	
 	public AsistentesVo() {
 		
 	}
 
-    public AsistentesVo(int SPRIDEN_PIDM, int UZTASISTENTES_ID, String UZTASISTENTES_ESTUDIANTE, String UZTASISTENTES_EMAIL, String UZTASISTENTES_CEDULA ) {
-    	this.SPRIDEN_PIDM=SPRIDEN_PIDM;
+    public AsistentesVo(String UZTASISTENTES_CEDULA, String UZTASISTENTES_ID, String UZTASISTENTES_ESTUDIANTE, String UZTASISTENTES_EMAIL, String UZTASISTENTES_ESTADO  ) {
+    	this.UZTASISTENTES_CEDULA=UZTASISTENTES_CEDULA;
     	this.UZTASISTENTES_ID=UZTASISTENTES_ID;
     	this.UZTASISTENTES_ESTUDIANTE=UZTASISTENTES_ESTUDIANTE;
     	this.UZTASISTENTES_EMAIL=UZTASISTENTES_EMAIL;
-    	this.UZTASISTENTES_CEDULA=UZTASISTENTES_CEDULA;
 		
 	}
 
-	public int getSPRIDEN_PIDM() {
-		return SPRIDEN_PIDM;
-	}
-
-	public void setSPRIDEN_PIDM(int sPRIDEN_PIDM) {
-		SPRIDEN_PIDM = sPRIDEN_PIDM;
-	}
-
-	public int getUZTASISTENTES_ID() {
+	public String getUZTASISTENTES_ID() {
 		return UZTASISTENTES_ID;
 	}
 
-	public void setUZTASISTENTES_ID(int uZTASISTENTES_ID) {
+	public void setUZTASISTENTES_ID(String uZTASISTENTES_ID) {
 		UZTASISTENTES_ID = uZTASISTENTES_ID;
+	}
+
+	public String getUZTASISTENTES_ESTADO() {
+		return UZTASISTENTES_ESTADO;
+	}
+
+	public void setUZTASISTENTES_ESTADO(String uZTASISTENTES_ESTADO) {
+		UZTASISTENTES_ESTADO = uZTASISTENTES_ESTADO;
 	}
 
 	public String getUZTASISTENTES_ESTUDIANTE() {
