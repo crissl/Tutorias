@@ -95,7 +95,7 @@ public ResponseEntity getPlanificaionR(@PathVariable String pidm) throws SQLExce
     		"                AND SIRASGN_CRN = SSBSECT_CRN\r\n" + 
     		"                AND SSRMEET_TERM_CODE = SSBSECT_TERM_CODE\r\n" + 
     		"                AND SSRMEET_CRN = SSBSECT_CRN       \r\n" + 
-    		"                AND SSRMEET_MTYP_CODE = 'TUTO' \r\n" + 
+//    		"                AND SSRMEET_MTYP_CODE = 'TUTO' \r\n" + 
     		//"                AND SSBSECT_PTRM_END_DATE >= SYSDATE\r\n" + 
     		"                AND SSBSECT_SUBJ_CODE = A.SCBCRSE_SUBJ_CODE\r\n" + 
     		"                AND SSBSECT_CRSE_NUMB = A.SCBCRSE_CRSE_NUMB\r\n" + 
