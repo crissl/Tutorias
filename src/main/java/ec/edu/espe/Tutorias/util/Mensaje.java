@@ -33,7 +33,7 @@ public class Mensaje {
 
 	 public String notfound() {
 
-	  String msj = "No se encontraron resultados";
+	  String msj = "No se encontraron resultados seleccione otro";
 	  mensaje.setMensaje(msj);
 	  return gson.toJson(mensaje);
 	 }

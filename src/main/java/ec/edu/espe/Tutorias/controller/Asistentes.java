@@ -57,15 +57,14 @@ public class Asistentes {
         }
     }
     //metodo agregar confirmados
-    //@RequestMapping(value = "/seguA", method = RequestMethod.POST)
-    //public ResponseEntity<Asistencia> crearAsistencia(@Valid @RequestBody Asistencia asistio) {
-    //	Asistencia asiste = new Asistencia();
-    //    int ultimo = asistenciaRep.findTopByOrderByIdDesc().getId() + 1;
-    //    asistio.setId(ultimo);
-    //planif.setId(ultimo);
-    //   asistenciaRep.save(asistio);
-    //    return new ResponseEntity(msg.add(), HttpStatus.CREATED);
-    //  }
+    @RequestMapping(value = "/crearAsistencia", method = RequestMethod.POST)
+    public ResponseEntity<Asistencia> crearAsistencia(@Valid @RequestBody Asistencia asistio) {
+    	Asistencia asiste = new Asistencia();
+        int ultimo = asistenciaRepository.findTopByOrderByIdDesc().getId() + 1;
+        asistio.setId(ultimo);
+       asistenciaRepository.save(asistio);
+        return new ResponseEntity(msg.add(), HttpStatus.CREATED);
+      }
 
 //  Funcion Actualizar un asistencia
     @RequestMapping(value = "/actualizarAsistencia", method = RequestMethod.PUT)
@@ -82,7 +81,7 @@ public class Asistentes {
     }
 
     @RequestMapping(value = "/horario/{campus}/{dia}", method = RequestMethod.GET)
-    public ResponseEntity getHorario(@PathVariable String campus, String dia) throws SQLException {
+    public ResponseEntity getHorario(@PathVariable String campus, @PathVariable String dia) throws SQLException {
         String wi = "WHERE SZARPGN_IDREPORT = 'AULAS_'||'" + campus + "' AND SLBRDEF_BLDG_CODE = SZARPGN_CAMPVAR3 AND SLBRDEF_ROOM_NUMBER = SZARPGN_CAMPVAR4 AND SLBRDEF_RMST_CODE = 'AC' AND SLBRDEF_ROOM_TYPE = 'C' AND '" + dia + "' IS NOT NULL ORDER BY 3,4,1";
         List<HorarioVo> horario = horarioAsistencia.getHorario(wi);
 
