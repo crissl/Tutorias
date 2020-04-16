@@ -25,7 +25,7 @@ public class Asistencia implements Serializable {
 	@Basic(optional = false)
 	@Column(name = " CODIGO_UZTPLANIF")
 	@NotNull
-	private int codigoPlanifiacion;
+	private int codigoPlanificacion;
 
 	@Basic(optional = false)
 	@Column(name = " CODIGO_UZGTFORMULARIOS")
@@ -96,11 +96,11 @@ public class Asistencia implements Serializable {
 	}
 
 	public int getCodigoPlanifiacion() {
-		return codigoPlanifiacion;
+		return codigoPlanificacion;
 	}
 
 	public void setCodigoPlanifiacion(int codigoPlanifiacion) {
-		this.codigoPlanifiacion = codigoPlanifiacion;
+		this.codigoPlanificacion = codigoPlanifiacion;
 	}
 
 	public int getCodigoFormularios() {

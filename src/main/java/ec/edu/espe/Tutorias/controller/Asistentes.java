@@ -130,4 +130,14 @@ public class Asistentes {
         System.out.println(wi);
         return new ResponseEntity(horarioPlan, HttpStatus.OK);
     }
+    
+    //Funcion que me retorna una asistencia de un estudiante de esa planificacion
+    
+    @RequestMapping(value = "/planificacionpidm/{planificacion}/{pidm}", method = RequestMethod.GET)
+    public ResponseEntity getRegistroAsistenci(@PathVariable int planificacion,@PathVariable int pidm) throws SQLException {
+        Asistencia usuario = asistenciaRepository.findByCodigoPlanificacionAndPidm(planificacion, pidm);
+       return new ResponseEntity(usuario, HttpStatus.OK);
+    }
+    
+    
 }
