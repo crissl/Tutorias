@@ -153,6 +153,41 @@ public class Planificaciones {
         List<ConvocadosVo> ConvocarS = convocados.getConvocadosSolicitados(wi);
         return new ResponseEntity(ConvocarS, HttpStatus.OK);
     }
+    @RequestMapping(value = "/convocadosTodosAcompanamiento/{pidm}", method = RequestMethod.GET)
+    public ResponseEntity getConvocadosTodosAcompanamiento(@PathVariable int pidm) throws SQLException {
+        String wi ="WHERE GOREMAL.GOREMAL_PIDM = SGRADVR_PIDM\r\n" + 
+        		"AND GOREMAL.GOREMAL_EMAL_CODE = 'STAN'), '') AS CORREO_INSTITUCIONAL,\r\n" + 
+        		"NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)\r\n" + 
+        		"FROM GOREMAL\r\n" + 
+        		"WHERE GOREMAL.GOREMAL_PIDM = SGRADVR_PIDM\r\n" + 
+        		"AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'), '') AS CORREO_PERSONAL\r\n" + 
+        		"FROM SGRADVR, SPBPERS\r\n" + 
+        		"WHERE SGRADVR_ADVR_PIDM = " + pidm + "\r\n" + 
+        		"AND SGRADVR_ADVR_CODE = 'TACO'\r\n" + 
+        		"AND SGRADVR_PIDM = SPBPERS_PIDM";
+        List<ConvocadosVo> ConvocarST = convocados.getConvocadosTodosAcompanamiento(wi);
+        return new ResponseEntity(ConvocarST, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/convocadosSolicitadosAcompanamiento/{pidm}", method = RequestMethod.GET)
+    public ResponseEntity getConvocadosSolicitadosAcompanamiento(@PathVariable int pidm) throws SQLException {
+        String wi ="WHERE GOREMAL.GOREMAL_PIDM = SGRADVR_PIDM\r\n" + 
+        		"AND GOREMAL.GOREMAL_EMAL_CODE = 'STAN'), '') AS CORREO_INSTITUCIONAL,\r\n" + 
+        		"NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)\r\n" + 
+        		"FROM GOREMAL\r\n" + 
+        		"WHERE GOREMAL.GOREMAL_PIDM = SGRADVR_PIDM\r\n" + 
+        		"AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'), '') AS CORREO_PERSONAL\r\n" + 
+        		"FROM UTIC.UZTPLANIF, SATURN.SGRADVR, SATURN.SPBPERS\r\n" + 
+        		"WHERE SGRADVR_ADVR_PIDM = " + pidm + "\r\n" + 
+        		"AND SGRADVR_ADVR_CODE = 'TACO'\r\n" + 
+        		"AND UZTPLANIF_TIPOPERSONA = 'ESTUDIANTE'\r\n" + 
+        		"AND SPRIDEN_PIDM = SGRADVR_PIDM\r\n" + 
+        		"AND SPRIDEN_PIDM = SPBPERS_PIDM\r\n" + 
+        		"AND UZTPLANIF_TITOTUTORIA = 'ACOMPAÑAMIENTO'\r\n" + 
+        		"AND UZTPLANIF_ESTADO = 'A'";
+        List<ConvocadosVo> ConvocarSA = convocados.getConvocadosSolicitadosAcompanamiento(wi);
+        return new ResponseEntity(ConvocarSA, HttpStatus.OK);
+    }
     
     
 }

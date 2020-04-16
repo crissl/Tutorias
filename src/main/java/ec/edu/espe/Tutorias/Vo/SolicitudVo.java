@@ -111,9 +111,25 @@ public class SolicitudVo {
   	
     }
     public List<ConvocadosVo> getConvocadosSolicitados(String q) throws SQLException {
-    	String selecConvocadosTodos = "SELECT DISTINCT SPRIDEN_PIDM AS PIDM, SUBSTR(f_getspridenid(SPRIDEN_PIDM),1,12) AS ID, SPBPERS_SSN AS CEDULA, SUBSTR(f_format_name(SPRIDEN_PIDM,'LFMI'),1,30) AS NOMBRES, NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)";
-    	String whereConvocadosTodos = "";
-    	return jdbcTemplate.query(selecConvocadosTodos + convocados + q + whereConvocadosTodos, new BeanPropertyRowMapper<>(ConvocadosVo.class));
+    	String selecConvocadosSolicitados = "SELECT DISTINCT SPRIDEN_PIDM AS PIDM, SUBSTR(f_getspridenid(SPRIDEN_PIDM),1,12) AS ID, SPBPERS_SSN AS CEDULA, SUBSTR(f_format_name(SPRIDEN_PIDM,'LFMI'),1,30) AS NOMBRES, NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)";
+    	String whereConvocadosSolicitados = "";
+    	return jdbcTemplate.query(selecConvocadosSolicitados + convocados + q + whereConvocadosSolicitados, new BeanPropertyRowMapper<>(ConvocadosVo.class));
+    	
+  	
+    }
+    
+    public List<ConvocadosVo> getConvocadosTodosAcompanamiento(String q) throws SQLException {
+    	String selecConvocadosTodosAcompanamiento= "SELECT DISTINCT SPBPERS_PIDM AS PIDM, SUBSTR(f_getspridenid(SGRADVR_PIDM),1,12) AS ID, SPBPERS_SSN AS CEDULA, SUBSTR(f_format_name(SGRADVR_PIDM,'LFMI'),1,30) AS NOMBRES, NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)";
+    	String whereConvocadosTodosAcompanamiento = "";
+    	return jdbcTemplate.query(selecConvocadosTodosAcompanamiento + convocados + q + whereConvocadosTodosAcompanamiento, new BeanPropertyRowMapper<>(ConvocadosVo.class));
+    	
+  	
+    }
+    
+    public List<ConvocadosVo> getConvocadosSolicitadosAcompanamiento(String q) throws SQLException {
+    	String selecConvocadosSolicitadosAcompanamiento= "SELECT DISTINCT SPRIDEN_PIDM AS PIDM, SUBSTR(f_getspridenid(SPRIDEN_PIDM),1,12) AS ID, SPBPERS_SSN AS CEDULA, SUBSTR(f_format_name(SPRIDEN_PIDM,'LFMI'),1,30) AS NOMBRES, NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)";
+    	String whereConvocadosSolicitadosAcompanamiento = "";
+    	return jdbcTemplate.query(selecConvocadosSolicitadosAcompanamiento + convocados + q + whereConvocadosSolicitadosAcompanamiento, new BeanPropertyRowMapper<>(ConvocadosVo.class));
     	
   	
     }
