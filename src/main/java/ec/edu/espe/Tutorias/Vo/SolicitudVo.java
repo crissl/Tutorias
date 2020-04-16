@@ -33,7 +33,7 @@ public class SolicitudVo {
     
     private static String Asistencias = " FROM UTIC.UZTASISTENTES ";
 
-    
+    private static String convocados = " FROM GOREMAL ";
 
     
     
@@ -94,6 +94,27 @@ public class SolicitudVo {
     	String whereRegistroAsistencia = "AND CODIGO_UZGTFORMULARIOS =3";
     	return jdbcTemplate.query(selecRegistroAsistencia + Asistencias + q + whereRegistroAsistencia, new BeanPropertyRowMapper<>(AsistentesVo.class));
     	
+   	
+    }
+    public List<ConvocadosVo> getConvocadosMenos(String q) throws SQLException {
+    	String selecConvocadosMenos = "SELECT DISTINCT SFRSTCR_PIDM AS PIDM, SUBSTR(f_getspridenid(SFRSTCR_PIDM),1,12) AS ID, SPBPERS_SSN AS CEDULA, SUBSTR(f_format_name(SFRSTCR_PIDM,'LFMI'),1,30) AS NOMBRES, NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)";
+    	String whereConvocadosMenos = "";
+    	return jdbcTemplate.query(selecConvocadosMenos + convocados + q + whereConvocadosMenos, new BeanPropertyRowMapper<>(ConvocadosVo.class));
     	
+   	
+    }
+    public List<ConvocadosVo> getConvocadosTodos(String q) throws SQLException {
+    	String selecConvocadosTodos = "SELECT DISTINCT SFRSTCR_PIDM AS PIDM, SUBSTR(f_getspridenid(SFRSTCR_PIDM),1,12) AS ID, SPBPERS_SSN AS CEDULA, SUBSTR(f_format_name(SFRSTCR_PIDM,'LFMI'),1,30) AS NOMBRES, NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)";
+    	String whereConvocadosTodos = "";
+    	return jdbcTemplate.query(selecConvocadosTodos + convocados + q + whereConvocadosTodos, new BeanPropertyRowMapper<>(ConvocadosVo.class));
+    	
+  	
+    }
+    public List<ConvocadosVo> getConvocadosSolicitados(String q) throws SQLException {
+    	String selecConvocadosTodos = "SELECT DISTINCT SPRIDEN_PIDM AS PIDM, SUBSTR(f_getspridenid(SPRIDEN_PIDM),1,12) AS ID, SPBPERS_SSN AS CEDULA, SUBSTR(f_format_name(SPRIDEN_PIDM,'LFMI'),1,30) AS NOMBRES, NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)";
+    	String whereConvocadosTodos = "";
+    	return jdbcTemplate.query(selecConvocadosTodos + convocados + q + whereConvocadosTodos, new BeanPropertyRowMapper<>(ConvocadosVo.class));
+    	
+  	
     }
 }

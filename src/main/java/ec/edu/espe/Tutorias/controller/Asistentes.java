@@ -126,7 +126,7 @@ public class Asistentes {
     public ResponseEntity getRegistroAsistencia(@PathVariable int codigoPlanificacion) throws SQLException {
         String wi = "WHERE CODIGO_UZTPLANIF =" + codigoPlanificacion + " ";
         List<AsistentesVo> horarioPlan = registroAsistencia.getRegistroAsistencia(wi);
-
+        
         System.out.println(wi);
         return new ResponseEntity(horarioPlan, HttpStatus.OK);
     }

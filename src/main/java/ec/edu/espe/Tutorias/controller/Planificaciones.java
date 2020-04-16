@@ -1,6 +1,7 @@
 package ec.edu.espe.Tutorias.controller;
 
 import ec.edu.espe.Tutorias.Vo.ConfirmacionAsistenciaVo;
+import ec.edu.espe.Tutorias.Vo.ConvocadosVo;
 import ec.edu.espe.Tutorias.Vo.NrcSolicitudVo;
 import ec.edu.espe.Tutorias.Vo.NrcVo;
 import ec.edu.espe.Tutorias.Vo.SolicitudVo;
@@ -39,7 +40,10 @@ public class Planificaciones {
     @Autowired
     private SolicitudVo confirmacionAsi;
     @Autowired
+    private SolicitudVo convocados;
+    @Autowired
     private AsistenciaRepository asistenciaRepository;
+    
     
     // funcion para listar un formulario
     @RequestMapping(value = "/listarPlanificacion", method = RequestMethod.GET)
@@ -96,4 +100,60 @@ public class Planificaciones {
         List<ConfirmacionAsistenciaVo> Confirmar = confirmacionAsi.getConfirmar(wi);
         return new ResponseEntity(Confirmar, HttpStatus.OK);
     }
+    @RequestMapping(value = "/convocadosMeno14/{nrc}/{periodo}", method = RequestMethod.GET)
+    public ResponseEntity getConvocadosMenos(@PathVariable int nrc, @PathVariable String periodo) throws SQLException {
+        String wi ="WHERE GOREMAL.GOREMAL_PIDM = SFRSTCR_PIDM\r\n" + 
+        		"                                AND GOREMAL.GOREMAL_EMAL_CODE = 'STAN'), '') AS CORREO_INSTITUCIONAL,\r\n" + 
+        		"                                NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)\r\n" + 
+        		"                                FROM GOREMAL\r\n" + 
+        		"                                WHERE GOREMAL.GOREMAL_PIDM = SFRSTCR_PIDM\r\n" + 
+        		"                                AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'), '') AS CORREO_PERSONAL\r\n" + 
+        		"                                FROM SFRSTCR, SPBPERS\r\n" + 
+        		"                                WHERE SFRSTCR_TERM_CODE =  '" + periodo + "'\r\n" + 
+        		"                                AND SFRSTCR_CRN = " + nrc + "\r\n" + 
+        		"                                AND SFRSTCR_PIDM = SPBPERS_PIDM\r\n" + 
+        		"                                AND SFRSTCR_PIDM IN (SELECT DISTINCT SHRMRKS_PIDM\r\n" + 
+        		"                                FROM SHRMRKS\r\n" + 
+        		"                                WHERE SHRMRKS_TERM_CODE =  '" + periodo + "'\r\n" + 
+        		"                                AND SHRMRKS_CRN = " + nrc + "\r\n" + 
+        		"                                AND SHRMRKS_SCORE <= 14) ";
+        List<ConvocadosVo> Convocar = convocados.getConvocadosMenos(wi);
+        return new ResponseEntity(Convocar, HttpStatus.OK);
+    }
+    @RequestMapping(value = "/convocadosTodos/{nrc}/{periodo}", method = RequestMethod.GET)
+    public ResponseEntity getConvocadosTodos(@PathVariable int nrc, @PathVariable String periodo) throws SQLException {
+        String wi ="WHERE GOREMAL.GOREMAL_PIDM = SFRSTCR_PIDM\r\n" + 
+        		"                                AND GOREMAL.GOREMAL_EMAL_CODE = 'STAN'),'') AS CORREO_INSTITUCIONAL,\r\n" + 
+        		"                                NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)\r\n" + 
+        		"                                FROM GOREMAL\r\n" + 
+        		"                                WHERE GOREMAL.GOREMAL_PIDM = SFRSTCR_PIDM\r\n" + 
+        		"                                AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'),'') AS CORREO_PERSONAL\r\n" + 
+        		"                                FROM SFRSTCR, SPBPERS\r\n" + 
+        		"                                WHERE SFRSTCR_TERM_CODE = '" + periodo + "'\r\n" + 
+        		"                                AND SFRSTCR_CRN = " + nrc + "\r\n" + 
+        		"                                AND SFRSTCR_PIDM = SPBPERS_PIDM";
+        List<ConvocadosVo> ConvocarT = convocados.getConvocadosTodos(wi);
+        return new ResponseEntity(ConvocarT, HttpStatus.OK);
+    }
+    @RequestMapping(value = "/convocadosSolicitados/{nrc}/{periodo}", method = RequestMethod.GET)
+    public ResponseEntity getConvocadosSolicitados(@PathVariable int nrc, @PathVariable String periodo) throws SQLException {
+        String wi ="                                WHERE GOREMAL.GOREMAL_PIDM = SPRIDEN_PIDM\r\n" + 
+        		"                                AND GOREMAL.GOREMAL_EMAL_CODE = 'STAN'), '') AS CORREO_INSTITUCIONAL,\r\n" + 
+        		"                                NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)\r\n" + 
+        		"                                FROM GOREMAL\r\n" + 
+        		"                                WHERE GOREMAL.GOREMAL_PIDM = SPRIDEN_PIDM\r\n" + 
+        		"                                AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'), '') AS CORREO_PERSONAL\r\n" + 
+        		"                                FROM UTIC.UZTPLANIF, SPBPERS\r\n" + 
+        		"                                WHERE UZTPLANIF_TIPOPERSONA = 'ESTUDIANTE'\r\n" + 
+        		"                                AND UZTPLANIF_TITOTUTORIA = 'REFORZAMIENTO'\r\n" + 
+        		"                                AND UZTPLANIF_NRC = " + nrc + "\r\n" + 
+        		"                                AND UZTPLANIF_PERIODO = '" + periodo + "'\r\n" + 
+        		"                                AND UZTPLANIF_ESTADO = 'A'\r\n" + 
+        		"                                AND SPRIDEN_PIDM=SPBPERS_PIDM";
+        List<ConvocadosVo> ConvocarS = convocados.getConvocadosSolicitados(wi);
+        return new ResponseEntity(ConvocarS, HttpStatus.OK);
+    }
+    
+    
 }
+
