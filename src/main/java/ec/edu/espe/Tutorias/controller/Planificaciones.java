@@ -1,10 +1,15 @@
 package ec.edu.espe.Tutorias.controller;
 
+import ec.edu.espe.Tutorias.Vo.AlumnosAcompanamientoVo;
 import ec.edu.espe.Tutorias.Vo.ConfirmacionAsistenciaVo;
 import ec.edu.espe.Tutorias.Vo.ConvocadosVo;
 import ec.edu.espe.Tutorias.Vo.NrcSolicitudVo;
 import ec.edu.espe.Tutorias.Vo.NrcVo;
+import ec.edu.espe.Tutorias.Vo.SolicitadasAcompanamientoVo;
+import ec.edu.espe.Tutorias.Vo.SolicitadasReforzamientoVo;
 import ec.edu.espe.Tutorias.Vo.SolicitudVo;
+import ec.edu.espe.Tutorias.Vo.TutoriasPlanificadasVo;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -43,8 +48,12 @@ public class Planificaciones {
     private SolicitudVo convocados;
     @Autowired
     private AsistenciaRepository asistenciaRepository;
-    
-    
+    @Autowired
+    private SolicitudVo planificadas;
+    @Autowired
+    private SolicitudVo solicitadasAcompanamiento;
+    @Autowired
+    private SolicitudVo solicitadasReforzamiento;
     // funcion para listar un formulario
     @RequestMapping(value = "/listarPlanificacion", method = RequestMethod.GET)
     public ResponseEntity<Planificacion> listarPlanificacion() throws SQLException {
@@ -206,26 +215,31 @@ public class Planificaciones {
         		"AND T.SPRTELE_TELE_CODE = 'TM')), '') AS CELULAR \r\n" + 
         		"FROM SATURN.SGRADVR T, SATURN.SPBPERS P \r\n" + 
         		"WHERE T.SGRADVR_ADVR_PIDM = " + pidm + "\r\n" + 
-        		"AND T.SGRADVR_ADVR_CODE = 'TACO' \r\n" + 
+//        		"AND T.SGRADVR_ADVR_CODE = 'TACO' \r\n" + 
         		"AND T.SGRADVR_PIDM = P.SPBPERS_PIDM \r\n" + 
         		"ORDER BY NOMBRES ";
-        List<ConvocadosVo> AlumnosA = convocados.getAlumnosAcompanamiento(wi);
+        List<AlumnosAcompanamientoVo> AlumnosA = convocados.getAlumnosAcompanamiento(wi);
         return new ResponseEntity(AlumnosA, HttpStatus.OK);
     }
     
     @RequestMapping(value = "/TutoriasPlanificadas/{pidm}", method = RequestMethod.GET)
     public ResponseEntity getTutoriasPlanificadas(@PathVariable int pidm) throws SQLException {
         String wi ="WHERE A.SPRIDEN_PIDM = " + pidm + "";
-        List<ConvocadosVo> AlumnosA = convocados.getTutoriasPlanificadas(wi);
-        return new ResponseEntity(AlumnosA, HttpStatus.OK);
+        List<TutoriasPlanificadasVo> Planificadas = planificadas.getTutoriasPlanificadas(wi);
+        return new ResponseEntity(Planificadas, HttpStatus.OK);
     }
     @RequestMapping(value = "/SolicitadasAcompanamiento/{pidm}", method = RequestMethod.GET)
     public ResponseEntity getSolicitadasAcompanamiento(@PathVariable int pidm) throws SQLException {
         String wi ="WHERE T.SGRADVR_ADVR_PIDM = " + pidm + "";
-        List<ConvocadosVo> SolicitadasA = convocados.getSolicitadasAcompanamiento(wi);
+        List<SolicitadasAcompanamientoVo> SolicitadasA = solicitadasAcompanamiento.getSolicitadasAcompanamiento(wi);
         return new ResponseEntity(SolicitadasA, HttpStatus.OK);
     }
     
-    
+    @RequestMapping(value = "/SolicitadasReforzamiento/{pidm}", method = RequestMethod.GET)
+    public ResponseEntity getSolicitadasReforzamiento(@PathVariable int pidm) throws SQLException {
+        String wi ="WHERE T.SIRASGN_PIDM = " + pidm + "";
+        List<SolicitadasReforzamientoVo> SolicitadasA = solicitadasReforzamiento.getSolicitadasReforzamiento(wi);
+        return new ResponseEntity(SolicitadasA, HttpStatus.OK);
+    }
 }
 
