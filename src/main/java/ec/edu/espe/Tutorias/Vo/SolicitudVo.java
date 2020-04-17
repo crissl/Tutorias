@@ -34,8 +34,10 @@ public class SolicitudVo {
     private static String Asistencias = " FROM UTIC.UZTASISTENTES ";
 
     private static String convocados = " FROM GOREMAL ";
+ 
+    private static String tutoriasPlanifiacadas = " FROM UTIC.UZTASISTENTES A, UTIC.UZTPLANIF P ";  
 
-    
+    private static String tutoriasSolicitadas = " FROM UTIC.UZTPLANIF P, SATURN.SGRADVR T ";
     
     
     @Autowired
@@ -133,4 +135,37 @@ public class SolicitudVo {
     	
   	
     }
+    
+    public List<ConvocadosVo> getAlumnosAcompanamiento(String q) throws SQLException {
+    	String selecAlumnosAcompanamiento= "SELECT DISTINCT SPBPERS_SSN AS CEDULA, SUBSTR(f_getspridenid(T.SGRADVR_PIDM),1,12) AS ID, SUBSTR(f_format_name(T.SGRADVR_PIDM,'LFMI'),1,30) AS NOMBRES, NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)";
+    	String whereAlumnosAcompanamiento = "";
+    	return jdbcTemplate.query(selecAlumnosAcompanamiento + convocados + q + whereAlumnosAcompanamiento, new BeanPropertyRowMapper<>(ConvocadosVo.class));
+    	
+  	
+    }
+    
+    
+    public List<ConvocadosVo> getTutoriasPlanificadas(String q) throws SQLException {
+    	String selecTutoriasPlanificadas= "SELECT DISTINCT P.UZTPLANIF_TITOTUTORIA AS TUTORIA, P.UZTPLANIF_TEMA AS TEMA, NVL(P.UZTPLANIF_ASIGNATURA,' ') AS ASIGNATURA, P.UZTPLANIF_FECHATUTORIA AS FECHA, P.UZTPLANIF_AULA AS AULA, P.UZTPLANIF_HORAINICIO AS HORA, P.UZTPLANIF_FECHA_CREA AS FEC";
+    	String whereTutoriasPlanificadas = "AND A.CODIGO_UZTPLANIF = P.CODIGO_UZTPLANIF AND A.CODIGO_UZGTFORMULARIOS = P.CODIGO_UZGTFORMULARIOS ORDER BY FEC, HORA, ASIGNATURA";
+    	return jdbcTemplate.query(selecTutoriasPlanificadas + tutoriasPlanifiacadas + q + whereTutoriasPlanificadas, new BeanPropertyRowMapper<>(ConvocadosVo.class));
+    	
+  	
+    }
+    
+    public List<ConvocadosVo> getSolicitadasAcompanamiento(String q) throws SQLException {
+    	String selecSolicitadasAcompanamiento= "SELECT DISTINCT P.UZTPLANIF_TITOTUTORIA AS TUTORIA, SUBSTR(f_getspridenid(P.SPRIDEN_PIDM),1,12) AS ID, SUBSTR(f_format_name(P.SPRIDEN_PIDM,'LFMI'),1,30) AS NOMBRES, P.UZTPLANIF_TEMA AS TEMA, P.UZTPLANIF_OBSERVACION AS OBSERVACION, P.UZTPLANIF_FECHAFORM AS FECHA";
+    	String whereSolicitadasAcompanamiento = "AND T.SGRADVR_PIDM = P.SPRIDEN_PIDM AND T.SGRADVR_ADVR_CODE = 'TACO' ORDER BY FECHA, NOMBRES";
+    	return jdbcTemplate.query(selecSolicitadasAcompanamiento + tutoriasSolicitadas + q + whereSolicitadasAcompanamiento, new BeanPropertyRowMapper<>(ConvocadosVo.class));
+    	
+    }
+    
+    public List<ConvocadosVo> getSolicitadasReforzamiento(String q) throws SQLException {
+    	String selecSolicitadasReforzamiento= "SELECT DISTINCT P.UZTPLANIF_TITOTUTORIA AS TUTORIA, SUBSTR(f_getspridenid(P.SPRIDEN_PIDM),1,12) AS ID, SUBSTR(f_format_name(P.SPRIDEN_PIDM,'LFMI'),1,30) AS NOMBRES, P.UZTPLANIF_ASIGNATURA AS ASIGNATURA, P.UZTPLANIF_TEMA AS TEMA, P.UZTPLANIF_FECHAFORM AS FECHA";
+    	String whereSolicitadasReforzamiento = "AND T.SIRASGN_TERM_CODE = TRIM(P.UZTPLANIF_PERIODO) AND T.SIRASGN_CRN = TRIM(P.UZTPLANIF_NRC) AND P.UZTPLANIF_TIPOPERSONA = 'ESTUDIANTE' ORDER BY FECHA, NOMBRES";
+    	return jdbcTemplate.query(selecSolicitadasReforzamiento + tutoriasSolicitadas + q + whereSolicitadasReforzamiento, new BeanPropertyRowMapper<>(ConvocadosVo.class));
+    	
+    }
+    
 }
+
