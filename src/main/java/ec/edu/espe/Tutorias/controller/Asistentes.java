@@ -130,7 +130,7 @@ public class Asistentes {
         System.out.println(wi);
         return new ResponseEntity(horarioPlan, HttpStatus.OK);
     }
-    
+     
     //Funcion que me retorna una asistencia de un estudiante de esa planificacion
     
     @RequestMapping(value = "/planificacionpidm/{planificacion}/{pidm}", method = RequestMethod.GET)
