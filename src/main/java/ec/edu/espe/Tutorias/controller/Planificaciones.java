@@ -66,18 +66,24 @@ public class Planificaciones {
     }
 
 
-    //metodo agregar solicitud de 
+    //metodo agregar solicitud de PLanificacion acompañamineto, reforzamiento y de Solicitud de acompanamiento y reforzamiento 
     @RequestMapping(value = "/crearPlanificacion", method = RequestMethod.POST)
     public ResponseEntity<Planificacion> crearPlanificacion(@Valid @RequestBody Planificacion usuario) {
         Planificacion planif = new Planificacion();
-        int ultimo = planificacionRepository.findTopByOrderByIdDesc().getId() + 1;
+        int ultimo = planificacionRepository.findTopByOrderByIdDesc().getId() + 1;//busca el ultimo id y le suma uno para remplazar a la secuencia 
         usuario.setId(ultimo);
         //planif.setId(ultimo);
         planificacionRepository.save(usuario);
         return new ResponseEntity(msg.add(), HttpStatus.CREATED);
     }
   
-
+      //método busca el ultimo registro de planificacion que se ingreso
+        @RequestMapping(value = "/ultimoPlanif", method = RequestMethod.GET)
+    public ResponseEntity<Planificacion> verUltimoRegistroPlanificacion() {
+        int ultimo = planificacionRepository.findTopByOrderByIdDesc().getId();
+        return new ResponseEntity(ultimo, HttpStatus.OK);
+    }
+    //método busca el ultimo registro de planificacion que se ingreso y suma 1 para generar un autoincrementable debido a que no existe secuencia
     @RequestMapping(value = "/ultimo", method = RequestMethod.GET)
     public ResponseEntity<Planificacion> ultimo() {
         int ultimo = planificacionRepository.findTopByOrderByIdDesc().getId() + 1;
@@ -192,7 +198,7 @@ public class Planificaciones {
         		"AND UZTPLANIF_TIPOPERSONA = 'ESTUDIANTE'\r\n" + 
         		"AND SPRIDEN_PIDM = SGRADVR_PIDM\r\n" + 
         		"AND SPRIDEN_PIDM = SPBPERS_PIDM\r\n" + 
-        		"AND UZTPLANIF_TITOTUTORIA = 'ACOMPA�AMIENTO'\r\n" + 
+        		"AND UZTPLANIF_TITOTUTORIA = 'ACOMPA�AMIENTO'\r\n" + 
         		"AND UZTPLANIF_ESTADO = 'A'";
         List<ConvocadosVo> ConvocarSA = convocados.getConvocadosSolicitadosAcompanamiento(wi);
         return new ResponseEntity(ConvocarSA, HttpStatus.OK);
