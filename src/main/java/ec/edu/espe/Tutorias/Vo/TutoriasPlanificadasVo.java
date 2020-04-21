@@ -8,19 +8,28 @@ public class TutoriasPlanificadasVo implements Serializable{
 	private String TEMA;
 	private String ASIGNATURA;
 	private String FECHA;
+	private String HORA;
 	private String AULA;
-	private String FECHA_CREA;
+
+	private String FEC;
 public TutoriasPlanificadasVo() {
 	
 }
-public TutoriasPlanificadasVo(String TUTORIA, String TEMA, String ASIGNATURA, String FECHA, String AULA, String FECHA_CREA) {
+public TutoriasPlanificadasVo(String TUTORIA, String TEMA, String ASIGNATURA, String FECHA, String AULA,String HORA, String FEC) {
 	this.TUTORIA=TUTORIA;
 	this.TEMA=TEMA;
 	this.ASIGNATURA=ASIGNATURA;
 	this.FECHA=FECHA;
+	this.HORA=HORA;
 	this.AULA=AULA;
-	this.FECHA_CREA=FECHA_CREA;
+	this.FEC=FEC;
 	
+}
+public String getHORA() {
+	return HORA;
+}
+public void setHORA(String hORA) {
+	HORA = hORA;
 }
 public String getTUTORIA() {
 	return TUTORIA;
@@ -52,12 +61,13 @@ public String getAULA() {
 public void setAULA(String aULA) {
 	AULA = aULA;
 }
-public String getFECHA_CREA() {
-	return FECHA_CREA;
+public String getFEC() {
+	return FEC;
 }
-public void setFECHA_CREA(String fECHA_CREA) {
-	FECHA_CREA = fECHA_CREA;
+public void setFEC(String fEC) {
+	FEC = fEC;
 }
+
 
 
 }
