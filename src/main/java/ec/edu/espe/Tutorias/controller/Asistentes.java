@@ -19,8 +19,10 @@ import ec.edu.espe.Tutorias.Vo.AsistentesVo;
 import ec.edu.espe.Tutorias.Vo.CampusVo;
 import ec.edu.espe.Tutorias.Vo.ConfirmacionAsistenciaVo;
 import ec.edu.espe.Tutorias.Vo.HorarioPlaVo;
+import ec.edu.espe.Tutorias.Vo.HorarioSeleccionadoVo;
 import ec.edu.espe.Tutorias.Vo.HorarioVo;
 import ec.edu.espe.Tutorias.Vo.PlanificacionReforzamientoVo;
+import ec.edu.espe.Tutorias.Vo.PlanificacionSeleccionadaVo;
 import ec.edu.espe.Tutorias.Vo.SolicitudVo;
 import ec.edu.espe.Tutorias.dao.AsistenciaRepository;
 import ec.edu.espe.Tutorias.model.Asistencia;
@@ -138,8 +140,33 @@ public class Asistentes {
         Asistencia usuario = asistenciaRepository.findByCodigoPlanificacionAndPidm(planificacion, pidm);
        return new ResponseEntity(usuario, HttpStatus.OK);
     }
+    @RequestMapping(value = "/planificaionSeleccion/{pidm}", method = RequestMethod.GET)
+    public ResponseEntity getplanificacionSeleccion(@PathVariable String pidm) throws SQLException {
+        String wi = "WHERE SIRASGN_PIDM  = " + pidm + " \r\n"
+                + "                AND SIRASGN_TERM_CODE = SSBSECT_TERM_CODE\r\n"
+                + "                AND SIRASGN_CRN = SSBSECT_CRN\r\n"
+                + "                AND SSRMEET_TERM_CODE = SSBSECT_TERM_CODE\r\n"
+                + "                AND SSRMEET_CRN = SSBSECT_CRN       \r\n"
+                + //    		"                AND SSRMEET_MTYP_CODE = 'TUTO' \r\n" + 
+                //"                AND SSBSECT_PTRM_END_DATE >= SYSDATE\r\n" + 
+                "                AND SSBSECT_SUBJ_CODE = A.SCBCRSE_SUBJ_CODE\r\n"
+                + "                AND SSBSECT_CRSE_NUMB = A.SCBCRSE_CRSE_NUMB\r\n"
+                + "                AND A.SCBCRSE_EFF_TERM = (SELECT MAX( SCBCRSE_EFF_TERM)\r\n"
+                + "                FROM  SCBCRSE\r\n"
+                + "                WHERE SCBCRSE_SUBJ_CODE = A.SCBCRSE_SUBJ_CODE\r\n"
+                + "                AND SCBCRSE_CRSE_NUMB = A.SCBCRSE_CRSE_NUMB) ";
+        List<PlanificacionSeleccionadaVo> nrcPlanif = nrcPlanificacion.planificacionSeleccion(wi);
+        return new ResponseEntity(nrcPlanif, HttpStatus.OK);
+    }
     
-    
-    
+    @RequestMapping(value = "/AulaEscogido/{campus1}/{dia}", method = RequestMethod.GET)
+    public ResponseEntity AulaEscogido(@PathVariable String campus1, @PathVariable String dia) throws SQLException {
+        System.out.println(campus1 + dia);
+        String wi = "WHERE SZARPGN_IDREPORT = 'AULAS_'||'" + campus1 + "' AND SLBRDEF_BLDG_CODE = SZARPGN_CAMPVAR3 AND SLBRDEF_ROOM_NUMBER = SZARPGN_CAMPVAR4 AND SLBRDEF_RMST_CODE = 'AC' AND SLBRDEF_ROOM_TYPE = 'C' AND '" + dia + "' IS NOT NULL ";
+        List<HorarioSeleccionadoVo> horarioPlan = horarioPlanificacion.AulaEscogido(wi);
+
+        System.out.println(wi);
+        return new ResponseEntity(horarioPlan, HttpStatus.OK);
+    }
     
 }

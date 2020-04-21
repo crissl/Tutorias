@@ -173,5 +173,20 @@ public class SolicitudVo {
     	
     }
     
+    
+    public List<PlanificacionSeleccionadaVo> planificacionSeleccion(String q) throws SQLException {
+    	String selecPlanificacionEscogida = "SELECT DISTINCT SIRASGN_CRN AS NRC, A.SCBCRSE_SUBJ_CODE || A.SCBCRSE_CRSE_NUMB || ' - ' || A.SCBCRSE_TITLE AS ASIGNATURA, SSBSECT_CAMP_CODE AS CAMPUS, SSBSECT_TERM_CODE AS PERIODO";
+    	String wherePlanificacionEscogida = "";
+    	return jdbcTemplate.query(selecPlanificacionEscogida + reforzamiento + q + wherePlanificacionEscogida, new BeanPropertyRowMapper<>(PlanificacionSeleccionadaVo.class));
+
+	
+}
+    public List<HorarioSeleccionadoVo> AulaEscogido(String q) throws SQLException {
+    	String selecHorarioPlanificacion = "SELECT DISTINCT SZARPGN_CAMPVAR3||' - '||SZARPGN_CAMPVAR4 AS AULA";
+    	String whereHorarioPlanificacion = "ORDER BY AULA";
+    	return jdbcTemplate.query(selecHorarioPlanificacion + horario + q + whereHorarioPlanificacion, new BeanPropertyRowMapper<>(HorarioSeleccionadoVo.class));
+    	
+    	
+    }
 }
 
