@@ -7,14 +7,16 @@ public class ConfirmacionAsistenciaVo implements Serializable{
 	
 	private int UZTASISTENTES_CODIGO;
 	private int CODIGO_UZTPLANIF;
+	private String UZTPLANIF_TITOTUTORIA;
 	private String UZTPLANIF_TEMA;
 	
 	 public ConfirmacionAsistenciaVo() {
 	    }
-	 public ConfirmacionAsistenciaVo(int CODIGO, int PLANIFICACION, String TEMA) 
+	 public ConfirmacionAsistenciaVo(int CODIGO, int PLANIFICACION, String UZTPLANIF_TITOTUTORIA, String TEMA) 
 			  {
 		 this.UZTASISTENTES_CODIGO=CODIGO;
 		 this.CODIGO_UZTPLANIF=PLANIFICACION;
+		 this.UZTPLANIF_TITOTUTORIA=UZTPLANIF_TITOTUTORIA;
 		 this.UZTPLANIF_TEMA=TEMA;
 	    }
 	public int getUZTASISTENTES_CODIGO() {
@@ -35,5 +37,12 @@ public class ConfirmacionAsistenciaVo implements Serializable{
 	public void setUZTPLANIF_TEMA(String uZTPLANIF_TEMA) {
 		UZTPLANIF_TEMA = uZTPLANIF_TEMA;
 	}
+	public String getUZTPLANIF_TITOTUTORIA() {
+		return UZTPLANIF_TITOTUTORIA;
+	}
+	public void setUZTPLANIF_TITOTUTORIA(String uZTPLANIF_TITOTUTORIA) {
+		UZTPLANIF_TITOTUTORIA = uZTPLANIF_TITOTUTORIA;
+	}
+	
 	 }
 	

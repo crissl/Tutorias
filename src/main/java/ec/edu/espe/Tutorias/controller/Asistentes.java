@@ -23,9 +23,11 @@ import ec.edu.espe.Tutorias.Vo.HorarioSeleccionadoVo;
 import ec.edu.espe.Tutorias.Vo.HorarioVo;
 import ec.edu.espe.Tutorias.Vo.PlanificacionReforzamientoVo;
 import ec.edu.espe.Tutorias.Vo.PlanificacionSeleccionadaVo;
+import ec.edu.espe.Tutorias.Vo.ResgistroAsistentesVo;
 import ec.edu.espe.Tutorias.Vo.SolicitudVo;
 import ec.edu.espe.Tutorias.dao.AsistenciaRepository;
 import ec.edu.espe.Tutorias.model.Asistencia;
+import ec.edu.espe.Tutorias.model.Planificacion;
 import ec.edu.espe.Tutorias.util.Mensaje;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
@@ -45,6 +47,8 @@ public class Asistentes {
     private SolicitudVo horarioPlanificacion;
     @Autowired
     private SolicitudVo registroAsistencia;
+    @Autowired
+    private SolicitudVo estudiantesAsisten;
 
     private final Mensaje msg = new Mensaje();
 
@@ -177,6 +181,14 @@ public class Asistentes {
         System.out.println(campus1 + dia);
         String wi = "WHERE SZARPGN_IDREPORT = 'AULAS_'||'" + campus1 + "' AND SLBRDEF_BLDG_CODE = SZARPGN_CAMPVAR3 AND SLBRDEF_ROOM_NUMBER = SZARPGN_CAMPVAR4 AND SLBRDEF_RMST_CODE = 'AC' AND SLBRDEF_ROOM_TYPE = 'C' AND '" + dia + "' IS NOT NULL ";
         List<HorarioSeleccionadoVo> horarioPlan = horarioPlanificacion.AulaEscogido(wi);
+
+        System.out.println(wi);
+        return new ResponseEntity(horarioPlan, HttpStatus.OK);
+    }
+    @RequestMapping(value = "/registroAsistentes/{pidm}", method = RequestMethod.GET)
+    public ResponseEntity getRegistroAsistentes(@PathVariable int pidm) throws SQLException {
+        String wi = "WHERE  SPRIDEN_PIDM=" + pidm + " ";
+        List<ResgistroAsistentesVo> horarioPlan = estudiantesAsisten.getRegistroAsistentes(wi);
 
         System.out.println(wi);
         return new ResponseEntity(horarioPlan, HttpStatus.OK);

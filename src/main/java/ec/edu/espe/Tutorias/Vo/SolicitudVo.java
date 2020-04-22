@@ -12,6 +12,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import ec.edu.espe.Tutorias.model.Planificacion;
+
 /**
  *
  * @author wils1
@@ -41,6 +43,9 @@ public class SolicitudVo {
     
     private static String solicitadasReforzamiento = " FROM UTIC.UZTPLANIF P, SATURN.SIRASGN T ";
     
+    private static String estudiantesAsistentes = " FROM UTIC.UZTPLANIF ";
+
+    
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -57,7 +62,7 @@ public class SolicitudVo {
     }
     public List<ConfirmacionAsistenciaVo> getConfirmar(String q) throws SQLException {
     	
-    	String selecConfirmacion = "SELECT UZTASISTENTES_CODIGO, p.CODIGO_UZTPLANIF, UZTPLANIF_TEMA";
+    	String selecConfirmacion = "SELECT UZTASISTENTES_CODIGO, p.CODIGO_UZTPLANIF, UZTPLANIF_TITOTUTORIA, UZTPLANIF_TEMA";
     	String whereConfirmacion = "AND (a.CODIGO_UZGTFORMULARIOS=3 OR a.CODIGO_UZGTFORMULARIOS=1) AND UZTASISTENTES_ESTADO='A' ORDER BY p.CODIGO_UZTPLANIF ASC";
     	return jdbcTemplate.query(selecConfirmacion + confirma + q + whereConfirmacion, new BeanPropertyRowMapper<>(ConfirmacionAsistenciaVo.class));
     
@@ -185,6 +190,14 @@ public class SolicitudVo {
     	String selecHorarioPlanificacion = "SELECT DISTINCT SZARPGN_CAMPVAR3||' - '||SZARPGN_CAMPVAR4 AS AULA";
     	String whereHorarioPlanificacion = "ORDER BY AULA";
     	return jdbcTemplate.query(selecHorarioPlanificacion + horario + q + whereHorarioPlanificacion, new BeanPropertyRowMapper<>(HorarioSeleccionadoVo.class));
+    	
+    	
+    }
+    
+    public List<ResgistroAsistentesVo> getRegistroAsistentes(String q) throws SQLException {
+    	String selecHorarioPlanificacion = "SELECT CODIGO_UZTPLANIF, UZTPLANIF_TITOTUTORIA, UZTPLANIF_TEMA";
+    	String whereHorarioPlanificacion = "AND (UZTPLANIF_TITOTUTORIA='ACOMPAÑAMIENTO' OR UZTPLANIF_TITOTUTORIA='REFORZAMIENTO') AND (CODIGO_UZGTFORMULARIOS=3 OR CODIGO_UZGTFORMULARIOS=1) AND UZTPLANIF_ESTADO='A' ORDER BY CODIGO_UZTPLANIF ASC";
+    	return jdbcTemplate.query(selecHorarioPlanificacion + estudiantesAsistentes + q + whereHorarioPlanificacion, new BeanPropertyRowMapper<>(ResgistroAsistentesVo.class));
     	
     	
     }
