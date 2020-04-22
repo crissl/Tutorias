@@ -58,13 +58,26 @@ public class Asistentes {
             return new ResponseEntity(asistencias, HttpStatus.OK);
         }
     }
+    
     //metodo agregar confirmados
     @RequestMapping(value = "/crearAsistencia", method = RequestMethod.POST)
     public ResponseEntity<Asistencia> crearAsistencia(@Valid @RequestBody Asistencia asistio) {
-    	Asistencia asiste = new Asistencia();
         int ultimo = asistenciaRepository.findTopByOrderByIdDesc().getId() + 1;
         asistio.setId(ultimo);
        asistenciaRepository.save(asistio);
+        return new ResponseEntity(msg.add(), HttpStatus.CREATED);
+      }
+    
+    
+    //metodo agregar confirmados
+    @RequestMapping(value = "/crearAsistenciaLista", method = RequestMethod.POST)
+    public ResponseEntity<Asistencia> crearAsistenciaList(@Valid @RequestBody List<Asistencia> asistio) {
+        int ultimo = asistenciaRepository.findTopByOrderByIdDesc().getId();
+  	
+        for(int i=1;i<asistio.size()+1;i++){
+          asistio.get(i-1).setId(ultimo+i);
+        }
+       asistenciaRepository.saveAll(asistio);
         return new ResponseEntity(msg.add(), HttpStatus.CREATED);
       }
 

@@ -54,6 +54,7 @@ public class Planificaciones {
     private SolicitudVo solicitadasAcompanamiento;
     @Autowired
     private SolicitudVo solicitadasReforzamiento;
+
     // funcion para listar un formulario
     @RequestMapping(value = "/listarPlanificacion", method = RequestMethod.GET)
     public ResponseEntity<Planificacion> listarPlanificacion() throws SQLException {
@@ -65,7 +66,6 @@ public class Planificaciones {
         }
     }
 
-
     //metodo agregar solicitud de PLanificacion acompañamineto, reforzamiento y de Solicitud de acompanamiento y reforzamiento 
     @RequestMapping(value = "/crearPlanificacion", method = RequestMethod.POST)
     public ResponseEntity<Planificacion> crearPlanificacion(@Valid @RequestBody Planificacion usuario) {
@@ -76,13 +76,14 @@ public class Planificaciones {
         planificacionRepository.save(usuario);
         return new ResponseEntity(msg.add(), HttpStatus.CREATED);
     }
-  
-      //método busca el ultimo registro de planificacion que se ingreso
-        @RequestMapping(value = "/ultimoPlanif", method = RequestMethod.GET)
+
+    //método busca el ultimo registro de planificacion que se ingreso
+    @RequestMapping(value = "/ultimoPlanif", method = RequestMethod.GET)
     public ResponseEntity<Planificacion> verUltimoRegistroPlanificacion() {
         int ultimo = planificacionRepository.findTopByOrderByIdDesc().getId();
         return new ResponseEntity(ultimo, HttpStatus.OK);
     }
+
     //método busca el ultimo registro de planificacion que se ingreso y suma 1 para generar un autoincrementable debido a que no existe secuencia
     @RequestMapping(value = "/ultimo", method = RequestMethod.GET)
     public ResponseEntity<Planificacion> ultimo() {
@@ -101,6 +102,7 @@ public class Planificaciones {
         List<NrcVo> libreta1 = libretaRepository.getNrc(wi);
         return new ResponseEntity(libreta1, HttpStatus.OK);
     }
+
     //Lista nrc de un solicitud de reforzzamineto estudiante
     @RequestMapping(value = "/nrcSolicitud/{data}", method = RequestMethod.GET)
     public ResponseEntity getNrcSolicitud(@PathVariable int data) throws SQLException {
@@ -115,137 +117,153 @@ public class Planificaciones {
         List<ConfirmacionAsistenciaVo> Confirmar = confirmacionAsi.getConfirmar(wi);
         return new ResponseEntity(Confirmar, HttpStatus.OK);
     }
+
     @RequestMapping(value = "/convocadosMeno14/{nrc}/{periodo}", method = RequestMethod.GET)
     public ResponseEntity getConvocadosMenos(@PathVariable int nrc, @PathVariable String periodo) throws SQLException {
-        String wi ="WHERE GOREMAL.GOREMAL_PIDM = SFRSTCR_PIDM\r\n" + 
-        		"                                AND GOREMAL.GOREMAL_EMAL_CODE = 'STAN'), '') AS CORREO_INSTITUCIONAL,\r\n" + 
-        		"                                NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)\r\n" + 
-        		"                                FROM GOREMAL\r\n" + 
-        		"                                WHERE GOREMAL.GOREMAL_PIDM = SFRSTCR_PIDM\r\n" + 
-        		"                                AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'), '') AS CORREO_PERSONAL\r\n" + 
-        		"                                FROM SFRSTCR, SPBPERS\r\n" + 
-        		"                                WHERE SFRSTCR_TERM_CODE =  '" + periodo + "'\r\n" + 
-        		"                                AND SFRSTCR_CRN = " + nrc + "\r\n" + 
-        		"                                AND SFRSTCR_PIDM = SPBPERS_PIDM\r\n" + 
-        		"                                AND SFRSTCR_PIDM IN (SELECT DISTINCT SHRMRKS_PIDM\r\n" + 
-        		"                                FROM SHRMRKS\r\n" + 
-        		"                                WHERE SHRMRKS_TERM_CODE =  '" + periodo + "'\r\n" + 
-        		"                                AND SHRMRKS_CRN = " + nrc + "\r\n" + 
-        		"                                AND SHRMRKS_SCORE <= 14) ";
+        String wi = "WHERE GOREMAL.GOREMAL_PIDM = SFRSTCR_PIDM\r\n"
+                + "                                AND GOREMAL.GOREMAL_EMAL_CODE = 'STAN'), '') AS CORREO_INSTITUCIONAL,\r\n"
+                + "                                NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)\r\n"
+                + "                                FROM GOREMAL\r\n"
+                + "                                WHERE GOREMAL.GOREMAL_PIDM = SFRSTCR_PIDM\r\n"
+                + "                                AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'), '') AS CORREO_PERSONAL\r\n"
+                + "                                FROM SFRSTCR, SPBPERS\r\n"
+                + "                                WHERE SFRSTCR_TERM_CODE =  '" + periodo + "'\r\n"
+                + "                                AND SFRSTCR_CRN = " + nrc + "\r\n"
+                + "                                AND SFRSTCR_PIDM = SPBPERS_PIDM\r\n"
+                + "                                AND SFRSTCR_PIDM IN (SELECT DISTINCT SHRMRKS_PIDM\r\n"
+                + "                                FROM SHRMRKS\r\n"
+                + "                                WHERE SHRMRKS_TERM_CODE =  '" + periodo + "'\r\n"
+                + "                                AND SHRMRKS_CRN = " + nrc + "\r\n"
+                + "                                AND SHRMRKS_SCORE <= 14) ";
         List<ConvocadosVo> Convocar = convocados.getConvocadosMenos(wi);
         return new ResponseEntity(Convocar, HttpStatus.OK);
     }
+
     @RequestMapping(value = "/convocadosTodos/{nrc}/{periodo}", method = RequestMethod.GET)
     public ResponseEntity getConvocadosTodos(@PathVariable int nrc, @PathVariable String periodo) throws SQLException {
-        String wi ="WHERE GOREMAL.GOREMAL_PIDM = SFRSTCR_PIDM\r\n" + 
-        		"                                AND GOREMAL.GOREMAL_EMAL_CODE = 'STAN'),'') AS CORREO_INSTITUCIONAL,\r\n" + 
-        		"                                NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)\r\n" + 
-        		"                                FROM GOREMAL\r\n" + 
-        		"                                WHERE GOREMAL.GOREMAL_PIDM = SFRSTCR_PIDM\r\n" + 
-        		"                                AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'),'') AS CORREO_PERSONAL\r\n" + 
-        		"                                FROM SFRSTCR, SPBPERS\r\n" + 
-        		"                                WHERE SFRSTCR_TERM_CODE = '" + periodo + "'\r\n" + 
-        		"                                AND SFRSTCR_CRN = " + nrc + "\r\n" + 
-        		"                                AND SFRSTCR_PIDM = SPBPERS_PIDM";
+        String wi = "WHERE GOREMAL.GOREMAL_PIDM = SFRSTCR_PIDM\r\n"
+                + "                                AND GOREMAL.GOREMAL_EMAL_CODE = 'STAN'),'') AS CORREO_INSTITUCIONAL,\r\n"
+                + "                                NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)\r\n"
+                + "                                FROM GOREMAL\r\n"
+                + "                                WHERE GOREMAL.GOREMAL_PIDM = SFRSTCR_PIDM\r\n"
+                + "                                AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'),'') AS CORREO_PERSONAL\r\n"
+                + "                                FROM SFRSTCR, SPBPERS\r\n"
+                + "                                WHERE SFRSTCR_TERM_CODE = '" + periodo + "'\r\n"
+                + "                                AND SFRSTCR_CRN = " + nrc + "\r\n"
+                + "                                AND SFRSTCR_PIDM = SPBPERS_PIDM";
         List<ConvocadosVo> ConvocarT = convocados.getConvocadosTodos(wi);
         return new ResponseEntity(ConvocarT, HttpStatus.OK);
     }
+
     @RequestMapping(value = "/convocadosSolicitados/{nrc}/{periodo}", method = RequestMethod.GET)
     public ResponseEntity getConvocadosSolicitados(@PathVariable int nrc, @PathVariable String periodo) throws SQLException {
-        String wi ="                                WHERE GOREMAL.GOREMAL_PIDM = SPRIDEN_PIDM\r\n" + 
-        		"                                AND GOREMAL.GOREMAL_EMAL_CODE = 'STAN'), '') AS CORREO_INSTITUCIONAL,\r\n" + 
-        		"                                NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)\r\n" + 
-        		"                                FROM GOREMAL\r\n" + 
-        		"                                WHERE GOREMAL.GOREMAL_PIDM = SPRIDEN_PIDM\r\n" + 
-        		"                                AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'), '') AS CORREO_PERSONAL\r\n" + 
-        		"                                FROM UTIC.UZTPLANIF, SPBPERS\r\n" + 
-        		"                                WHERE UZTPLANIF_TIPOPERSONA = 'ESTUDIANTE'\r\n" + 
-        		"                                AND UZTPLANIF_TITOTUTORIA = 'REFORZAMIENTO'\r\n" + 
-        		"                                AND UZTPLANIF_NRC = " + nrc + "\r\n" + 
-        		"                                AND UZTPLANIF_PERIODO = '" + periodo + "'\r\n" + 
-        		"                                AND UZTPLANIF_ESTADO = 'A'\r\n" + 
-        		"                                AND SPRIDEN_PIDM=SPBPERS_PIDM";
+        String wi = "                                WHERE GOREMAL.GOREMAL_PIDM = SPRIDEN_PIDM\r\n"
+                + "                                AND GOREMAL.GOREMAL_EMAL_CODE = 'STAN'), '') AS CORREO_INSTITUCIONAL,\r\n"
+                + "                                NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)\r\n"
+                + "                                FROM GOREMAL\r\n"
+                + "                                WHERE GOREMAL.GOREMAL_PIDM = SPRIDEN_PIDM\r\n"
+                + "                                AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'), '') AS CORREO_PERSONAL\r\n"
+                + "                                FROM UTIC.UZTPLANIF, SPBPERS\r\n"
+                + "                                WHERE UZTPLANIF_TIPOPERSONA = 'ESTUDIANTE'\r\n"
+                + "                                AND UZTPLANIF_TITOTUTORIA = 'REFORZAMIENTO'\r\n"
+                + "                                AND UZTPLANIF_NRC = " + nrc + "\r\n"
+                + "                                AND UZTPLANIF_PERIODO = '" + periodo + "'\r\n"
+                + "                                AND UZTPLANIF_ESTADO = 'A'\r\n"
+                + "                                AND SPRIDEN_PIDM=SPBPERS_PIDM";
         List<ConvocadosVo> ConvocarS = convocados.getConvocadosSolicitados(wi);
         return new ResponseEntity(ConvocarS, HttpStatus.OK);
     }
+
     @RequestMapping(value = "/convocadosTodosAcompanamiento/{pidm}", method = RequestMethod.GET)
     public ResponseEntity getConvocadosTodosAcompanamiento(@PathVariable int pidm) throws SQLException {
-        String wi ="WHERE GOREMAL.GOREMAL_PIDM = SGRADVR_PIDM\r\n" + 
-        		"AND GOREMAL.GOREMAL_EMAL_CODE = 'STAN'), '') AS CORREO_INSTITUCIONAL,\r\n" + 
-        		"NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)\r\n" + 
-        		"FROM GOREMAL\r\n" + 
-        		"WHERE GOREMAL.GOREMAL_PIDM = SGRADVR_PIDM\r\n" + 
-        		"AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'), '') AS CORREO_PERSONAL\r\n" + 
-        		"FROM SGRADVR, SPBPERS\r\n" + 
-        		"WHERE SGRADVR_ADVR_PIDM = " + pidm + "\r\n" + 
-//        		"AND SGRADVR_ADVR_CODE = 'TACO'\r\n" + 
-        		"AND SGRADVR_PIDM = SPBPERS_PIDM";
+        String wi = "WHERE GOREMAL.GOREMAL_PIDM = SGRADVR_PIDM\r\n"
+                + "AND GOREMAL.GOREMAL_EMAL_CODE = 'STAN'), '') AS CORREO_INSTITUCIONAL,\r\n"
+                + "NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)\r\n"
+                + "FROM GOREMAL\r\n"
+                + "WHERE GOREMAL.GOREMAL_PIDM = SGRADVR_PIDM\r\n"
+                + "AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'), '') AS CORREO_PERSONAL\r\n"
+                + "FROM SGRADVR, SPBPERS\r\n"
+                + "WHERE SGRADVR_ADVR_PIDM = " + pidm + "\r\n"
+                + //        		"AND SGRADVR_ADVR_CODE = 'TACO'\r\n" + 
+                "AND SGRADVR_PIDM = SPBPERS_PIDM";
         List<ConvocadosVo> ConvocarST = convocados.getConvocadosTodosAcompanamiento(wi);
-        return new ResponseEntity(ConvocarST, HttpStatus.OK);
+        if(ConvocarST.isEmpty()){
+            return new ResponseEntity(msg.notfound(), HttpStatus.NOT_FOUND);
+        }else{
+            return new ResponseEntity(ConvocarST, HttpStatus.OK);
+        }
+        
     }
-    
+
     @RequestMapping(value = "/convocadosSolicitadosAcompanamiento/{pidm}", method = RequestMethod.GET)
     public ResponseEntity getConvocadosSolicitadosAcompanamiento(@PathVariable int pidm) throws SQLException {
-        String wi ="WHERE GOREMAL.GOREMAL_PIDM = SGRADVR_PIDM\r\n" + 
-        		"AND GOREMAL.GOREMAL_EMAL_CODE = 'STAN'), '') AS CORREO_INSTITUCIONAL,\r\n" + 
-        		"NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)\r\n" + 
-        		"FROM GOREMAL\r\n" + 
-        		"WHERE GOREMAL.GOREMAL_PIDM = SGRADVR_PIDM\r\n" + 
-        		"AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'), '') AS CORREO_PERSONAL\r\n" + 
-        		"FROM UTIC.UZTPLANIF, SATURN.SGRADVR, SATURN.SPBPERS\r\n" + 
-        		"WHERE SGRADVR_ADVR_PIDM = " + pidm + "\r\n" + 
-//        		"AND SGRADVR_ADVR_CODE = 'TACO'\r\n" + 
-        		"AND UZTPLANIF_TIPOPERSONA = 'ESTUDIANTE'\r\n" + 
-        		"AND SPRIDEN_PIDM = SGRADVR_PIDM\r\n" + 
-        		"AND SPRIDEN_PIDM = SPBPERS_PIDM\r\n" + 
-        		"AND UZTPLANIF_TITOTUTORIA = 'ACOMPA�AMIENTO'\r\n" + 
-        		"AND UZTPLANIF_ESTADO = 'A'";
+        String wi = "WHERE GOREMAL.GOREMAL_PIDM = SGRADVR_PIDM\r\n"
+                + "AND GOREMAL.GOREMAL_EMAL_CODE = 'STAN'), '') AS CORREO_INSTITUCIONAL,\r\n"
+                + "NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)\r\n"
+                + "FROM GOREMAL\r\n"
+                + "WHERE GOREMAL.GOREMAL_PIDM = SGRADVR_PIDM\r\n"
+                + "AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'), '') AS CORREO_PERSONAL\r\n"
+                + "FROM UTIC.UZTPLANIF, SATURN.SGRADVR, SATURN.SPBPERS\r\n"
+                + "WHERE SGRADVR_ADVR_PIDM = " + pidm + "\r\n"
+                + //        		"AND SGRADVR_ADVR_CODE = 'TACO'\r\n" + 
+                "AND UZTPLANIF_TIPOPERSONA = 'ESTUDIANTE'\r\n"
+                + "AND SPRIDEN_PIDM = SGRADVR_PIDM\r\n"
+                + "AND SPRIDEN_PIDM = SPBPERS_PIDM\r\n"
+                + "AND UZTPLANIF_TITOTUTORIA = 'ACOMPA�AMIENTO'\r\n"
+                + "AND UZTPLANIF_ESTADO = 'A'";
         List<ConvocadosVo> ConvocarSA = convocados.getConvocadosSolicitadosAcompanamiento(wi);
-        return new ResponseEntity(ConvocarSA, HttpStatus.OK);
+        if (ConvocarSA.isEmpty()) {
+            return new ResponseEntity(msg.notfound(), HttpStatus.OK);
+        }else{
+            return new ResponseEntity(ConvocarSA, HttpStatus.OK);
+        }
+
+        
     }
+
     @RequestMapping(value = "/AlumnosAcompanamiento/{pidm}", method = RequestMethod.GET)
     public ResponseEntity getAlumnosAcompanamiento(@PathVariable int pidm) throws SQLException {
-        String wi ="WHERE GOREMAL.GOREMAL_PIDM = SGRADVR_PIDM \r\n" + 
-        		"AND GOREMAL.GOREMAL_EMAL_CODE = 'STAN'), '') AS CORREO_INSTITUCIONAL, \r\n" + 
-        		"NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS) \r\n" + 
-        		"FROM GOREMAL \r\n" + 
-        		"WHERE GOREMAL.GOREMAL_PIDM = SGRADVR_PIDM \r\n" + 
-        		"AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'), '') AS CORREO_PERSONAL, \r\n" + 
-        		"NVL((SELECT distinct MAX(F.SPRTELE_PHONE_NUMBER) \r\n" + 
-        		"FROM SPRTELE F \r\n" + 
-        		"WHERE F.SPRTELE_PIDM = SGRADVR_PIDM \r\n" + 
-        		"AND F.SPRTELE_TELE_CODE = 'TM' \r\n" + 
-        		"AND F.SPRTELE_SEQNO = (SELECT MAX(T.SPRTELE_SEQNO) \r\n" + 
-        		"FROM SPRTELE T \r\n" + 
-        		"WHERE T.SPRTELE_PIDM = F.SPRTELE_PIDM \r\n" + 
-        		"AND T.SPRTELE_TELE_CODE = 'TM')), '') AS CELULAR \r\n" + 
-        		"FROM SATURN.SGRADVR T, SATURN.SPBPERS P \r\n" + 
-        		"WHERE T.SGRADVR_ADVR_PIDM = " + pidm + "\r\n" + 
-//        		"AND T.SGRADVR_ADVR_CODE = 'TACO' \r\n" + 
-        		"AND T.SGRADVR_PIDM = P.SPBPERS_PIDM \r\n" + 
-        		"ORDER BY NOMBRES ";
+        String wi = "WHERE GOREMAL.GOREMAL_PIDM = SGRADVR_PIDM \r\n"
+                + "AND GOREMAL.GOREMAL_EMAL_CODE = 'STAN'), '') AS CORREO_INSTITUCIONAL, \r\n"
+                + "NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS) \r\n"
+                + "FROM GOREMAL \r\n"
+                + "WHERE GOREMAL.GOREMAL_PIDM = SGRADVR_PIDM \r\n"
+                + "AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'), '') AS CORREO_PERSONAL, \r\n"
+                + "NVL((SELECT distinct MAX(F.SPRTELE_PHONE_NUMBER) \r\n"
+                + "FROM SPRTELE F \r\n"
+                + "WHERE F.SPRTELE_PIDM = SGRADVR_PIDM \r\n"
+                + "AND F.SPRTELE_TELE_CODE = 'TM' \r\n"
+                + "AND F.SPRTELE_SEQNO = (SELECT MAX(T.SPRTELE_SEQNO) \r\n"
+                + "FROM SPRTELE T \r\n"
+                + "WHERE T.SPRTELE_PIDM = F.SPRTELE_PIDM \r\n"
+                + "AND T.SPRTELE_TELE_CODE = 'TM')), '') AS CELULAR \r\n"
+                + "FROM SATURN.SGRADVR T, SATURN.SPBPERS P \r\n"
+                + "WHERE T.SGRADVR_ADVR_PIDM = " + pidm + "\r\n"
+                + //        		"AND T.SGRADVR_ADVR_CODE = 'TACO' \r\n" + 
+                "AND T.SGRADVR_PIDM = P.SPBPERS_PIDM \r\n"
+                + "ORDER BY NOMBRES ";
         List<AlumnosAcompanamientoVo> AlumnosA = convocados.getAlumnosAcompanamiento(wi);
         return new ResponseEntity(AlumnosA, HttpStatus.OK);
     }
-    
+
     @RequestMapping(value = "/TutoriasPlanificadas/{pidm}", method = RequestMethod.GET)
     public ResponseEntity getTutoriasPlanificadas(@PathVariable int pidm) throws SQLException {
-        String wi ="WHERE A.SPRIDEN_PIDM = " + pidm + "";
+        String wi = "WHERE A.SPRIDEN_PIDM = " + pidm + "";
         List<TutoriasPlanificadasVo> Planificadas = planificadas.getTutoriasPlanificadas(wi);
         return new ResponseEntity(Planificadas, HttpStatus.OK);
     }
+
     @RequestMapping(value = "/SolicitadasAcompanamiento/{pidm}", method = RequestMethod.GET)
     public ResponseEntity getSolicitadasAcompanamiento(@PathVariable int pidm) throws SQLException {
-        String wi ="WHERE T.SGRADVR_ADVR_PIDM = " + pidm + "";
+        String wi = "WHERE T.SGRADVR_ADVR_PIDM = " + pidm + "";
         List<SolicitadasAcompanamientoVo> SolicitadasA = solicitadasAcompanamiento.getSolicitadasAcompanamiento(wi);
         return new ResponseEntity(SolicitadasA, HttpStatus.OK);
     }
-    
+
     @RequestMapping(value = "/SolicitadasReforzamiento/{pidm}", method = RequestMethod.GET)
     public ResponseEntity getSolicitadasReforzamiento(@PathVariable int pidm) throws SQLException {
-        String wi ="WHERE T.SIRASGN_PIDM = " + pidm + "";
+        String wi = "WHERE T.SIRASGN_PIDM = " + pidm + "";
         List<SolicitadasReforzamientoVo> SolicitadasA = solicitadasReforzamiento.getSolicitadasReforzamiento(wi);
         return new ResponseEntity(SolicitadasA, HttpStatus.OK);
     }
 }
-

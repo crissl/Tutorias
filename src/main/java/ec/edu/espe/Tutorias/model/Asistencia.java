@@ -23,12 +23,12 @@ public class Asistencia implements Serializable {
 	private int id;
 
 	@Basic(optional = false)
-	@Column(name = " CODIGO_UZTPLANIF")
+	@Column(name = "CODIGO_UZTPLANIF")
 	@NotNull
 	private int codigoPlanificacion;
 
 	@Basic(optional = false)
-	@Column(name = " CODIGO_UZGTFORMULARIOS")
+	@Column(name = "CODIGO_UZGTFORMULARIOS")
 	@NotNull
 	private int codigoFormularios;
 
@@ -95,11 +95,11 @@ public class Asistencia implements Serializable {
 		this.id = id;
 	}
 
-	public int getCodigoPlanifiacion() {
+	public int getCodigoPlanificacion() {
 		return codigoPlanificacion;
 	}
 
-	public void setCodigoPlanifiacion(int codigoPlanifiacion) {
+	public void setCodigoPlanificacion(int codigoPlanifiacion) {
 		this.codigoPlanificacion = codigoPlanifiacion;
 	}
 
