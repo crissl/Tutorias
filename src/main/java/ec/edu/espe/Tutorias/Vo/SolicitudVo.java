@@ -82,14 +82,15 @@ public class SolicitudVo {
     	
     }
     public List<PlanificacionReforzamientoVo> getPlanificaionR(String q) throws SQLException {
-        	String selecPlanificacion = "SELECT DISTINCT SIRASGN_CRN AS NRC, A.SCBCRSE_SUBJ_CODE || A.SCBCRSE_CRSE_NUMB || ' - ' || A.SCBCRSE_TITLE AS ASIGNATURA, SSBSECT_CAMP_CODE AS CAMPUS, SSBSECT_TERM_CODE AS PERIODO, SSRMEET_BEGIN_TIME AS INICIO, SSRMEET_END_TIME AS FIN";
+        	String selecPlanificacion = "SELECT DISTINCT SIRASGN_CRN AS NRC, A.SCBCRSE_SUBJ_CODE || A.SCBCRSE_CRSE_NUMB AS CODIGO_ASIGNATURA, A.SCBCRSE_TITLE AS ASIGNATURA, SSBSECT_CAMP_CODE AS CAMPUS, SSBSECT_TERM_CODE AS PERIODO, SSRMEET_BEGIN_TIME AS INICIO, SSRMEET_END_TIME AS FIN\r\n" + 
+        			"";
         	String wherePlanificacion = "";
         	return jdbcTemplate.query(selecPlanificacion + reforzamiento + q + wherePlanificacion, new BeanPropertyRowMapper<>(PlanificacionReforzamientoVo.class));
     
     	
     }
     public List<HorarioPlaVo> getHorarioPlanificacion(String q) throws SQLException {
-    	String selecHorarioPlanificacion = "SELECT DISTINCT SZARPGN_CAMPVAR3||' - '||SZARPGN_CAMPVAR4 AS AULA, SZARPGN_CAMPVAR7||' - '||SZARPGN_CAMPVAR8 AS HORARIO, SZARPGN_CAMPVAR7 AS HORA_INICIO, SZARPGN_CAMPVAR8 AS HORA_FIN";
+    	String selecHorarioPlanificacion = "SELECT DISTINCT SZARPGN_CAMPVAR3 AS NIVEL, SZARPGN_CAMPVAR4 AS AULA, SZARPGN_CAMPVAR7 ||' - '||SZARPGN_CAMPVAR8 AS HORARIO, SZARPGN_CAMPVAR7 AS HORA_INICIO, SZARPGN_CAMPVAR8 AS HORA_FIN";
     	String whereHorarioPlanificacion = "ORDER BY 3,4,1";
     	return jdbcTemplate.query(selecHorarioPlanificacion + horario + q + whereHorarioPlanificacion, new BeanPropertyRowMapper<>(HorarioPlaVo.class));
     	

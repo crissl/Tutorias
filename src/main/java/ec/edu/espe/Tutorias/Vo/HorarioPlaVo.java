@@ -6,6 +6,7 @@ public class HorarioPlaVo implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private String AULA;
+	private String NIVEL;
 	private String HORARIO;
 	private int HORA_INICIO;
 	private int HORA_FIN;
@@ -14,7 +15,8 @@ public HorarioPlaVo() {
 		
 	}
 	
-    public HorarioPlaVo(String AULA, String HORARIO, int HORA_INICIO, int HORA_FIN) {
+    public HorarioPlaVo(String NIVEL, String AULA, String HORARIO, int HORA_INICIO, int HORA_FIN) {
+    	this.AULA= NIVEL;
     	this.AULA= AULA;
     	this.HORARIO=HORARIO;
     	this.HORA_INICIO=HORA_INICIO;
@@ -53,6 +55,14 @@ public HorarioPlaVo() {
 
 	public void setHORA_FIN(int hORA_FIN) {
 		HORA_FIN = hORA_FIN;
+	}
+
+	public String getNIVEL() {
+		return NIVEL;
+	}
+
+	public void setNIVEL(String nIVEL) {
+		NIVEL = nIVEL;
 	}
 
 	

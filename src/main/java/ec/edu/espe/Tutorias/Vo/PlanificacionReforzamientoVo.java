@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class PlanificacionReforzamientoVo implements Serializable{
 	private static final long serialVersionUID = 1L;
     private String NRC;
+    private String CODIGO_ASIGNATURA;
     private String ASIGNATURA;
     private String CAMPUS;
     private String PERIODO;
@@ -16,9 +17,10 @@ public class PlanificacionReforzamientoVo implements Serializable{
    }
    
     
-    public PlanificacionReforzamientoVo(String NRC, String ASIGNATURA, String CAMPUS, String PERIODO, String INICIO, String FIN)
+    public PlanificacionReforzamientoVo(String NRC, String CODIGO_ASIGNATURA, String ASIGNATURA, String CAMPUS, String PERIODO, String INICIO, String FIN )
     {
     this.NRC=NRC;
+    this.CODIGO_ASIGNATURA=CODIGO_ASIGNATURA;
     this.ASIGNATURA=ASIGNATURA;
     this.CAMPUS=CAMPUS;
     this.PERIODO=PERIODO;
@@ -26,6 +28,16 @@ public class PlanificacionReforzamientoVo implements Serializable{
     this.FIN=FIN;
     	
     }
+
+
+	public String getCODIGO_ASIGNATURA() {
+		return CODIGO_ASIGNATURA;
+	}
+
+
+	public void setCODIGO_ASIGNATURA(String cODIGO_ASIGNATURA) {
+		CODIGO_ASIGNATURA = cODIGO_ASIGNATURA;
+	}
 
 
 	public String getNRC() {
