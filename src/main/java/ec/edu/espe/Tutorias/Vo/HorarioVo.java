@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class HorarioVo implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	private String NIVEL;
 	private String AULA;
 	private String HORARIO;
 	private String HORA_INICIO;
@@ -14,7 +15,8 @@ public class HorarioVo implements Serializable {
 		
 	}
 	
-    public HorarioVo(String AULA, String HORARIO, String HORA_INICIO, String HORA_FIN) {
+    public HorarioVo(String NIVEL, String AULA, String HORARIO, String HORA_INICIO, String HORA_FIN) {
+    	this.NIVEL= NIVEL;
     	this.AULA= AULA;
     	this.HORARIO=HORARIO;
     	this.HORA_INICIO=HORA_INICIO;
@@ -53,6 +55,14 @@ public class HorarioVo implements Serializable {
 
 	public void setHORA_FIN(String hORA_FIN) {
 		HORA_FIN = hORA_FIN;
+	}
+
+	public String getNIVEL() {
+		return NIVEL;
+	}
+
+	public void setNIVEL(String nIVEL) {
+		NIVEL = nIVEL;
 	}
 	
 	

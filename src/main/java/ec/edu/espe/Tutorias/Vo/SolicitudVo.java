@@ -75,7 +75,7 @@ public class SolicitudVo {
     	
     }
     public List<HorarioVo> getHorario(String q) throws SQLException {
-    	String selecHorario = "SELECT DISTINCT SZARPGN_CAMPVAR3||' - '||SZARPGN_CAMPVAR4 AS AULA, SZARPGN_CAMPVAR7||' - '||SZARPGN_CAMPVAR8 AS HORARIO, SZARPGN_CAMPVAR7 AS HORA_INICIO, SZARPGN_CAMPVAR8 AS HORA_FIN";
+    	String selecHorario = "SELECT DISTINCT SZARPGN_CAMPVAR3 AS NIVEL, SZARPGN_CAMPVAR4 AS AULA, SZARPGN_CAMPVAR7||' - '||SZARPGN_CAMPVAR8 AS HORARIO, SZARPGN_CAMPVAR7 AS HORA_INICIO, SZARPGN_CAMPVAR8 AS HORA_FIN";
     	String whereHorario = "";
     	return jdbcTemplate.query(selecHorario + horario + q + whereHorario, new BeanPropertyRowMapper<>(HorarioVo.class));
     	
