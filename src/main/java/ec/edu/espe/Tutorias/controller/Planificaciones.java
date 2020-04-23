@@ -136,7 +136,12 @@ public class Planificaciones {
                 + "                                AND SHRMRKS_CRN = " + nrc + "\r\n"
                 + "                                AND SHRMRKS_SCORE <= 14) ";
         List<ConvocadosVo> Convocar = convocados.getConvocadosMenos(wi);
-        return new ResponseEntity(Convocar, HttpStatus.OK);
+        if (Convocar.isEmpty()) {
+            return new ResponseEntity(msg.notfound(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity(Convocar, HttpStatus.OK);
+        }
+
     }
 
     @RequestMapping(value = "/convocadosTodos/{nrc}/{periodo}", method = RequestMethod.GET)
@@ -152,7 +157,11 @@ public class Planificaciones {
                 + "                                AND SFRSTCR_CRN = " + nrc + "\r\n"
                 + "                                AND SFRSTCR_PIDM = SPBPERS_PIDM";
         List<ConvocadosVo> ConvocarT = convocados.getConvocadosTodos(wi);
-        return new ResponseEntity(ConvocarT, HttpStatus.OK);
+        if (ConvocarT.isEmpty()) {
+            return new ResponseEntity(msg.notfound(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity(ConvocarT, HttpStatus.OK);
+        }
     }
 
     @RequestMapping(value = "/convocadosSolicitados/{nrc}/{periodo}", method = RequestMethod.GET)
@@ -171,7 +180,11 @@ public class Planificaciones {
                 + "                                AND UZTPLANIF_ESTADO = 'A'\r\n"
                 + "                                AND SPRIDEN_PIDM=SPBPERS_PIDM";
         List<ConvocadosVo> ConvocarS = convocados.getConvocadosSolicitados(wi);
-        return new ResponseEntity(ConvocarS, HttpStatus.OK);
+        if(ConvocarS.isEmpty()){
+            return new ResponseEntity(msg.notfound(), HttpStatus.OK);
+        }else{
+            return new ResponseEntity(ConvocarS, HttpStatus.OK);
+        }
     }
 
     @RequestMapping(value = "/convocadosTodosAcompanamiento/{pidm}", method = RequestMethod.GET)
@@ -187,12 +200,12 @@ public class Planificaciones {
                 + //        		"AND SGRADVR_ADVR_CODE = 'TACO'\r\n" + 
                 "AND SGRADVR_PIDM = SPBPERS_PIDM";
         List<ConvocadosVo> ConvocarST = convocados.getConvocadosTodosAcompanamiento(wi);
-        if(ConvocarST.isEmpty()){
+        if (ConvocarST.isEmpty()) {
             return new ResponseEntity(msg.notfound(), HttpStatus.NOT_FOUND);
-        }else{
+        } else {
             return new ResponseEntity(ConvocarST, HttpStatus.OK);
         }
-        
+
     }
 
     @RequestMapping(value = "/convocadosSolicitadosAcompanamiento/{pidm}", method = RequestMethod.GET)
@@ -214,11 +227,10 @@ public class Planificaciones {
         List<ConvocadosVo> ConvocarSA = convocados.getConvocadosSolicitadosAcompanamiento(wi);
         if (ConvocarSA.isEmpty()) {
             return new ResponseEntity(msg.notfound(), HttpStatus.OK);
-        }else{
+        } else {
             return new ResponseEntity(ConvocarSA, HttpStatus.OK);
         }
 
-        
     }
 
     @RequestMapping(value = "/AlumnosAcompanamiento/{pidm}", method = RequestMethod.GET)
