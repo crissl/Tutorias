@@ -62,28 +62,34 @@ public class Asistentes {
             return new ResponseEntity(asistencias, HttpStatus.OK);
         }
     }
-    
+
+    //Funcion que devuelve la asistencia de un estudiante para ser confirmada
+    @RequestMapping(value = "/buscaIdAsistente/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Asistencia> buscarAsistencia(@PathVariable int id) {
+        Asistencia AsistenciaE = asistenciaRepository.findById(id);
+        return new ResponseEntity(AsistenciaE, HttpStatus.OK);
+    }
+
     //metodo agregar confirmados
     @RequestMapping(value = "/crearAsistencia", method = RequestMethod.POST)
     public ResponseEntity<Asistencia> crearAsistencia(@Valid @RequestBody Asistencia asistio) {
         int ultimo = asistenciaRepository.findTopByOrderByIdDesc().getId() + 1;
         asistio.setId(ultimo);
-       asistenciaRepository.save(asistio);
+        asistenciaRepository.save(asistio);
         return new ResponseEntity(msg.add(), HttpStatus.CREATED);
-      }
-    
-    
+    }
+
     //metodo agregar confirmados
     @RequestMapping(value = "/crearAsistenciaLista", method = RequestMethod.POST)
     public ResponseEntity<Asistencia> crearAsistenciaList(@Valid @RequestBody List<Asistencia> asistio) {
         int ultimo = asistenciaRepository.findTopByOrderByIdDesc().getId();
-  	
-        for(int i=1;i<asistio.size()+1;i++){
-          asistio.get(i-1).setId(ultimo+i);
+
+        for (int i = 1; i < asistio.size() + 1; i++) {
+            asistio.get(i - 1).setId(ultimo + i);
         }
-       asistenciaRepository.saveAll(asistio);
+        asistenciaRepository.saveAll(asistio);
         return new ResponseEntity(msg.add(), HttpStatus.CREATED);
-      }
+    }
 
 //  Funcion Actualizar un asistencia
     @RequestMapping(value = "/actualizarAsistencia", method = RequestMethod.PUT)
@@ -145,18 +151,18 @@ public class Asistentes {
     public ResponseEntity getRegistroAsistencia(@PathVariable int codigoPlanificacion) throws SQLException {
         String wi = "WHERE CODIGO_UZTPLANIF =" + codigoPlanificacion + " ";
         List<AsistentesVo> horarioPlan = registroAsistencia.getRegistroAsistencia(wi);
-        
+
         System.out.println(wi);
         return new ResponseEntity(horarioPlan, HttpStatus.OK);
     }
-     
+
     //Funcion que me retorna una asistencia de un estudiante de esa planificacion
-    
     @RequestMapping(value = "/planificacionpidm/{planificacion}/{pidm}", method = RequestMethod.GET)
-    public ResponseEntity getRegistroAsistenci(@PathVariable int planificacion,@PathVariable int pidm) throws SQLException {
+    public ResponseEntity getRegistroAsistenci(@PathVariable int planificacion, @PathVariable int pidm) throws SQLException {
         Asistencia usuario = asistenciaRepository.findByCodigoPlanificacionAndPidm(planificacion, pidm);
-       return new ResponseEntity(usuario, HttpStatus.OK);
+        return new ResponseEntity(usuario, HttpStatus.OK);
     }
+
     @RequestMapping(value = "/planificaionSeleccion/{pidm}", method = RequestMethod.GET)
     public ResponseEntity getplanificacionSeleccion(@PathVariable String pidm) throws SQLException {
         String wi = "WHERE SIRASGN_PIDM  = " + pidm + " \r\n"
@@ -175,7 +181,7 @@ public class Asistentes {
         List<PlanificacionSeleccionadaVo> nrcPlanif = nrcPlanificacion.planificacionSeleccion(wi);
         return new ResponseEntity(nrcPlanif, HttpStatus.OK);
     }
-    
+
     @RequestMapping(value = "/AulaEscogido/{campus1}/{dia}", method = RequestMethod.GET)
     public ResponseEntity AulaEscogido(@PathVariable String campus1, @PathVariable String dia) throws SQLException {
         System.out.println(campus1 + dia);
@@ -185,6 +191,7 @@ public class Asistentes {
         System.out.println(wi);
         return new ResponseEntity(horarioPlan, HttpStatus.OK);
     }
+
     @RequestMapping(value = "/registroAsistentes/{pidm}", method = RequestMethod.GET)
     public ResponseEntity getRegistroAsistentes(@PathVariable int pidm) throws SQLException {
         String wi = "WHERE  SPRIDEN_PIDM=" + pidm + " ";
@@ -193,5 +200,5 @@ public class Asistentes {
         System.out.println(wi);
         return new ResponseEntity(horarioPlan, HttpStatus.OK);
     }
-    
+
 }
