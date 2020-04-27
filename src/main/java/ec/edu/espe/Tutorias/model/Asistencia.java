@@ -22,11 +22,13 @@ public class Asistencia implements Serializable {
 	@Column(name = "UZTASISTENTES_CODIGO")
 	private int id;
 
+        
 	@Basic(optional = false)
 	@Column(name = "CODIGO_UZTPLANIF")
 	@NotNull
 	private int codigoPlanificacion;
 
+        
 	@Basic(optional = false)
 	@Column(name = "CODIGO_UZGTFORMULARIOS")
 	@NotNull

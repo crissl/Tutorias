@@ -97,6 +97,13 @@ public class Asistentes {
         asistenciaRepository.save(asistencia);
         return new ResponseEntity(msg.update(), HttpStatus.OK);
     }
+    
+     @RequestMapping(value = "/editarAsistenciaLista", method = RequestMethod.PUT)
+    public ResponseEntity<Asistencia> uptAsistenciaList(@Valid @RequestBody List<Asistencia> asistio) {
+        asistenciaRepository.saveAll(asistio);
+        return new ResponseEntity(msg.add(), HttpStatus.CREATED);
+    }
+    
 
     @RequestMapping(value = "/getCampus", method = RequestMethod.GET)
     public ResponseEntity getCampus() throws SQLException {
@@ -155,6 +162,14 @@ public class Asistentes {
         System.out.println(wi);
         return new ResponseEntity(horarioPlan, HttpStatus.OK);
     }
+    
+    
+    //funcion actual
+    @RequestMapping(value = "/registroAsistenciaD/{codigoPlanificacion}", method = RequestMethod.GET)
+    public ResponseEntity getRegistroAsistenciaAcompañamiento(@PathVariable int codigoPlanificacion) throws SQLException {
+        List<Asistencia> asistentes = asistenciaRepository.findByCodigoPlanificacion(codigoPlanificacion);
+        return new ResponseEntity(asistentes, HttpStatus.OK);
+    }
 
     //Funcion que me retorna una asistencia de un estudiante de esa planificacion
     @RequestMapping(value = "/planificacionpidm/{planificacion}/{pidm}", method = RequestMethod.GET)
@@ -196,9 +211,11 @@ public class Asistentes {
     public ResponseEntity getRegistroAsistentes(@PathVariable int pidm) throws SQLException {
         String wi = "WHERE  SPRIDEN_PIDM=" + pidm + " ";
         List<ResgistroAsistentesVo> horarioPlan = estudiantesAsisten.getRegistroAsistentes(wi);
-
         System.out.println(wi);
         return new ResponseEntity(horarioPlan, HttpStatus.OK);
     }
+    
+    
+    
 
 }

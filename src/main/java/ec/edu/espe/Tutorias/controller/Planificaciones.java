@@ -65,6 +65,14 @@ public class Planificaciones {
             return new ResponseEntity(tutorias, HttpStatus.OK);
         }
     }
+    
+    
+    //  Funcion Actualizar un asistencia
+    @RequestMapping(value = "/actualizarPlanificacion", method = RequestMethod.PUT)
+    public ResponseEntity<Planificacion> actualizarAsistencia(@Valid @RequestBody Planificacion confirmacion) throws SQLException {
+       planificacionRepository.save(confirmacion);
+        return new ResponseEntity(msg.update(), HttpStatus.OK);
+    }
 
     //metodo agregar solicitud de PLanificacion acompañamineto, reforzamiento y de Solicitud de acompanamiento y reforzamiento 
     @RequestMapping(value = "/crearPlanificacion", method = RequestMethod.POST)
@@ -278,4 +286,12 @@ public class Planificaciones {
         List<SolicitadasReforzamientoVo> SolicitadasA = solicitadasReforzamiento.getSolicitadasReforzamiento(wi);
         return new ResponseEntity(SolicitadasA, HttpStatus.OK);
     }
+    
+    @RequestMapping(value = "/getPlanificacion/{pidm}", method = RequestMethod.GET)
+    public ResponseEntity getPlanificacion(@PathVariable int pidm) throws SQLException {
+        
+        Planificacion SolicitadasA = planificacionRepository.findById(pidm);
+        return new ResponseEntity(SolicitadasA, HttpStatus.OK);
+    }
+    
 }

@@ -18,6 +18,7 @@ public interface AsistenciaRepository extends JpaRepository<Asistencia, Long>{
 	 
 	 Asistencia findByCodigoPlanificacionAndPidm(int planif,int pidm);
          Asistencia findById(int id);
+         List<Asistencia> findByCodigoPlanificacion(int idP);
 	
 	 //findByPerIdAndUsuId
 

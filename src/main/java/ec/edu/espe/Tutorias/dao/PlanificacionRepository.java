@@ -14,6 +14,7 @@ public interface PlanificacionRepository extends JpaRepository<Planificacion, Lo
 	 List<Planificacion> findallPlanifica();
          //List<Planificacion> findTopByOrderBy();
         Planificacion findTopByOrderByIdDesc();
+        Planificacion findById (int id);
 	 
 
 }

@@ -31,7 +31,7 @@ public class Correo {
 //		helper.setFrom("development@espe.edu.ec");
 //		helper.setTo("saintkache@gmail.com");
 //		helper.setText("<html \n"
-//				+ "Espe.edu.ec><body>Enlace para recuperar contraseÒa: http://localhost:4200/confirmpassword/7 \r\n"
+//				+ "Espe.edu.ec><body>Enlace para recuperar contrase√±a: http://localhost:4200/confirmpassword/7 \r\n"
 //				+ "contactos \r\n" + "direccion \r\n" + "<body></html>", true);
 //		helper.setSubject("Hi");
 //
