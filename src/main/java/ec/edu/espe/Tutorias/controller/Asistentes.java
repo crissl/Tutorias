@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ec.edu.espe.Tutorias.Vo.AsistentesVo;
 import ec.edu.espe.Tutorias.Vo.CampusVo;
 import ec.edu.espe.Tutorias.Vo.ConfirmacionAsistenciaVo;
+import ec.edu.espe.Tutorias.Vo.DocenteVo;
+import ec.edu.espe.Tutorias.Vo.EstudianteVo;
 import ec.edu.espe.Tutorias.Vo.HorarioPlaVo;
 import ec.edu.espe.Tutorias.Vo.HorarioSeleccionadoVo;
 import ec.edu.espe.Tutorias.Vo.HorarioVo;
@@ -25,6 +27,7 @@ import ec.edu.espe.Tutorias.Vo.PlanificacionReforzamientoVo;
 import ec.edu.espe.Tutorias.Vo.PlanificacionSeleccionadaVo;
 import ec.edu.espe.Tutorias.Vo.ResgistroAsistentesVo;
 import ec.edu.espe.Tutorias.Vo.SolicitudVo;
+import ec.edu.espe.Tutorias.Vo.TipoPersonaVo;
 import ec.edu.espe.Tutorias.dao.AsistenciaRepository;
 import ec.edu.espe.Tutorias.model.Asistencia;
 import ec.edu.espe.Tutorias.model.Planificacion;
@@ -49,6 +52,12 @@ public class Asistentes {
     private SolicitudVo registroAsistencia;
     @Autowired
     private SolicitudVo estudiantesAsisten;
+    @Autowired
+    private SolicitudVo estudiantes;
+    @Autowired
+    private SolicitudVo docentes;
+    @Autowired
+    private SolicitudVo tipoPersonas;
 
     private final Mensaje msg = new Mensaje();
 
@@ -166,7 +175,7 @@ public class Asistentes {
     
     //funcion actual
     @RequestMapping(value = "/registroAsistenciaD/{codigoPlanificacion}", method = RequestMethod.GET)
-    public ResponseEntity getRegistroAsistenciaAcompañamiento(@PathVariable int codigoPlanificacion) throws SQLException {
+    public ResponseEntity getRegistroAsistenciaAcompanamiento(@PathVariable int codigoPlanificacion) throws SQLException {
         List<Asistencia> asistentes = asistenciaRepository.findByCodigoPlanificacion(codigoPlanificacion);
         return new ResponseEntity(asistentes, HttpStatus.OK);
     }
@@ -215,6 +224,28 @@ public class Asistentes {
         return new ResponseEntity(horarioPlan, HttpStatus.OK);
     }
     
+    @RequestMapping(value = "/estudiante/{pidm}", method = RequestMethod.GET)
+    public ResponseEntity getEstudiante(@PathVariable int pidm) throws SQLException {
+        String wi = "WHERE SGBSTDN_PIDM = " + pidm + " ";
+        List<EstudianteVo>  estudiante= estudiantes.getEstudiante(wi);
+        System.out.println(wi);
+        return new ResponseEntity(estudiante, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/docente/{pidm}", method = RequestMethod.GET)
+    public ResponseEntity getDocente(@PathVariable int pidm) throws SQLException {
+        String wi = "WHERE SIRASGN_PIDM = " + pidm + " ";
+        List<DocenteVo> docente = docentes.getDocente(wi);
+        System.out.println(wi);
+        return new ResponseEntity(docente, HttpStatus.OK);
+    }
+    @RequestMapping(value = "/tipoPersona/{pidm}", method = RequestMethod.GET)
+    public ResponseEntity getTipoPersona(@PathVariable int pidm) throws SQLException {
+        String wi = "WHERE PEBEMPL_PIDM =" + pidm + " ";
+        List<TipoPersonaVo> tipo = tipoPersonas.getTipoPersona(wi);
+        System.out.println(wi);
+        return new ResponseEntity(tipo, HttpStatus.OK);
+    }
     
     
 

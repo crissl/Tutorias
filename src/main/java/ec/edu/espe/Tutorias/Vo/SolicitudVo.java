@@ -44,6 +44,14 @@ public class SolicitudVo {
     private static String solicitadasReforzamiento = " FROM UTIC.UZTPLANIF P, SATURN.SIRASGN T ";
     
     private static String estudiantesAsistentes = " FROM UTIC.UZTPLANIF ";
+    
+    private static String estudiante = " FROM SGBSTDN ";
+    
+    private static String docente = " FROM SIRASGN ";
+    
+    private static String tipo = " FROM PEBEMPL ";
+
+
 
     
     @Autowired
@@ -203,12 +211,24 @@ public class SolicitudVo {
     
     public List<ResgistroAsistentesVo> getRegistroAsistentes(String q) throws SQLException {
     	String selecHorarioPlanificacion = "SELECT CODIGO_UZTPLANIF, UZTPLANIF_TITOTUTORIA, UZTPLANIF_TEMA";
-    	String whereHorarioPlanificacion = "AND (UZTPLANIF_TITOTUTORIA='ACOMPAÃ‘AMIENTO' OR UZTPLANIF_TITOTUTORIA='REFORZAMIENTO') AND (CODIGO_UZGTFORMULARIOS=3 OR CODIGO_UZGTFORMULARIOS=1) AND UZTPLANIF_ESTADO='A' ORDER BY CODIGO_UZTPLANIF ASC";
+    	String whereHorarioPlanificacion = "AND (UZTPLANIF_TITOTUTORIA='ACOMPAÑAMIENTO' OR UZTPLANIF_TITOTUTORIA='REFORZAMIENTO') AND (CODIGO_UZGTFORMULARIOS=3 OR CODIGO_UZGTFORMULARIOS=1) AND UZTPLANIF_ESTADO='A' ORDER BY CODIGO_UZTPLANIF ASC";
     	return jdbcTemplate.query(selecHorarioPlanificacion + estudiantesAsistentes + q + whereHorarioPlanificacion, new BeanPropertyRowMapper<>(ResgistroAsistentesVo.class));
     }
+    public List<EstudianteVo> getEstudiante(String q) throws SQLException {
+    	String selecEstudiante = "SELECT SGBSTDN_PIDM";
+    	String whereEstudiante = "";
+    	return jdbcTemplate.query(selecEstudiante + estudiante + q + whereEstudiante, new BeanPropertyRowMapper<>(EstudianteVo.class));
+    }
+    public List<DocenteVo> getDocente(String q) throws SQLException {
+    	String selecDocente = "SELECT SIRASGN_PIDM";
+    	String whereDocente = "";
+    	return jdbcTemplate.query(selecDocente + docente + q + whereDocente, new BeanPropertyRowMapper<>(DocenteVo.class));
+    }
     
-
-    
-    
+    public List<TipoPersonaVo> getTipoPersona(String q) throws SQLException {
+    	String selecTipo = "SELECT PEBEMPL_BCAT_CODE AS CODIGO";
+    	String whereTipo = "";
+    	return jdbcTemplate.query(selecTipo + tipo + q + whereTipo, new BeanPropertyRowMapper<>(TipoPersonaVo.class));
+    }
 }
 
