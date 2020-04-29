@@ -30,31 +30,8 @@ private static final String Campus = null;
 
 private SolicitudVo confirmacionAsi;
 
-//
-//	@Autowired
-//	private JavaMailSender sender;
-//	@RequestMapping("/mail")
-//	@ResponseBody
-//	String home() {
-//		try {
-//			enviarCorreo();
-//			return "Email Sent!";
-//		} catch (Exception ex) {
-//			return "Error in sending email: " + ex;
-//		}
-//	}
-//	private void enviarCorreo() throws Exception {
-//		MimeMessage message = sender.createMimeMessage();
-//		MimeMessageHelper helper = new MimeMessageHelper(message);
-//		helper.setFrom("development@espe.edu.ec");
-//		helper.setTo("saintkache@gmail.com");
-//		helper.setText("<html \n"
-//				+ "Espe.edu.ec><body>Enlace para recuperar contrase√±a: http://localhost:4200/confirmpassword/7 \r\n"
-//				+ "contactos \r\n" + "direccion \r\n" + "<body></html>", true);
-//		helper.setSubject("Hi");
-//
-//		sender.send(message);
-//	}
+
+
 	String par_mensaje = " el formulario " + Cod + " " + Actividad + " fue llenado";
     String par_emailp = "auditoria_sis@espe.edu.ec";
     String par_mensajeprincipal = " espere por favor una hora y podr· realizar su matricula";
