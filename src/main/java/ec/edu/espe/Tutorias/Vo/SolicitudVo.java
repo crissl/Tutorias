@@ -177,6 +177,7 @@ public class SolicitudVo {
     public List<SolicitadasAcompanamientoVo> getSolicitadasAcompanamiento(String q) throws SQLException {
     	String selecSolicitadasAcompanamiento= "SELECT DISTINCT P.UZTPLANIF_TITOTUTORIA AS TUTORIA, SUBSTR(f_getspridenid(P.SPRIDEN_PIDM),1,12) AS ID, SUBSTR(f_format_name(P.SPRIDEN_PIDM,'LFMI'),1,30) AS NOMBRES, P.UZTPLANIF_TEMA AS TEMA, P.UZTPLANIF_OBSERVACION AS OBSERVACION, P.UZTPLANIF_FECHAFORM AS FECHA";
     	String whereSolicitadasAcompanamiento = "AND T.SGRADVR_PIDM = P.SPRIDEN_PIDM "
+                                                 + "AND P.UZTPLANIF_TITOTUTORIA = 'ACOMPAÑAMIENTO'"
 //    			                                 + "AND T.SGRADVR_ADVR_CODE = 'TACO' "
     			                                 + "ORDER BY FECHA, NOMBRES";
     	return jdbcTemplate.query(selecSolicitadasAcompanamiento + solicitadasAcompanamiento + q + whereSolicitadasAcompanamiento, new BeanPropertyRowMapper<>(SolicitadasAcompanamientoVo.class));
