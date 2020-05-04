@@ -114,7 +114,10 @@ public class Planificaciones {
     //Lista nrc de un solicitud de reforzzamineto estudiante
     @RequestMapping(value = "/nrcSolicitud/{data}", method = RequestMethod.GET)
     public ResponseEntity getNrcSolicitud(@PathVariable int data) throws SQLException {
-        String wi = " WHERE sfrstcr_pidm = " + data + " AND sfrstcr_term_code = ssbsect_term_code AND sfrstcr_crn = ssbsect_crn  AND ssbsect_subj_code = a.scbcrse_subj_code AND ssbsect_crse_numb = a.scbcrse_crse_numb ";
+        String wi = " WHERE sfrstcr_pidm = " + data + " AND sfrstcr_term_code = ssbsect_term_code AND sfrstcr_crn = ssbsect_crn"
+//                + " AND ssbsect_ptrm_end_date >= sysdate"
+        		+ " AND ssbsect_subj_code = a.scbcrse_subj_code"
+        		+ " AND ssbsect_crse_numb = a.scbcrse_crse_numb ";
         List<NrcSolicitudVo> NrcEstudiante = libretaRepository.getNrcSolicitud(wi);
         return new ResponseEntity(NrcEstudiante, HttpStatus.OK);
     }
@@ -128,21 +131,27 @@ public class Planificaciones {
 
     @RequestMapping(value = "/convocadosMeno14/{nrc}/{periodo}", method = RequestMethod.GET)
     public ResponseEntity getConvocadosMenos(@PathVariable int nrc, @PathVariable String periodo) throws SQLException {
-        String wi = "WHERE GOREMAL.GOREMAL_PIDM = SFRSTCR_PIDM\r\n"
-                + "                                AND GOREMAL.GOREMAL_EMAL_CODE = 'STAN'), '') AS CORREO_INSTITUCIONAL,\r\n"
-                + "                                NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)\r\n"
-                + "                                FROM GOREMAL\r\n"
-                + "                                WHERE GOREMAL.GOREMAL_PIDM = SFRSTCR_PIDM\r\n"
-                + "                                AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'), '') AS CORREO_PERSONAL\r\n"
-                + "                                FROM SFRSTCR, SPBPERS\r\n"
-                + "                                WHERE SFRSTCR_TERM_CODE =  '" + periodo + "'\r\n"
-                + "                                AND SFRSTCR_CRN = " + nrc + "\r\n"
-                + "                                AND SFRSTCR_PIDM = SPBPERS_PIDM\r\n"
-                + "                                AND SFRSTCR_PIDM IN (SELECT DISTINCT SHRMRKS_PIDM\r\n"
-                + "                                FROM SHRMRKS\r\n"
-                + "                                WHERE SHRMRKS_TERM_CODE =  '" + periodo + "'\r\n"
-                + "                                AND SHRMRKS_CRN = " + nrc + "\r\n"
-                + "                                AND SHRMRKS_SCORE <= 14) ";
+        String wi = "WHERE GOREMAL.GOREMAL_PIDM = SFRSTCR_PIDM\r\n" + 
+        		"                                AND GOREMAL.GOREMAL_EMAL_CODE = 'STAN'), '') AS CORREO_INSTITUCIONAL,\r\n" + 
+        		"                                NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)\r\n" + 
+        		"                                FROM GOREMAL\r\n" + 
+        		"                                WHERE GOREMAL.GOREMAL_PIDM = SFRSTCR_PIDM\r\n" + 
+        		"                                AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'), '') AS CORREO_PERSONAL\r\n" + 
+        		"                                FROM SFRSTCR, SPBPERS\r\n" + 
+        		"                                WHERE SFRSTCR_TERM_CODE =  '" + periodo + "'\r\n" + 
+        		"                                AND SFRSTCR_CRN = " + nrc + "\r\n" + 
+        		"                                AND SFRSTCR_PIDM = SPBPERS_PIDM\r\n" + 
+        		"                                AND SFRSTCR_PIDM IN (SELECT DISTINCT SHRMRKS_PIDM\r\n" + 
+        		"                                FROM SHRMRKS\r\n" + 
+        		"                                WHERE SHRMRKS_TERM_CODE =  '" + periodo + "'\r\n" + 
+        		"                                AND SHRMRKS_CRN = " + nrc + "\r\n" + 
+        		"                                AND SHRMRKS_SCORE <= 14)\r\n" + 
+//        		"                                AND SHRMRKS_COMPLETED_DATE = (SELECT MAX(SHRMRKS_COMPLETED_DATE)\r\n" + 
+//        		"                                FROM SHRMRKS\r\n" + 
+//        		"                                WHERE SHRMRKS_COMPLETED_DATE <= SYSDATE\r\n" + 
+//        		"                                AND SHRMRKS_TERM_CODE = '" + periodo + "' \r\n" + 
+//        		"                                AND SHRMRKS_CRN = " + nrc + ")" +
+        		"";
         List<ConvocadosVo> Convocar = convocados.getConvocadosMenos(wi);
         if (Convocar.isEmpty()) {
             return new ResponseEntity(msg.notfound(), HttpStatus.OK);
