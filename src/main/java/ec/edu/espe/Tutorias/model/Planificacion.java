@@ -120,9 +120,8 @@ public class Planificacion implements Serializable {
     
     private String campCode;
     
-    @Column(name = "UZTPLANIF_TUTO_HORARIO")
-    
-    private String horarioOpcion;
+//    @Column(name = "UZTPLANIF_TUTO_HORARIO")
+//    private String horarioOpcion;
 
     public int getId() {
         return id;
@@ -326,13 +325,13 @@ public class Planificacion implements Serializable {
         this.campCode = campCode;
     }
 
-	public String getHorarioOpcion() {
-		return horarioOpcion;
-	}
-
-	public void setHorarioOpcion(String horarioOpcion) {
-		this.horarioOpcion = horarioOpcion;
-	}
+//	public String getHorarioOpcion() {
+//		return horarioOpcion;
+//	}
+//
+//	public void setHorarioOpcion(String horarioOpcion) {
+//		this.horarioOpcion = horarioOpcion;
+//	}
     
 
 }
