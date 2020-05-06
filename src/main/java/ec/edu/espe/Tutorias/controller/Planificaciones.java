@@ -214,8 +214,8 @@ public class Planificaciones {
                 + "AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'), '') AS CORREO_PERSONAL\r\n"
                 + "FROM SGRADVR, SPBPERS\r\n"
                 + "WHERE SGRADVR_ADVR_PIDM = " + pidm + "\r\n"
-                + //        		"AND SGRADVR_ADVR_CODE = 'TACO'\r\n" + 
-                "AND SGRADVR_PIDM = SPBPERS_PIDM";
+                + "AND SGRADVR_ADVR_CODE = 'TACO'\r\n"  
+                + "AND SGRADVR_PIDM = SPBPERS_PIDM";
         List<ConvocadosVo> ConvocarST = convocados.getConvocadosTodosAcompanamiento(wi);
         if (ConvocarST.isEmpty()) {
             return new ResponseEntity(msg.notfound(), HttpStatus.NOT_FOUND);
@@ -235,8 +235,8 @@ public class Planificaciones {
                 + "AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'), '') AS CORREO_PERSONAL\r\n"
                 + "FROM UTIC.UZTPLANIF, SATURN.SGRADVR, SATURN.SPBPERS\r\n"
                 + "WHERE SGRADVR_ADVR_PIDM = " + pidm + "\r\n"
-                + //        		"AND SGRADVR_ADVR_CODE = 'TACO'\r\n" + 
-                "AND UZTPLANIF_TIPOPERSONA = 'ESTUDIANTE'\r\n"
+                + "AND SGRADVR_ADVR_CODE = 'TACO'\r\n"  
+                + "AND UZTPLANIF_TIPOPERSONA = 'ESTUDIANTE'\r\n"
                 + "AND SPRIDEN_PIDM = SGRADVR_PIDM\r\n"
                 + "AND SPRIDEN_PIDM = SPBPERS_PIDM\r\n"
                 + "AND UZTPLANIF_TITOTUTORIA = 'ACOMPA�AMIENTO'\r\n"
@@ -268,8 +268,8 @@ public class Planificaciones {
                 + "AND T.SPRTELE_TELE_CODE = 'TM')), '') AS CELULAR \r\n"
                 + "FROM SATURN.SGRADVR T, SATURN.SPBPERS P \r\n"
                 + "WHERE T.SGRADVR_ADVR_PIDM = " + pidm + "\r\n"
-                + //        		"AND T.SGRADVR_ADVR_CODE = 'TACO' \r\n" + 
-                "AND T.SGRADVR_PIDM = P.SPBPERS_PIDM \r\n"
+                + "AND T.SGRADVR_ADVR_CODE = 'TACO' \r\n"  
+                + "AND T.SGRADVR_PIDM = P.SPBPERS_PIDM \r\n"
                 + "ORDER BY NOMBRES ";
         List<AlumnosAcompanamientoVo> AlumnosA = convocados.getAlumnosAcompanamiento(wi);
         return new ResponseEntity(AlumnosA, HttpStatus.OK);
