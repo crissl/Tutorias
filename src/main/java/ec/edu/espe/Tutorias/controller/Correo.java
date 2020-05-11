@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,9 +24,14 @@ import org.springframework.web.bind.annotation.RestController;
 import ec.edu.espe.Tutorias.Vo.ConfirmacionAsistenciaVo;
 import ec.edu.espe.Tutorias.Vo.EnvioCorreoVo;
 import ec.edu.espe.Tutorias.Vo.SolicitudVo;
+import ec.edu.espe.Tutorias.constants.DominiosConstantes;
+
+//@CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
+
+@CrossOrigin(origins = { DominiosConstantes.DOMAIN_1, DominiosConstantes.DOMAIN_2, DominiosConstantes.DOMAIN_3})
 
 @RestController
-@RequestMapping("/tutoring")
+@RequestMapping(DominiosConstantes.context)
 public class Correo {
 private static final String Cod = null;
 private static final String Actividad = null;

@@ -33,9 +33,13 @@ import ec.edu.espe.Tutorias.model.Asistencia;
 import ec.edu.espe.Tutorias.model.Planificacion;
 import ec.edu.espe.Tutorias.util.Mensaje;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
+import ec.edu.espe.Tutorias.constants.DominiosConstantes;
+
+//@CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
+@CrossOrigin(origins = { DominiosConstantes.DOMAIN_1, DominiosConstantes.DOMAIN_2, DominiosConstantes.DOMAIN_3})
+
 @RestController
-@RequestMapping("/tutoring")
+@RequestMapping(DominiosConstantes.context)
 public class Asistentes {
 
     @Autowired

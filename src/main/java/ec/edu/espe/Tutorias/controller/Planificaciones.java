@@ -9,6 +9,7 @@ import ec.edu.espe.Tutorias.Vo.SolicitadasAcompanamientoVo;
 import ec.edu.espe.Tutorias.Vo.SolicitadasReforzamientoVo;
 import ec.edu.espe.Tutorias.Vo.SolicitudVo;
 import ec.edu.espe.Tutorias.Vo.TutoriasPlanificadasVo;
+import ec.edu.espe.Tutorias.constants.DominiosConstantes;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -31,9 +32,12 @@ import ec.edu.espe.Tutorias.model.Asistencia;
 import ec.edu.espe.Tutorias.model.Planificacion;
 import ec.edu.espe.Tutorias.util.Mensaje;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
+@CrossOrigin(origins = { DominiosConstantes.DOMAIN_1, DominiosConstantes.DOMAIN_2, DominiosConstantes.DOMAIN_3})
+
 @RestController
-@RequestMapping("/tutoring")
+@RequestMapping(DominiosConstantes.context)
+//@RequestMapping("/tutoring")
 public class Planificaciones {
 
     @Autowired
