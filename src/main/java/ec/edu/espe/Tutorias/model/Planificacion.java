@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "UZTPLANIF")
@@ -101,7 +103,7 @@ public class Planificacion implements Serializable {
     private String estado;
 
     @Column(name = "UZTPLANIF_FECHA_CREA")
-    
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCrea;
 
     @Column(name = "UZTPLANIF_USUA_CREA")
@@ -120,8 +122,8 @@ public class Planificacion implements Serializable {
     
     private String campCode;
     
-//    @Column(name = "UZTPLANIF_TUTO_HORARIO")
-//    private String horarioOpcion;
+    @Column(name = "UZTPLANIF_TUTO_HORARIO")
+    private String horarioOpcion;
 
     public int getId() {
         return id;
@@ -325,13 +327,13 @@ public class Planificacion implements Serializable {
         this.campCode = campCode;
     }
 
-//	public String getHorarioOpcion() {
-//		return horarioOpcion;
-//	}
-//
-//	public void setHorarioOpcion(String horarioOpcion) {
-//		this.horarioOpcion = horarioOpcion;
-//	}
+	public String getHorarioOpcion() {
+		return horarioOpcion;
+	}
+
+	public void setHorarioOpcion(String horarioOpcion) {
+		this.horarioOpcion = horarioOpcion;
+	}
     
 
 }

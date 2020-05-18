@@ -36,7 +36,7 @@ import ec.edu.espe.Tutorias.util.Mensaje;
 import ec.edu.espe.Tutorias.constants.DominiosConstantes;
 
 //@CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
-@CrossOrigin(origins = { DominiosConstantes.DOMAIN_1, DominiosConstantes.DOMAIN_2, DominiosConstantes.DOMAIN_3})
+@CrossOrigin(origins = { DominiosConstantes.DOMAIN_1, DominiosConstantes.DOMAIN_2})
 
 @RestController
 @RequestMapping(DominiosConstantes.context)
@@ -145,8 +145,8 @@ public class Asistentes {
                 + "                AND SIRASGN_CRN = SSBSECT_CRN\r\n"
                 + "                AND SSRMEET_TERM_CODE = SSBSECT_TERM_CODE\r\n"
                 + "                AND SSRMEET_CRN = SSBSECT_CRN       \r\n"
-                + "                AND SSRMEET_MTYP_CODE = 'TUTO' \r\n"  
-                + "                AND SSBSECT_PTRM_END_DATE >= SYSDATE\r\n"  
+//                + "                AND SSRMEET_MTYP_CODE = 'TUTO' \r\n"  
+//                + "                AND SSBSECT_PTRM_END_DATE >= SYSDATE\r\n"  
                 + "                AND SSBSECT_SUBJ_CODE = A.SCBCRSE_SUBJ_CODE\r\n"
                 + "                AND SSBSECT_CRSE_NUMB = A.SCBCRSE_CRSE_NUMB\r\n"
                 + "                AND A.SCBCRSE_EFF_TERM = (SELECT MAX( SCBCRSE_EFF_TERM)\r\n"
@@ -198,7 +198,7 @@ public class Asistentes {
                 + "                AND SIRASGN_CRN = SSBSECT_CRN\r\n"
                 + "                AND SSRMEET_TERM_CODE = SSBSECT_TERM_CODE\r\n"
                 + "                AND SSRMEET_CRN = SSBSECT_CRN       \r\n"
-                + "                AND SSRMEET_MTYP_CODE = 'TUTO' \r\n" 
+//                + "                AND SSRMEET_MTYP_CODE = 'TUTO' \r\n" 
                 + "                AND SSBSECT_PTRM_END_DATE >= SYSDATE\r\n"  
                 + "                AND SSBSECT_SUBJ_CODE = A.SCBCRSE_SUBJ_CODE\r\n"
                 + "                AND SSBSECT_CRSE_NUMB = A.SCBCRSE_CRSE_NUMB\r\n"

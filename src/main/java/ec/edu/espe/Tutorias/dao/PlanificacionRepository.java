@@ -18,7 +18,8 @@ public interface PlanificacionRepository extends JpaRepository<Planificacion, Lo
         Planificacion findById (int id);
 	
         @Query(value = "{call wfobjects.wzwkreport.P_Envio_Emails(:par_mensaje, :par_emailp,:par_mensajeprincipal,:par_notificacion1,:par_notificacion2,:Email,:Cedula,:Nombres)}", nativeQuery = true)
-    	public List<EnvioCorreoVo> findAllBetweenStoredProcedure(@Param("par_mensaje") String par_mensaje,
+    	public List<EnvioCorreoVo> findAllBetweenStoredProcedure(
+    			@Param("par_mensaje") String par_mensaje,
     			@Param("par_emailp") String par_emailp,
     			@Param("par_mensajeprincipal") String par_mensajeprincipal,
         		@Param("par_notificacion1") String par_notificacion1,

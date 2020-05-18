@@ -1,12 +1,24 @@
 package ec.edu.espe.Tutorias.Vo;
 
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.NamedStoredProcedureQueries;
 import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureParameter;
-@NamedStoredProcedureQueries({ @NamedStoredProcedureQuery (
-		name="proceso1", 
-		procedureName  =  "wfobjects.wzwkreport.P_Envio_Emails",
+import javax.persistence.Table;
+
+
+@Entity 
+@Table(name="wfobjects")
+@NamedStoredProcedureQueries({
+	@NamedStoredProcedureQuery (
+		name = "proceso1", 
+		procedureName  =  "wzwkreport.P_Envio_Emails",
 parameters   = {
 		@StoredProcedureParameter ( mode  =  ParameterMode . IN , name  =  "par_mensaje" , type = String.class),
 		@StoredProcedureParameter ( mode  =  ParameterMode . IN , name  =  "par_emailp" , type = String.class),
@@ -15,29 +27,33 @@ parameters   = {
 		@StoredProcedureParameter ( mode  =  ParameterMode . IN , name  =  "par_notificacion2" , type = String.class),
 		@StoredProcedureParameter ( mode  =  ParameterMode . IN , name  =  "Cedula" , type = String.class),
 		@StoredProcedureParameter ( mode  =  ParameterMode . IN , name  =  "Nombres" , type = String.class),
+		@StoredProcedureParameter ( mode  =  ParameterMode . IN , name  =  "Email" , type = String.class),
 		@StoredProcedureParameter ( mode  =  ParameterMode . IN , name  =  "par_notificacion2" , type = String.class),
 
-		}
+		},
+resultClasses = EnvioCorreoVo.class
 
 )})
-public class EnvioCorreoVo{
+public class EnvioCorreoVo {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private String Cedula = "1725292757";
 	String Actividad = "";
-	String Cod = "";
 	String Campus = "";
 	String Razon = "";
 	String Carrera ="";
-	String Email ="";
-	String Cedula ="";
-	String Nombres ="";
-
+	String Cod ="";
 	
+	private String Email="cac.lopez@yavirac.edu.ec";
+	private String Nombres= "Christian Lopez";
 	private String par_mensaje;
 	private String par_emailp;
 	private String par_mensajeprincipal;
-	private Object par_notificacion1;
+	private String par_notificacion1;
 	private String par_notificacion2;
 	
 	public EnvioCorreoVo() {
+		
 		
 	}
 
@@ -119,7 +135,7 @@ public class EnvioCorreoVo{
 		return par_notificacion1;
 	}
 
-	public void setPar_notificacion1(Object par_notificacion1) {
+	public void setPar_notificacion1(String par_notificacion1) {
 		this.par_notificacion1 = par_notificacion1;
 	}
 

@@ -33,7 +33,7 @@ import ec.edu.espe.Tutorias.model.Planificacion;
 import ec.edu.espe.Tutorias.util.Mensaje;
 
 //@CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
-@CrossOrigin(origins = { DominiosConstantes.DOMAIN_1, DominiosConstantes.DOMAIN_2, DominiosConstantes.DOMAIN_3})
+@CrossOrigin(origins = { DominiosConstantes.DOMAIN_1, DominiosConstantes.DOMAIN_2})
 
 @RestController
 @RequestMapping(DominiosConstantes.context)
@@ -218,7 +218,7 @@ public class Planificaciones {
                 + "AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'), '') AS CORREO_PERSONAL\r\n"
                 + "FROM SGRADVR, SPBPERS\r\n"
                 + "WHERE SGRADVR_ADVR_PIDM = " + pidm + "\r\n"
-                + "AND SGRADVR_ADVR_CODE = 'TACO'\r\n"  
+//                + "AND SGRADVR_ADVR_CODE = 'TACO'\r\n"  
                 + "AND SGRADVR_PIDM = SPBPERS_PIDM";
         List<ConvocadosVo> ConvocarST = convocados.getConvocadosTodosAcompanamiento(wi);
         if (ConvocarST.isEmpty()) {
@@ -239,11 +239,11 @@ public class Planificaciones {
                 + "AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'), '') AS CORREO_PERSONAL\r\n"
                 + "FROM UTIC.UZTPLANIF, SATURN.SGRADVR, SATURN.SPBPERS\r\n"
                 + "WHERE SGRADVR_ADVR_PIDM = " + pidm + "\r\n"
-                + "AND SGRADVR_ADVR_CODE = 'TACO'\r\n"  
+//                + "AND SGRADVR_ADVR_CODE = 'TACO'\r\n"  
                 + "AND UZTPLANIF_TIPOPERSONA = 'ESTUDIANTE'\r\n"
                 + "AND SPRIDEN_PIDM = SGRADVR_PIDM\r\n"
                 + "AND SPRIDEN_PIDM = SPBPERS_PIDM\r\n"
-                + "AND UZTPLANIF_TITOTUTORIA = 'ACOMPAï¿½AMIENTO'\r\n"
+                + "AND UZTPLANIF_TITOTUTORIA = 'ACOMPAÑAMIENTO'\r\n"
                 + "AND UZTPLANIF_ESTADO = 'A'";
         List<ConvocadosVo> ConvocarSA = convocados.getConvocadosSolicitadosAcompanamiento(wi);
         if (ConvocarSA.isEmpty()) {
