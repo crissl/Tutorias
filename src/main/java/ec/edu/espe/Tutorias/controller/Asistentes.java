@@ -169,7 +169,7 @@ public class Asistentes {
 
     @RequestMapping(value = "/registroAsistencia/{codigoPlanificacion}", method = RequestMethod.GET)
     public ResponseEntity getRegistroAsistencia(@PathVariable int codigoPlanificacion) throws SQLException {
-        String wi = "WHERE CODIGO_UZTPLANIF =" + codigoPlanificacion + " ";
+        String wi = "WHERE CODIGO_UZTPLANIF = " + codigoPlanificacion + " ";
         List<AsistentesVo> horarioPlan = registroAsistencia.getRegistroAsistencia(wi);
 
         System.out.println(wi);

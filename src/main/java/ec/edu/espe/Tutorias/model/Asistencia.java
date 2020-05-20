@@ -1,6 +1,7 @@
 package ec.edu.espe.Tutorias.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Basic;
@@ -8,13 +9,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "UZTASISTENTES")
 
 public class Asistencia implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -22,13 +24,11 @@ public class Asistencia implements Serializable {
 	@Column(name = "UZTASISTENTES_CODIGO")
 	private int id;
 
-        
 	@Basic(optional = false)
 	@Column(name = "CODIGO_UZTPLANIF")
 	@NotNull
 	private int codigoPlanificacion;
 
-        
 	@Basic(optional = false)
 	@Column(name = "CODIGO_UZGTFORMULARIOS")
 	@NotNull
@@ -45,32 +45,24 @@ public class Asistencia implements Serializable {
 	private int pidm;
 
 	@Column(name = "UZTASISTENTES_FECHATUTORIA")
-	private Date fechaTutoriaAsi;
+	private String fechaTutoriaAsi;
 
 	@Column(name = "UZTASISTENTES_FECHAREGISTRO")
-	private Date fechaRegistroAsi;
+	private String fechaRegistroAsi;
 
 	@Column(name = "UZTASISTENTES_ASISTESN")
 	private String asistentes;
 
 	@Column(name = "UZTASISTENTES_COMENTARIO")
 	private String comentario;
-
-	@Column(name = "UZTASISTENTES_OBSERVACION")
-	private String observacionAsi;
-
-	@Column(name = "UZTASISTENTES_FECHA_CREA")
-	private Date fechaCrea;
-
-	@Column(name = "UZTASISTENTES_USUA_CREA")
-	private String usuarioCrea;
-
+	
+	@Temporal (TemporalType.TIMESTAMP)
 	@Column(name = "UZTASISTENTES_FECHA_MODIF")
 	private Date fechaModica;
-
+	
 	@Column(name = "UZTASISTENTES_USUA_MODIF")
 	private String usuarioModica;
-
+	
 	@Column(name = "UZTASISTENTES_ESTADO")
 	private String estado;
 
@@ -89,6 +81,20 @@ public class Asistencia implements Serializable {
 	@Column(name = "UZTASISTENTES_CONFIRMACION")
 	private String confirmacion;
 
+	@Column(name = "UZTASISTENTES_OBSERVACION")
+	private String observacionAsi;
+	
+	@Column(name = "UZTASISTENTES_USUA_CREA")
+	private String usuarioCrea;
+
+	@Temporal (TemporalType.TIMESTAMP)
+	@Column(name = "UZTASISTENTES_FECHA_CREA")
+	private Date fechaCrea;
+	
+	@Column(name = "UZTASISTENTES_OBS_EST")
+	private String ObservacionEst;
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -129,20 +135,19 @@ public class Asistencia implements Serializable {
 		this.pidm = pidm;
 	}
 
-	
-	public Date getFechaTutoriaAsi() {
+	public String getFechaTutoriaAsi() {
 		return fechaTutoriaAsi;
 	}
 
-	public void setFechaTutoriaAsi(Date fechaTutoriaAsi) {
+	public void setFechaTutoriaAsi(String fechaTutoriaAsi) {
 		this.fechaTutoriaAsi = fechaTutoriaAsi;
 	}
 
-	public Date getFechaRegistroAsi() {
+	public String getFechaRegistroAsi() {
 		return fechaRegistroAsi;
 	}
 
-	public void setFechaRegistroAsi(Date fechaRegistroAsi) {
+	public void setFechaRegistroAsi(String fechaRegistroAsi) {
 		this.fechaRegistroAsi = fechaRegistroAsi;
 	}
 
@@ -230,7 +235,6 @@ public class Asistencia implements Serializable {
 		this.estudiante = estudiante;
 	}
 
-
 	public String getEmail() {
 		return email;
 	}
@@ -250,5 +254,15 @@ public class Asistencia implements Serializable {
 	public void setConfirmacion(String confirmacion) {
 		this.confirmacion = confirmacion;
 	}
+
+	public String getObservacionEst() {
+		return ObservacionEst;
+	}
+
+	public void setObservacionEst(String observacionEst) {
+		ObservacionEst = observacionEst;
+	}
+
+	
 
 }

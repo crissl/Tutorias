@@ -272,7 +272,7 @@ public class Planificaciones {
                 + "AND T.SPRTELE_TELE_CODE = 'TM')), '') AS CELULAR \r\n"
                 + "FROM SATURN.SGRADVR T, SATURN.SPBPERS P \r\n"
                 + "WHERE T.SGRADVR_ADVR_PIDM = " + pidm + "\r\n"
-                + "AND T.SGRADVR_ADVR_CODE = 'TACO' \r\n"  
+//                + "AND T.SGRADVR_ADVR_CODE = 'TACO' \r\n"  
                 + "AND T.SGRADVR_PIDM = P.SPBPERS_PIDM \r\n"
                 + "ORDER BY NOMBRES ";
         List<AlumnosAcompanamientoVo> AlumnosA = convocados.getAlumnosAcompanamiento(wi);
