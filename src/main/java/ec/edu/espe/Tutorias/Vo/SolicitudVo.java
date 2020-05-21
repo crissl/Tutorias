@@ -108,7 +108,7 @@ public class SolicitudVo {
     
     public List<AsistentesVo> getRegistroAsistencia(String q) throws SQLException {
     	String selecRegistroAsistencia = "SELECT UZTASISTENTES_CEDULA , UZTASISTENTES_ID, UZTASISTENTES_ESTUDIANTE, UZTASISTENTES_EMAIL, UZTASISTENTES_ESTADO";
-    	String whereRegistroAsistencia = "AND CODIGO_UZGTFORMULARIOS =1";
+    	String whereRegistroAsistencia = "AND (CODIGO_UZGTFORMULARIOS =1 OR CODIGO_UZGTFORMULARIOS =3)";
     	return jdbcTemplate.query(selecRegistroAsistencia + Asistencias + q + whereRegistroAsistencia, new BeanPropertyRowMapper<>(AsistentesVo.class));
     }
     
@@ -168,7 +168,14 @@ public class SolicitudVo {
     
     public List<TutoriasPlanificadasVo> getTutoriasPlanificadas(String q) throws SQLException {
     	String selecTutoriasPlanificadas= "SELECT DISTINCT P.UZTPLANIF_TITOTUTORIA AS TUTORIA, P.UZTPLANIF_TEMA AS TEMA, NVL(P.UZTPLANIF_ASIGNATURA,' ') AS ASIGNATURA, P.UZTPLANIF_FECHATUTORIA AS FECHA, P.UZTPLANIF_AULA AS AULA, P.UZTPLANIF_HORAINICIO AS HORA, P.UZTPLANIF_FECHA_CREA AS FEC";
-    	String whereTutoriasPlanificadas = "AND A.CODIGO_UZTPLANIF = P.CODIGO_UZTPLANIF AND A.CODIGO_UZGTFORMULARIOS = P.CODIGO_UZGTFORMULARIOS ORDER BY FEC, HORA, ASIGNATURA";
+    	String whereTutoriasPlanificadas = "AND A.CODIGO_UZTPLANIF = P.CODIGO_UZTPLANIF AND A.CODIGO_UZGTFORMULARIOS = P.CODIGO_UZGTFORMULARIOS AND P.UZTPLANIF_TITOTUTORIA='ACOMPAÑAMIENTO' ORDER BY FEC, HORA, ASIGNATURA";
+    	return jdbcTemplate.query(selecTutoriasPlanificadas + tutoriasPlanifiacadas + q + whereTutoriasPlanificadas, new BeanPropertyRowMapper<>(TutoriasPlanificadasVo.class));
+    	
+  	
+    }
+    public List<TutoriasPlanificadasVo> getTutoriasPlanificadasR(String q) throws SQLException {
+    	String selecTutoriasPlanificadas= "SELECT DISTINCT P.UZTPLANIF_TITOTUTORIA AS TUTORIA, P.UZTPLANIF_TEMA AS TEMA, NVL(P.UZTPLANIF_ASIGNATURA,' ') AS ASIGNATURA, P.UZTPLANIF_FECHATUTORIA AS FECHA, P.UZTPLANIF_AULA AS AULA, P.UZTPLANIF_HORAINICIO AS HORA, P.UZTPLANIF_FECHA_CREA AS FEC";
+    	String whereTutoriasPlanificadas = "AND A.CODIGO_UZTPLANIF = P.CODIGO_UZTPLANIF AND A.CODIGO_UZGTFORMULARIOS = P.CODIGO_UZGTFORMULARIOS AND P.UZTPLANIF_TITOTUTORIA='REFORZAMIENTO' ORDER BY FEC, HORA, ASIGNATURA";
     	return jdbcTemplate.query(selecTutoriasPlanificadas + tutoriasPlanifiacadas + q + whereTutoriasPlanificadas, new BeanPropertyRowMapper<>(TutoriasPlanificadasVo.class));
     	
   	

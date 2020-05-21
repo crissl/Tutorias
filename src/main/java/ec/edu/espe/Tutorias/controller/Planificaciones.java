@@ -285,6 +285,12 @@ public class Planificaciones {
         List<TutoriasPlanificadasVo> Planificadas = planificadas.getTutoriasPlanificadas(wi);
         return new ResponseEntity(Planificadas, HttpStatus.OK);
     }
+    @RequestMapping(value = "/TutoriasPlanificadasR/{pidm}", method = RequestMethod.GET)
+    public ResponseEntity getTutoriasPlanificadasR(@PathVariable int pidm) throws SQLException {
+        String wi = "WHERE A.SPRIDEN_PIDM = " + pidm + "";
+        List<TutoriasPlanificadasVo> PlanificadasR = planificadas.getTutoriasPlanificadasR(wi);
+        return new ResponseEntity(PlanificadasR, HttpStatus.OK);
+    }
 
     @RequestMapping(value = "/SolicitadasAcompanamiento/{pidm}", method = RequestMethod.GET)
     public ResponseEntity getSolicitadasAcompanamiento(@PathVariable int pidm) throws SQLException {
