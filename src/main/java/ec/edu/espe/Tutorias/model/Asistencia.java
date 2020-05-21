@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "UZTASISTENTES")
 
+//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss a z");
 public class Asistencia implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -89,7 +90,7 @@ public class Asistencia implements Serializable {
 
 	@Temporal (TemporalType.TIMESTAMP)
 	@Column(name = "UZTASISTENTES_FECHA_CREA")
-	private Date fechaCrea;
+	public Date fechaCrea;
 	
 	@Column(name = "UZTASISTENTES_OBS_EST")
 	private String ObservacionEst;
