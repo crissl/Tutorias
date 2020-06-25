@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ec.edu.espe.Tutorias.Vo.AsistentesVo;
 import ec.edu.espe.Tutorias.Vo.CampusVo;
 import ec.edu.espe.Tutorias.Vo.ConfirmacionAsistenciaVo;
+import ec.edu.espe.Tutorias.Vo.DatosDocenteVo;
 import ec.edu.espe.Tutorias.Vo.DocenteVo;
 import ec.edu.espe.Tutorias.Vo.EstudianteVo;
 import ec.edu.espe.Tutorias.Vo.HorarioPlaVo;
@@ -28,6 +29,7 @@ import ec.edu.espe.Tutorias.Vo.PlanificacionSeleccionadaVo;
 import ec.edu.espe.Tutorias.Vo.ResgistroAsistentesVo;
 import ec.edu.espe.Tutorias.Vo.SolicitudVo;
 import ec.edu.espe.Tutorias.Vo.TipoPersonaVo;
+import ec.edu.espe.Tutorias.Vo.emailEstudio;
 import ec.edu.espe.Tutorias.dao.AsistenciaRepository;
 import ec.edu.espe.Tutorias.model.Asistencia;
 import ec.edu.espe.Tutorias.model.Planificacion;
@@ -62,6 +64,12 @@ public class Asistentes {
     private SolicitudVo docentes;
     @Autowired
     private SolicitudVo tipoPersonas;
+    @Autowired
+    private SolicitudVo datosDocentes;
+    @Autowired
+    private SolicitudVo emailEstudiante;
+
+
 
     private final Mensaje msg = new Mensaje();
 
@@ -250,7 +258,45 @@ public class Asistentes {
         System.out.println(wi);
         return new ResponseEntity(tipo, HttpStatus.OK);
     }
+    @RequestMapping(value = "/datosDocente/{pidm}", method = RequestMethod.GET)
+    public ResponseEntity getDatosDocente(@PathVariable int pidm) throws SQLException {
+        String wi = "WHERE GOREMAL.GOREMAL_PIDM = SGRADVR_ADVR_PIDM\r\n" + 
+        		"AND GOREMAL.GOREMAL_EMAL_CODE = 'STAN'), '') AS CORREO_INSTITUCIONAL,\r\n" + 
+        		"NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)\r\n" + 
+        		"FROM GOREMAL\r\n" + 
+        		"WHERE GOREMAL.GOREMAL_PIDM = SGRADVR_ADVR_PIDM\r\n" + 
+        		"AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'), '') AS CORREO_PERSONAL\r\n" + 
+        		"FROM SGRADVR, SPBPERS\r\n" + 
+        		"WHERE SGRADVR_PIDM = " + pidm + "\r\n" + 
+//        		"AND SGRADVR_ADVR_CODE = 'TACO'\r\n" + 
+        		"AND SGRADVR_ADVR_PIDM = SPBPERS_PIDM";
+        List<DatosDocenteVo> datosDocente = datosDocentes.getDatosDocente(wi);
+        System.out.println(wi);
+        return new ResponseEntity(datosDocente, HttpStatus.OK);
+    }
     
-    
+    @RequestMapping(value = "/datosEstudiante/{pidm}", method = RequestMethod.GET)
+    public ResponseEntity getEmailEstudiante(@PathVariable int pidm) throws SQLException {
+        String wi = "WHERE SPRIDEN_PIDM = " + pidm + "";
+        List<emailEstudio> datosEstudiante = emailEstudiante.getEmailEstudiante(wi);
+        System.out.println(wi);
+        return new ResponseEntity(datosEstudiante, HttpStatus.OK);
+    }
 
+    @RequestMapping(value = "/datosDocentes/{pidm}", method = RequestMethod.GET)
+    public ResponseEntity getDatosDocentes(@PathVariable int pidm) throws SQLException {
+        String wi = "WHERE GOREMAL.GOREMAL_PIDM = SGRADVR_ADVR_PIDM\r\n" + 
+        		"AND GOREMAL.GOREMAL_EMAL_CODE = 'STAN'), '') AS CORREO_INSTITUCIONAL,\r\n" + 
+        		"NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)\r\n" + 
+        		"FROM GOREMAL\r\n" + 
+        		"WHERE GOREMAL.GOREMAL_PIDM = SGRADVR_ADVR_PIDM\r\n" + 
+        		"AND GOREMAL.GOREMAL_EMAL_CODE = 'PERS'), '') AS CORREO_PERSONAL\r\n" + 
+        		"FROM SGRADVR, SPBPERS\r\n" + 
+        		"WHERE SPBPERS_PIDM = " + pidm + "\r\n" + 
+//        		"AND SGRADVR_ADVR_CODE = 'TACO'\r\n" + 
+        		"AND SGRADVR_ADVR_PIDM = SPBPERS_PIDM";
+        List<DatosDocenteVo> datosDocente = datosDocentes.getDatosDocentes(wi);
+        System.out.println(wi);
+        return new ResponseEntity(datosDocente, HttpStatus.OK);
+    }
 }

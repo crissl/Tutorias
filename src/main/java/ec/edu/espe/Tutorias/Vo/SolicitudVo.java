@@ -50,6 +50,10 @@ public class SolicitudVo {
     private static String docente = " FROM SIRASGN ";
     
     private static String tipo = " FROM PEBEMPL ";
+    
+    private static String emailEstudiante = " FROM  UZTASISTENTES ";
+    
+
 
 
 
@@ -237,6 +241,30 @@ public class SolicitudVo {
     	String selecTipo = "SELECT PEBEMPL_BCAT_CODE AS CODIGO";
     	String whereTipo = "";
     	return jdbcTemplate.query(selecTipo + tipo + q + whereTipo, new BeanPropertyRowMapper<>(TipoPersonaVo.class));
+    }
+    public List<DatosDocenteVo> getDatosDocente(String q) throws SQLException {
+    	String selecTipo = "SELECT DISTINCT SPBPERS_PIDM AS PIDM,\r\n" + 
+    			"SUBSTR(f_getspridenid(SGRADVR_ADVR_PIDM),1,12) AS ID,\r\n" + 
+    			"SPBPERS_SSN AS CEDULA,\r\n" + 
+    			"SUBSTR(f_format_name(SGRADVR_ADVR_PIDM,'LFMI'),1,30) AS NOMBRES,\r\n" + 
+    			"NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)";
+    	String whereTipo = "";
+    	return jdbcTemplate.query(selecTipo + convocados + q + whereTipo, new BeanPropertyRowMapper<>(DatosDocenteVo.class));
+    }
+    
+    public List<emailEstudio> getEmailEstudiante(String q) throws SQLException {
+    	String selecEmail = "SELECT DISTINCT UZTASISTENTES_EMAIL";
+    	String whereEmail = "";
+    	return jdbcTemplate.query(selecEmail + emailEstudiante + q + whereEmail, new BeanPropertyRowMapper<>(emailEstudio.class));
+    }
+    public List<DatosDocenteVo> getDatosDocentes(String q) throws SQLException {
+    	String selecTipo = "SELECT DISTINCT SPBPERS_PIDM AS PIDM,\r\n" + 
+    			"SUBSTR(f_getspridenid(SGRADVR_ADVR_PIDM),1,12) AS ID,\r\n" + 
+    			"SPBPERS_SSN AS CEDULA,\r\n" + 
+    			"SUBSTR(f_format_name(SGRADVR_ADVR_PIDM,'LFMI'),1,30) AS NOMBRES,\r\n" + 
+    			"NVL((SELECT DISTINCT MAX (GOREMAL.GOREMAL_EMAIL_ADDRESS)";
+    	String whereTipo = "";
+    	return jdbcTemplate.query(selecTipo + convocados + q + whereTipo, new BeanPropertyRowMapper<>(DatosDocenteVo.class));
     }
 }
 
